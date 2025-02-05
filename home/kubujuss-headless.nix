@@ -1,10 +1,10 @@
 {
   imports = [
     ./modules/fastfetch.nix
+    ./modules/nvim.nix
     ./modules/bash.nix
     ./modules/tmux.nix
     ./modules/git.nix
-    ./modules/nvim
   ];
 
   programs.home-manager.enable = true;
