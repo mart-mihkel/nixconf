@@ -2,7 +2,7 @@
 
 {
   environment = {
-    systemPackages = with pkgs; [ 
+    systemPackages = with pkgs; [
       openssl
       cacert
     ];

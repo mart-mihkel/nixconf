@@ -7,33 +7,35 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: let
-    x86 = "x86_64-linux";
-    arm = "aarch64-linux";
+  outputs = { nixpkgs, home-manager, ... }:
+    let
+      x86 = "x86_64-linux";
+      arm = "aarch64-linux";
 
-    make-users = users: [
-      home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          inherit users;
+      make-users = users: [
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            inherit users;
+          };
+        }
+      ];
+
+      kubujuss-headless = make-users { kubujuss = import ./home/kubujuss-headless.nix; };
+    in
+    {
+      nixosConfigurations = {
+        jaam = nixpkgs.lib.nixosSystem {
+          system = "${x86}";
+          modules = kubujuss-headless ++ [ ./host/jaam ];
         };
-      }
-    ];
 
-    kubujuss-headless = make-users { kubujuss = import ./home/kubujuss-headless.nix; };
-  in {
-    nixosConfigurations = {
-      jaam = nixpkgs.lib.nixosSystem {
-        system = "${x86}";
-        modules =  kubujuss-headless ++ [ ./host/jaam ];
-      };
-
-      alajaam = nixpkgs.lib.nixosSystem {
-        system = "${arm}";
-        modules = kubujuss-headless ++ [ ./host/alajaam ];
+        alajaam = nixpkgs.lib.nixosSystem {
+          system = "${arm}";
+          modules = kubujuss-headless ++ [ ./host/alajaam ];
+        };
       };
     };
-  };
 }

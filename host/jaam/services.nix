@@ -9,8 +9,8 @@
       enable = true;
 
       extraConfig = ''
-        c.Authenticator.allowed_users = {'kubujuss'} 
-        c.Authenticator.admin_users = {'kubujuss'}
+        c.Authenticator.allowed_users = { 'kubujuss' }
+        c.Authenticator.admin_users = { 'kubujuss' }
 
         c.SystemdSpawner.environment = {
           'LD_LIBRARY_PATH': '/run/opengl-driver/lib:$LD_LIBRARY_PATH',
@@ -24,8 +24,8 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 
+  networking.firewall.allowedTCPPorts = [
     11434 # ollama
-    8000  # jupyterhub
+    8000 # jupyterhub
   ];
 }

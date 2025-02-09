@@ -13,7 +13,7 @@
 
   virtualisation.docker.enable = true;
 
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     gnumake
     nodejs
     cargo

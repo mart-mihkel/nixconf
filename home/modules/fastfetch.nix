@@ -26,7 +26,7 @@
         {
           type = "colors";
           key = "Colors";
-          block.range = [1 6];
+          block.range = [ 1 6 ];
         }
       ];
     };
