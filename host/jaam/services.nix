@@ -1,10 +1,15 @@
+{ pkgs, ... }:
+
+let
+  python = pkgs.python3.override {
+    self = python;
+    packageOverrides = pyfinal: pyprev: {
+      jupyterlab-vim = pyfinal.callPackage ../modules/packages/jupyterlab-vim.nix { };
+    };
+  };
+in
 {
   services = {
-    ollama = {
-      enable = true;
-      acceleration = "cuda";
-    };
-
     jupyterhub = {
       enable = true;
 
@@ -21,11 +26,18 @@
           'TF_CPP_MIN_LOG_LEVEL': '3',
         }
       '';
+
+      jupyterlabEnv = python.withPackages (p: with p; [
+        jupyterhub
+        jupyterlab
+        jupyterlab-widgets
+        jupyterlab-vim
+      ]);
+
     };
   };
 
   networking.firewall.allowedTCPPorts = [
-    11434 # ollama
     8000 # jupyterhub
   ];
 }
