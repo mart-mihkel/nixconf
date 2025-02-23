@@ -1,5 +1,8 @@
 {
   services = {
+    openssh.enable = true;
+    getty.autologinUser = "kubujuss";
+
     soft-serve = {
       enable = true;
 
@@ -15,7 +18,9 @@
     };
   };
 
+
   networking.firewall.allowedTCPPorts = [
     23231 # soft-serve ssh
+    22 #ssh
   ];
 }

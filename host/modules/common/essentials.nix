@@ -14,6 +14,7 @@
   virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
+    neofetch
     gnumake
     nodejs
     cargo

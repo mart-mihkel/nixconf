@@ -2,15 +2,12 @@
 
 {
   imports = [
+    ../modules/common
     ./filesystems.nix
     ./networking.nix
     ./services.nix
     ./boot.nix
-
-    ../modules/ssh.nix
-
-    ../modules/common
-    ../modules/cuda
+    ./gpu.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

@@ -2,14 +2,11 @@
 
 {
   imports = [
+    ../modules/common
     ./filesystems.nix
     ./networking.nix
     ./services.nix
     ./boot.nix
-
-    ../modules/ssh.nix
-
-    ../modules/common
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";

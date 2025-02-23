@@ -11,13 +11,13 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-    "/media/ssd-256gb-sata" = {
-      device = "/dev/disk/by-label/ssd-256gb-sata";
+    "/media/ssd" = {
+      device = "/dev/sdb1";
       fsType = "ext4";
     };
 
-    "/media/hdd-1tb-sata" = {
-      device = "/dev/disk/by-label/hdd-1tb-sata";
+    "/media/hdd" = {
+      device = "/dev/sda1";
       fsType = "ext4";
     };
   };

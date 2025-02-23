@@ -1,6 +1,5 @@
 {
   imports = [
-    ./modules/fastfetch.nix
     ./modules/nvim.nix
     ./modules/bash.nix
     ./modules/tmux.nix
