@@ -31,6 +31,8 @@ let
     scipy
     torch
   ]);
+
+  tunnel-token = builtins.readFile "/run/secrets/tunnel/jaam/token";
 in
 {
   services = {
@@ -78,6 +80,13 @@ in
         jupyterlab
         jupyterhub
       ]);
+    };
+  };
+
+  virtualisation.oci-containers.containers = {
+    tunnel = {
+      image = "cloudflare/cloudflared:latest";
+      cmd = [ "tunnel" "--no-autoupdate" "run" "--token" "${tunnel-token}" ];
     };
   };
 

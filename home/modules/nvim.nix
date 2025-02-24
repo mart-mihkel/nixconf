@@ -4,7 +4,7 @@ let
   conf = builtins.fetchGit {
     url = "https://github.com/mart-mihkel/conf.git";
     ref = "minimal";
-    rev = "sha1-NCR7/bRqt3ap2rgn0Mf38kHU9Gw=";
+    rev = "sha1-Wm0qYj+gezeOH5TNklyGEhnvg9k=";
   };
 in
 {

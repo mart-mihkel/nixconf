@@ -16,8 +16,10 @@
       bind k select-pane -U
       bind l select-pane -R
 
-      set -g mode-style "fg=color0 bg=color16"
-      set -g status-style "fg=color16 bg=default"
+      set -g pane-active-border-style "fg=default"
+      set -g pane-border-style "fg=default"
+
+      set -g status-style "fg=default bg=default"
       set -g status-right "#(whoami)@#H"
     '';
   };

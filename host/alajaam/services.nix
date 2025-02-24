@@ -1,3 +1,6 @@
+let
+  tunnel-token = builtins.readFile "/run/secrets/tunnel/alajaam/token";
+in
 {
   services = {
     openssh.enable = true;
@@ -18,6 +21,12 @@
     };
   };
 
+  virtualisation.oci-containers.containers = {
+    tunnel = {
+      image = "cloudflare/cloudflared:latest";
+      cmd = [ "tunnel" "--no-autoupdate" "run" "--token" "${tunnel-token}" ];
+    };
+  };
 
   networking.firewall.allowedTCPPorts = [
     23231 # soft-serve ssh
