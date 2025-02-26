@@ -3,19 +3,19 @@
 let
   conf = builtins.fetchGit {
     url = "https://github.com/mart-mihkel/conf.git";
-    ref = "minimal";
-    rev = "sha1-Wm0qYj+gezeOH5TNklyGEhnvg9k=";
+    rev = "sha1-ujr/Z4sgFeTQ+pqc2oUliYeeDK0=";
+    ref = "nix";
   };
 in
 {
   programs.neovim = {
     enable = true;
-    vimAlias = true;
     defaultEditor = true;
 
-    extraPackages = with pkgs; [
-      ripgrep
-    ];
+    viAlias = true;
+    vimAlias = true;
+
+    extraPackages = with pkgs; [ ripgrep ];
   };
 
   home.file.".config/nvim".source = conf.outPath + "/.config/nvim";
