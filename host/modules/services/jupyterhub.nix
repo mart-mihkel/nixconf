@@ -8,31 +8,16 @@ let
     };
   };
 
-  tf-kernel = python.withPackages (p: with p; [
+  pycommon = p: with p; [
     scikit-learn
-    tensorflow
     matplotlib
-    ipykernel
     plotnine
     seaborn
     pandas
     numpy
     scipy
-  ]);
-
-  torch-kernel = python.withPackages (p: with p; [
-    scikit-learn
-    torchvision
-    torchaudio
-    matplotlib
-    ipykernel
-    plotnine
-    seaborn
-    pandas
-    numpy
-    scipy
-    torch
-  ]);
+    tqdm
+  ];
 in
 {
   services = {
@@ -54,33 +39,12 @@ in
         }
       '';
 
-      kernels = {
-        tensorflow = {
-          displayName = "Tensoflow Nix";
-          argv = [ "${tf-kernel.interpreter}" "-m" "ipykernel_launcher" "-f" "{connection_file}" ];
-          logo32 = "${tf-kernel}/${tf-kernel.sitePackages}/ipykernel/resources/logo-32x32.png";
-          logo64 = "${tf-kernel}/${tf-kernel.sitePackages}/ipykernel/resources/logo-64x64.png";
-          language = "python";
-          env = {
-            TF_CPP_MIN_LOG_LEVEL = "3";
-          };
-        };
-
-        torch = {
-          displayName = "PyTorch Nix";
-          argv = [ "${torch-kernel.interpreter}" "-m" "ipykernel_launcher" "-f" "{connection_file}" ];
-          logo32 = "${torch-kernel}/${torch-kernel.sitePackages}/ipykernel/resources/logo-32x32.png";
-          logo64 = "${torch-kernel}/${torch-kernel.sitePackages}/ipykernel/resources/logo-64x64.png";
-          language = "python";
-        };
-      };
-
       jupyterlabEnv = python.withPackages (p: with p; [
         jupyterlab-widgets
         jupyterlab-vim
         jupyterlab
         jupyterhub
-      ]);
+      ] ++ (pycommon p));
     };
   };
 

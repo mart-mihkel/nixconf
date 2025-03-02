@@ -5,10 +5,12 @@ let
     scikit-learn
     torchvision
     torchaudio
+    opencv4
     pandas
     numpy
     scipy
     torch
+    tqdm
   ]);
 in
 pkgs.mkShell {

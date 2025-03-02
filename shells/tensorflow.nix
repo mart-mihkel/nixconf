@@ -4,9 +4,11 @@ let
   pypkgs = pkgs.python3.withPackages (p: with p; [
     scikit-learn
     tensorflow
+    opencv4
     pandas
     numpy
     scipy
+    tqdm
   ]);
 in
 pkgs.mkShell {
