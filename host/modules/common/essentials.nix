@@ -28,6 +28,7 @@
     git
     gcc
     vim
+    fzf
     uv
     jq
   ];

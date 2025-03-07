@@ -17,8 +17,11 @@ in
   systemd.services.tunnel = {
     after = [ "network.target" "systemd-resolved.service" ];
     wantedBy = [ "multi-user.target" ];
+
     serviceConfig = {
       ExecStart = "/bin/sh -c '${tunnel} --token $(cat ${token})'";
+
+      RestartSec = 5;
       Restart = "always";
     };
   };
