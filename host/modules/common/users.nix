@@ -6,6 +6,4 @@
       extraGroups = [ "wheel" "docker" ];
     };
   };
-
-  security.sudo.wheelNeedsPassword = false;
 }

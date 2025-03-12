@@ -3,8 +3,8 @@
 let
   conf = builtins.fetchGit {
     url = "https://github.com/mart-mihkel/conf.git";
-    rev = "sha1-dM0BHZjjvlbfXajpBaHirqe7p+8=";
-    ref = "nix";
+    rev = "sha1-DdcQgDP0B6VIPWsroZxyIqqMoE4=";
+    ref = "tty";
   };
 in
 {
@@ -28,14 +28,6 @@ in
       extraConfig = {
         core.editor = "nvim";
         pull.rebase = true;
-      };
-
-      aliases = {
-        st = "status";
-        ci = "commit";
-        ca = "commit -a";
-        sw = "switch";
-        sc = "switch -c";
       };
     };
   };
