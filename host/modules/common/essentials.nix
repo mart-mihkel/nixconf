@@ -14,9 +14,11 @@
   virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
+    fastfetch
     neofetch
     gnumake
     ripgrep
+    neovim
     nodejs
     cargo
     tmux

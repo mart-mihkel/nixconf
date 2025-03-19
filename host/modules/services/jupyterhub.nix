@@ -20,6 +20,13 @@ let
   ];
 in
 {
+  environment = {
+    systemPackages = with pkgs; [ libGL glib ];
+    variables = {
+      LD_LIBRARY_PATH = "/run/opengl-driver/lib:${pkgs.libGL}/lib:${pkgs.glib.out}/lib:$LD_LIBRARY_PATH";
+    };
+  };
+
   services = {
     jupyterhub = {
       enable = true;
@@ -31,7 +38,7 @@ in
         c.SystemdSpawner.environment = {
           'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
 
-          'LD_LIBRARY_PATH': '/run/opengl-driver/lib',
+          'LD_LIBRARY_PATH': '/run/opengl-driver/lib:${pkgs.libGL}/lib:${pkgs.glib.out}/lib:$LD_LIBRARY_PATH',
           'CUDA_HOME': '/run/opengl-driver',
           'CUDA_PATH': '/run/opengl-driver',
 
