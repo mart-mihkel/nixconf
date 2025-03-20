@@ -3,7 +3,7 @@
 let
   conf = builtins.fetchGit {
     url = "https://github.com/mart-mihkel/conf.git";
-    rev = "sha1-DdcQgDP0B6VIPWsroZxyIqqMoE4=";
+    rev = "sha1-nMVLHMDMLc73NeR98s3dIqnW4Jk=";
     ref = "tty";
   };
 in
@@ -37,7 +37,7 @@ in
     homeDirectory = "/home/kubujuss";
 
     file.".config/nvim".source = conf.outPath + "/.config/nvim";
-    file.".tmux.conf".source = conf.outPath + "/.tmux.conf";
+    file.".config/tmux".source = conf.outPath + "/.config/tmux";
 
     file.".bash_profile".text = "[[ -f ~/.bashrc ]] && . ~/.bashrc";
     file.".bashrc".source = conf.outPath + "/.bashrc";
