@@ -7,24 +7,26 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  boot = {};
+  boot = { };
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  networking = {
-    hostName = "dell";
-    networkmanager.enable = true;
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    bluetooth.enable = true;
   };
 
-  fileSystems = {};
+  networking.hostName = "dell";
+
+  fileSystems = { };
 
   swapDevices = [
     { device = "/var/lib/swapfile"; size = 16 * 1024; }
   ];
 
   services = {
-    openssh.enable = true;
-    getty.autologinUser = "kubujuss";
+    pipewire = {
+      enable = true;
+      audio.enable = true;
+    };
   };
 
   system.stateVersion = "24.11";

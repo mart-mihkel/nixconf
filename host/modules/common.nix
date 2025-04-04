@@ -44,27 +44,14 @@
 
   environment = {
     systemPackages = with pkgs; [
-      gnumake
-      ripgrep
       openssl
-      neovim
-      nodejs
       cacert
-      cargo
       tmux
       curl
       wget
-      tree
-      btop
-      zsh
       wol
       git
-      gcc
       vim
-      fzf
-      fd
-      uv
-      jq
     ];
 
     variables = {

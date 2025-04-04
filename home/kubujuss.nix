@@ -10,11 +10,16 @@ in
   programs = {
     home-manager.enable = true;
     tmux.enable = true;
+
     neovim = {
       enable = true;
       vimAlias = true;
       defaultEditor = true;
-      extraPackages = with pkgs; [ ripgrep ];
+      extraPackages = with pkgs; [
+        ripgrep
+        nodejs
+        fd
+      ];
     };
 
     zsh = {
@@ -93,25 +98,43 @@ in
     file.".config/i3".source = conf.outPath + "/.config/i3";
 
     packages = with pkgs; [
-      nerd-fonts.jetbrains-mono
-      noto-fonts
-      xlockmore
-      xdotool
-      xclip
-      networkmanager
-      brightnessctl
-      gammastep
-      alacritty
-      playerctl
-      pipewire
+      i3
+      feh
+      maim
       picom
       dunst
-      rofi-emoji
-      rofi
-      feh
-      i3
+      gammastep
+      alacritty
       autotiling
-      maim
+
+      rofi
+      rofi-emoji
+
+      xclip
+      xdotool
+      xlockmore
+
+      bluetui
+      playerctl
+      pulsemixer
+      brightnessctl
+      networkmanager
+
+      jq
+      uv
+      fd
+      fzf
+      ripgrep
+
+      btop
+      cava
+      pipes
+      neofetch
+      fastfetch
+      tty-clock
+
+      noto-fonts
+      nerd-fonts.jetbrains-mono
     ];
 
     stateVersion = "24.05";
