@@ -1,27 +1,25 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   python = pkgs.python3.override {
     self = python;
     packageOverrides = pyfinal: pyprev: {
-      jupyterlab-vim = pyfinal.callPackage ../packages/jupyterlab-vim.nix { };
+      jupyterlab-vim = pyfinal.callPackage ../packages/jupyterlab-vim.nix {};
     };
   };
 
-  pycommon = p: with p; [
-    scikit-learn
-    matplotlib
-    plotnine
-    seaborn
-    pandas
-    numpy
-    scipy
-    tqdm
-  ];
-in
-{
+  pycommon = p:
+    with p; [
+      scikit-learn
+      matplotlib
+      plotnine
+      seaborn
+      pandas
+      numpy
+      scipy
+      tqdm
+    ];
+in {
   environment = {
-    systemPackages = with pkgs; [ libGL glib ];
+    systemPackages = with pkgs; [libGL glib];
     variables = {
       LD_LIBRARY_PATH = "/run/opengl-driver/lib:${pkgs.libGL}/lib:${pkgs.glib.out}/lib:$LD_LIBRARY_PATH";
     };
@@ -46,12 +44,15 @@ in
         }
       '';
 
-      jupyterlabEnv = python.withPackages (p: with p; [
-        jupyterlab-widgets
-        jupyterlab-vim
-        jupyterlab
-        jupyterhub
-      ] ++ (pycommon p));
+      jupyterlabEnv = python.withPackages (p:
+        with p;
+          [
+            jupyterlab-widgets
+            jupyterlab-vim
+            jupyterlab
+            jupyterhub
+          ]
+          ++ (pycommon p));
     };
   };
 

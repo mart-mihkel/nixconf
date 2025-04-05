@@ -25,38 +25,41 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, ... }:
-    let
-      build-modules = users: [
-        sops-nix.nixosModules.sops
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            inherit users;
-          };
-        }
-      ];
-
-      modules = build-modules { kubujuss = import ./home/kubujuss.nix; };
-    in
-    {
-      nixosConfigurations = {
-        dell = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = modules ++ [ ./host/dell.nix ];
+  outputs = {
+    nixpkgs,
+    home-manager,
+    sops-nix,
+    ...
+  }: let
+    build-modules = users: [
+      sops-nix.nixosModules.sops
+      home-manager.nixosModules.home-manager
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          inherit users;
         };
+      }
+    ];
 
-        jaam = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = modules ++ [ ./host/jaam.nix ];
-        };
+    modules = build-modules {kubujuss = import ./home/kubujuss.nix;};
+  in {
+    nixosConfigurations = {
+      dell = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = modules ++ [./host/dell.nix];
+      };
 
-        alajaam = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = modules ++ [ ./host/alajaam.nix ];
-        };
+      jaam = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = modules ++ [./host/jaam.nix];
+      };
+
+      alajaam = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = modules ++ [./host/alajaam.nix];
       };
     };
+  };
 }

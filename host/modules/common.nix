@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   nix = {
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = ["nix-command" "flakes"];
     gc = {
       automatic = true;
       dates = "weekly";
@@ -10,9 +8,9 @@
   };
 
   networking.hosts = {
-    "192.168.10.2" = [ "jaam" ];
-    "192.168.10.3" = [ "dell" ];
-    "192.168.10.4" = [ "alajaam" ];
+    "192.168.10.2" = ["jaam"];
+    "192.168.10.3" = ["dell"];
+    "192.168.10.4" = ["alajaam"];
   };
 
   time.timeZone = "Europe/Tallinn";
@@ -22,7 +20,7 @@
 
     keyMap = "et";
 
-    packages = with pkgs; [ terminus_font ];
+    packages = with pkgs; [terminus_font];
     font = "ter-u12n";
   };
 
@@ -33,7 +31,7 @@
       shell = pkgs.zsh;
       createHome = true;
       isNormalUser = true;
-      extraGroups = [ "wheel" "docker" ];
+      extraGroups = ["wheel" "docker"];
     };
   };
 

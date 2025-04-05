@@ -1,12 +1,12 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, hatchling
-, hatch-jupyter-builder
-, hatch-nodejs-version
-, jupyterlab
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  hatchling,
+  hatch-jupyter-builder,
+  hatch-nodejs-version,
+  jupyterlab,
 }:
-
 buildPythonPackage rec {
   pname = "jupyterlab-vim";
   version = "4.1.4";
@@ -24,8 +24,8 @@ buildPythonPackage rec {
     hatch-nodejs-version
   ];
 
-  propagatedBuildInputs = [ jupyterlab ];
-  pythonImportsCheck = [ "jupyterlab_vim" ];
+  propagatedBuildInputs = [jupyterlab];
+  pythonImportsCheck = ["jupyterlab_vim"];
 
   doCheck = false;
 
@@ -34,6 +34,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/jupyterlab-contrib/jupyterlab-vim";
     license = licenses.mit;
     platforms = platforms.all;
-    maintainers = [ ];
+    maintainers = [];
   };
 }

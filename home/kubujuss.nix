@@ -1,12 +1,9 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   conf = builtins.fetchGit {
     url = "https://github.com/mart-mihkel/conf.git";
     rev = "sha1-CtZ4WFmnq4Ity3ziAwiZ1yYN3DQ=";
   };
-in
-{
+in {
   programs = {
     home-manager.enable = true;
     tmux.enable = true;
@@ -28,7 +25,7 @@ in
 
       autosuggestion = {
         enable = true;
-        strategy = [ "completion" "history" ];
+        strategy = ["completion" "history"];
       };
 
       shellAliases = {

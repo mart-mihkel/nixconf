@@ -1,12 +1,10 @@
-{ lib, config, pkgs, ... }:
-
-
-let
-  tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
-  token = config.sops.secrets."tunnel/jaam/token".path;
-in
 {
+  lib,
+  config,
+  ...
+}: {
   imports = [
+    (import ./services/cloudflare-tunnel.nix {host = "jaam";})
     ./services/jupyterhub.nix
     ./modules/common.nix
     ./modules/sops.nix
@@ -22,14 +20,8 @@ in
 
   boot = {
     loader.systemd-boot.enable = true;
-
-    initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
-      kernelModules = [ ];
-    };
-
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
+    kernelModules = ["kvm-amd"];
   };
 
   hardware = {
@@ -46,21 +38,6 @@ in
     nvidia-container-toolkit.enable = true;
   };
 
-  networking = {
-    hostName = "jaam";
-    networkmanager.enable = false;
-
-    interfaces.enp9s0.wakeOnLan.enable = true;
-
-    firewall.allowedUDPPorts = [
-      9 # wol
-    ];
-
-    firewall.allowedTCPPorts = [
-      22 # ssh
-    ];
-  };
-
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/nixos";
@@ -70,7 +47,7 @@ in
     "/boot" = {
       device = "/dev/disk/by-label/boot";
       fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
+      options = ["fmask=0077" "dmask=0077"];
     };
 
     "/media/ssd" = {
@@ -85,26 +62,30 @@ in
   };
 
   swapDevices = [
-    { device = "/var/lib/swapfile"; size = 32 * 1024; }
+    {
+      device = "/var/lib/swapfile";
+      size = 32 * 1024;
+    }
   ];
+
+  networking = {
+    hostName = "jaam";
+    networkmanager.enable = false;
+    interfaces.enp9s0.wakeOnLan.enable = true;
+
+    firewall.allowedUDPPorts = [
+      9 # wol
+    ];
+
+    firewall.allowedTCPPorts = [
+      22 # ssh
+    ];
+  };
 
   services = {
     openssh.enable = true;
     getty.autologinUser = "kubujuss";
-    xserver.videoDrivers = [ "nvidia" ];
-  };
-
-  sops.secrets."tunnel/jaam/token" = { };
-  systemd.services.cloudflare-tunnel = {
-    after = [ "network.target" "systemd-resolved.service" ];
-    wantedBy = [ "multi-user.target" ];
-
-    serviceConfig = {
-      ExecStart = "/bin/sh -c '${tunnel} --token $(cat ${token})'";
-
-      RestartSec = 5;
-      Restart = "always";
-    };
+    xserver.videoDrivers = ["nvidia"];
   };
 
   system.stateVersion = "24.05";

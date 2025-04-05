@@ -1,26 +1,31 @@
-{ lib, config, ... }:
-
 {
+  lib,
+  config,
+  ...
+}: {
   imports = [
     ./modules/common.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  boot = { };
+  boot = {};
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     bluetooth.enable = true;
   };
 
-  networking.hostName = "dell";
-
-  fileSystems = { };
+  fileSystems = {};
 
   swapDevices = [
-    { device = "/var/lib/swapfile"; size = 16 * 1024; }
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
   ];
+
+  networking.hostName = "dell";
 
   services = {
     pipewire = {
