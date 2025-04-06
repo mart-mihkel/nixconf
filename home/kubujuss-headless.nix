@@ -117,6 +117,7 @@
     packages = with pkgs; [
       ripgrep
       tree
+      bat
       fzf
       jq
       fd

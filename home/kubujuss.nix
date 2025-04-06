@@ -61,6 +61,7 @@
 
       networkmanager
       brightnessctl
+      cloudflared
       pulseaudio
       pulsemixer
       playerctl
