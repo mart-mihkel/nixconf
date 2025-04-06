@@ -16,6 +16,7 @@ return {
                 layout_strategy = "vertical",
                 layout_config = {
                     vertical = {
+                        preview_cutoff = 1000,
                         width = { padding = 0 },
                         height = { padding = 0 },
                     },

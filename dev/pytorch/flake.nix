@@ -1,0 +1,42 @@
+{
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-24.11";
+  };
+
+  outputs = {nixpkgs, ...}: let
+    pkgs = import nixpkgs {
+      system = "x86_64-linux";
+      config = {
+        allowUnfree = true;
+        cudaSupport = true;
+      };
+    };
+
+    pypkgs = pkgs.python3.withPackages (p:
+      with p; [
+        scikit-learn
+        torchvision
+        torchaudio
+        opencv4
+        pandas
+        numpy
+        scipy
+        torch
+        tqdm
+      ]);
+  in {
+    devShell.x86_64-linux = pkgs.mkShell {
+      buildInputs = [pypkgs];
+
+      shellHook = ''
+        export LD_LIBRARY_PATH="/run/opengl-driver/lib:$LD_LIBRARY_PATH"
+        export CUDA_HOME="/run/opengl-driver"
+        export CUDA_PATH="/run/opengl-driver"
+
+        echo 📦 pytorch nix-shell
+        echo 🐍 python-${pkgs.python3.version}
+        echo 🔥 torch-${pkgs.python3Packages.torch.version}
+      '';
+    };
+  };
+}
