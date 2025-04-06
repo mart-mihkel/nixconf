@@ -1,9 +1,11 @@
 {
   lib,
   config,
+  modulesPath,
   ...
 }: {
   imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
     (import ./services/cloudflare-tunnel.nix {host = "jaam";})
     ./services/jupyterhub.nix
     ./modules/common.nix

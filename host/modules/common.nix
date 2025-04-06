@@ -31,7 +31,7 @@
       shell = pkgs.zsh;
       createHome = true;
       isNormalUser = true;
-      extraGroups = ["wheel" "docker"];
+      extraGroups = ["wheel" "networkmanager" "docker"];
     };
   };
 

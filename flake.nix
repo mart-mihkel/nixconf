@@ -44,6 +44,7 @@
     ];
 
     modules = build-modules {kubujuss = import ./home/kubujuss.nix;};
+    modules-headless = build-modules {kubujuss = import ./home/kubujuss-headless.nix;};
   in {
     nixosConfigurations = {
       dell = nixpkgs.lib.nixosSystem {
@@ -53,12 +54,12 @@
 
       jaam = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = modules ++ [./host/jaam.nix];
+        modules = modules-headless ++ [./host/jaam.nix];
       };
 
       alajaam = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        modules = modules ++ [./host/alajaam.nix];
+        modules = modules-headless ++ [./host/alajaam.nix];
       };
     };
   };

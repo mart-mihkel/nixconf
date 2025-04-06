@@ -1,139 +1,86 @@
-{pkgs, ...}: let
-  conf = builtins.fetchGit {
-    url = "https://github.com/mart-mihkel/conf.git";
-    rev = "sha1-CtZ4WFmnq4Ity3ziAwiZ1yYN3DQ=";
-  };
-in {
+{pkgs, ...}: {
+  imports = [
+    ./kubujuss-headless.nix
+  ];
+
   programs = {
-    home-manager.enable = true;
-    tmux.enable = true;
-
-    neovim = {
+    chromium = {
       enable = true;
-      vimAlias = true;
-      defaultEditor = true;
-      extraPackages = with pkgs; [
-        ripgrep
-        nodejs
-        fd
-      ];
+      commandLineArgs = ["--enable-features=TouchpadOverscrollHistoryNavigation"];
     };
 
-    zsh = {
+    rofi = {
       enable = true;
-      syntaxHighlighting.enable = true;
-
-      autosuggestion = {
-        enable = true;
-        strategy = ["completion" "history"];
-      };
-
-      shellAliases = {
-        rm = "rm -v";
-        ls = "ls --color";
-        l = "ls -A --color";
-      };
-
-      completionInit = ''
-        autoload -Uz compinit && compinit
-        zstyle ":completion:*" menu yes select
-        zstyle ":completion:*" special-dirs true
-        zstyle ":completion::complete:*" gain-privileges 1
-      '';
-
-      initExtra = ''
-        PROMPT="%F{4}%1~%f "
-        precmd_functions+=(_rprompt)
-
-        setopt list_packed
-        setopt no_case_glob no_case_match
-
-        function _rprompt() {
-          items=""
-
-          branch=$(git symbolic-ref --short HEAD 2> /dev/null)
-          [[ -n $branch ]] && items="󰊢 $branch"
-          [[ -n $SSH_TTY ]] && items="$items  %n@%M"
-
-          RPROMPT="%F{8}$items%f"
-        }
-      '';
-    };
-
-    git = {
-      enable = true;
-      userName = "mart-mihkel";
-      userEmail = "mart.mihkel.aun@gmail.com";
-
-      aliases = {
-        st = "status";
-        sw = "switch";
-        sc = "switch -c";
-        ci = "commit";
-        ca = "commit -a";
-        ri = "rebase -i";
-      };
-
-      extraConfig = {
-        core.editor = "nvim";
-        pull.rebase = true;
+      package = pkgs.rofi-wayland.override {
+        plugins = with pkgs; [rofi-emoji];
       };
     };
   };
 
   home = {
-    username = "kubujuss";
-    homeDirectory = "/home/kubujuss";
+    pointerCursor = {
+      enable = true;
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
 
-    file.".config/nvim".source = conf.outPath + "/.config/nvim";
-    file.".config/tmux".source = conf.outPath + "/.config/tmux";
+    file.".config/alacritty".source = ../conf/alacritty;
+    file.".config/dunst".source = ../conf/dunst;
+    file.".config/hypr".source = ../conf/hypr;
+    file.".config/rofi".source = ../conf/rofi;
+    file.".config/eww".source = ../conf/eww;
 
-    file.".config/alacritty".source = conf.outPath + "/.config/alacritty";
-    file.".config/picom".source = conf.outPath + "/.config/picom";
-    file.".config/dunst".source = conf.outPath + "/.config/dunst";
-    file.".config/rofi".source = conf.outPath + "/.config/rofi";
-    file.".config/i3".source = conf.outPath + "/.config/i3";
+    file.".config/picom".source = ../conf/picom;
+    file.".config/i3".source = ../conf/i3;
+    file.".xinitrc".text = ''
+      xset r rate 256 32
+      exec i3
+    '';
 
     packages = with pkgs; [
-      i3
-      feh
-      maim
-      picom
-      dunst
-      gammastep
-      alacritty
+      wayland-pipewire-idle-inhibit
+      wl-clipboard
+      hyprpaper
+      hyprland
+      hyprlock
+      hypridle
+      wtype
+      slurp
+      grim
+      eww
+
       autotiling
-
-      rofi
-      rofi-emoji
-
-      xclip
-      xdotool
+      xorg.xinit
       xlockmore
+      xdotool
+      xclip
+      picom
+      maim
+      feh
+      i3
 
-      bluetui
-      playerctl
-      pulsemixer
-      brightnessctl
       networkmanager
+      brightnessctl
+      pulseaudio
+      pulsemixer
+      playerctl
+      alacritty
+      gammastep
+      bluetui
+      socat
+      dunst
 
-      jq
-      uv
-      fd
-      fzf
-      ripgrep
+      eduvpn-client
+      qbittorrent
+      qdigidoc
+      discord
+      spotify
+      zoom-us
+      slack
+      vlc
 
-      btop
-      cava
-      pipes
-      neofetch
-      fastfetch
-      tty-clock
-
-      noto-fonts
       nerd-fonts.jetbrains-mono
+      noto-fonts
     ];
-
-    stateVersion = "24.05";
   };
 }
