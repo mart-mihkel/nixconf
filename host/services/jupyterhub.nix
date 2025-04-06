@@ -1,17 +1,11 @@
 {pkgs, ...}: let
-  python = pkgs.python3.override {
-    self = python;
-    packageOverrides = pyfinal: pyprev: {
-      jupyterlab-vim = pyfinal.callPackage ../packages/jupyterlab-vim.nix {};
-    };
-  };
-
   pycommon = p:
     with p; [
       scikit-learn
       matplotlib
       plotnine
       seaborn
+      opencv4
       pandas
       numpy
       scipy
@@ -44,11 +38,10 @@ in {
         }
       '';
 
-      jupyterlabEnv = python.withPackages (p:
+      jupyterlabEnv = pkgs.python3.withPackages (p:
         with p;
           [
             jupyterlab-widgets
-            jupyterlab-vim
             jupyterlab
             jupyterhub
           ]
