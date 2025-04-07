@@ -63,5 +63,3 @@ element {
 element.selected {
   background-color: #4C566ACC;
 }
-
-// vim: ft=rasi

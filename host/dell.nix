@@ -58,15 +58,6 @@
   programs.hyprland.enable = true;
 
   services = {
-    xserver = {
-      windowManager.i3.enable = true;
-
-      xkb = {
-        layout = "ee";
-        variant = "nodeadkeys";
-      };
-    };
-
     pipewire = {
       enable = true;
       pulse.enable = true;
