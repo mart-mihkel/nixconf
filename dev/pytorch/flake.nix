@@ -32,10 +32,6 @@
         export LD_LIBRARY_PATH="/run/opengl-driver/lib:$LD_LIBRARY_PATH"
         export CUDA_HOME="/run/opengl-driver"
         export CUDA_PATH="/run/opengl-driver"
-
-        echo 📦 pytorch nix-shell
-        echo 🐍 python-${pkgs.python3.version}
-        echo 🔥 torch-${pkgs.python3Packages.torch.version}
       '';
     };
   };
