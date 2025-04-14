@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-notify() {
+function notify() {
     brightness=$(brightnessctl -m | awk -F , '{print $4}' | tr -d %)
     tag="string:x-dunst-stack-tag:brightness"
-    progress="int:value:$brightness"
 
     icons=("󰃞" "󰃟" "󰃠")
     idx=$(( brightness * 3 / 100 ))

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-poll-source() {
+function poll-source() {
     source=$(pactl -f json get-default-source)
     mute=$(pactl -f json list sources | jq -c --arg default "$source" '.[] | select(.name == $default) | .mute')
 

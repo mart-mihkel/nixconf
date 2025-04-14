@@ -22,13 +22,6 @@
     separator_height = 1
     corner_radius = 0
 
-    highlight = "#5E81AC,#81A1C1,#88C0D0,#8FBCBB"
-    progress_bar_corner_radius = 2
-    progress_bar_frame_width = 0
-    progress_bar_max_width = 128
-    progress_bar_min_width = 32
-    progress_bar_height = 6
-
     idle_threshold = 300
 
     dmenu = rofi -dmenu

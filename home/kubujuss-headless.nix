@@ -50,6 +50,9 @@
 
       shellAliases = {
         rm = "rm -v";
+        cp = "cp -v";
+        mv = "mv -v";
+
         ls = "ls --color";
         l = "ls -A --color";
 
@@ -104,6 +107,7 @@
       extraConfig = {
         core.editor = "nvim";
         pull.rebase = true;
+        init.defaultBranch = "main";
       };
     };
   };

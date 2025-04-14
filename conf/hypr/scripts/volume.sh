@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-notify_sink() {
+function notify_sink() {
     volume=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}' | tr -d %)
     mute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
     tag="string:x-dunst-stack-tag:volume"
-    progress="int:value:$volume"
 
     if [[ $mute == "yes" ]]; then
         icon="󰖁"
@@ -18,7 +17,7 @@ notify_sink() {
     dunstify -u low -h $tag "$icon $volume"
 }
 
-notify_source() {
+function notify_source() {
     mute=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
     tag="string:x-dunst-stack-tag:mic"
 

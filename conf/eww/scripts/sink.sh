@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-poll-sink() {
+function poll-sink() {
     sink=$(pactl -f json get-default-sink)
     info=$(pactl -f json list sinks | jq -c --arg default "$sink" '.[] | select(.name == $default) | {
         mute: .mute,

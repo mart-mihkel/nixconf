@@ -12,7 +12,11 @@
     rofi = {
       enable = true;
       package = pkgs.rofi-wayland.override {
-        plugins = with pkgs; [rofi-emoji];
+        plugins = with pkgs; [
+          rofi-emoji
+          wl-clipboard
+          wtype
+        ];
       };
     };
 
@@ -87,6 +91,7 @@
     packages = with pkgs; [
       wayland-pipewire-idle-inhibit
       wl-clipboard
+      hyprcursor
       hyprpaper
       hyprland
       hyprlock
@@ -106,6 +111,8 @@
       bluetui
       socat
       dunst
+      unzip
+      zip
 
       eduvpn-client
       qbittorrent
