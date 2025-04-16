@@ -8,18 +8,18 @@
 (defvar bluetooth-hover false)
 
 (defpoll date-poll :interval '2s' 'date +"󰃰 %A, %B-%d %H:%M"')
-(defpoll battery-poll :initial '󰁹' :interval '2s' 'scripts/battery.sh')
 (defpoll wifi-poll :initial '["󰤮", ""]' :interval '10s' 'scripts/wifi.sh')
 (defpoll bt-poll :initial '["󰂯", ""]' :interval '10s' 'scripts/bluetooth.sh')
 
 (deflisten wsp-listen :initial '[]' 'scripts/wsp.sh')
 (deflisten active-listen :initial 1 'scripts/wsp.sh -a')
+(deflisten bat-listen :initial '󰁹' 'scripts/battery.sh')
 (deflisten source-listen :initial '󰍬' 'scripts/source.sh')
 (deflisten spotify-listen :initial '' 'scripts/player.sh')
 (deflisten sink-listen :initial '["󰕾", "0.0"]' 'scripts/sink.sh')
 
 (defwindow bar :monitor 0
-  :exclusive false :focusable false :namespace 'eww' :stacking 'fg'
+  :exclusive false :focusable false :namespace 'eww' :stacking 'bg'
   :geometry (geometry :width '100%' :anchor 'bottom center')
   (bar))
 
@@ -91,7 +91,7 @@
   (eventbox :onhover 'eww update battery-hover=true'
     :onhoverlost 'eww update battery-hover=false'
     (box :space-evenly false :spacing 4
-      (button :width icon-width :onclick '${terminal} btop &' battery-poll)
+      (button :width icon-width :onclick '${terminal} btop &' bat-listen)
       (revealer :transition 'slideleft' :reveal battery-hover
         (box :space-evenly false :spacing 4
           (button :width icon-width :onclick 'shutdown now' '󰤆')
