@@ -13,6 +13,7 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
+
     gc = {
       automatic = true;
       dates = "weekly";
@@ -29,11 +30,9 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     earlySetup = true;
-
+    font = "ter-u20n";
     keyMap = "et";
-
     packages = with pkgs; [terminus_font];
-    font = "ter-u12n";
   };
 
   virtualisation.docker.enable = true;
@@ -54,14 +53,21 @@
 
   environment = {
     systemPackages = with pkgs; [
+      gnumake
       openssl
+      nodejs
       cacert
+      cargo
+      cmake
       tmux
       curl
       wget
+      gcc
       wol
       git
       vim
+      jq
+      uv
     ];
 
     variables = {

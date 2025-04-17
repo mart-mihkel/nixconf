@@ -1,13 +1,15 @@
-(defvar icon-width 12)
-(defvar terminal 'alacritty -e')
+(defvar icon-width 14)
+(defvar terminal 'foot')
 
-(defvar sink-hover false)
 (defvar wifi-hover false)
+(defvar sink-hover false)
+(defvar date-hover false)
 (defvar spotify-hover false)
 (defvar battery-hover false)
 (defvar bluetooth-hover false)
 
-(defpoll date-poll :interval '2s' 'date +"󰃰 %A, %B-%d %H:%M"')
+(defpoll time-poll :interval '2s' 'date +"󰥔 %H:%M"')
+(defpoll date-poll :interval '2s' 'date +"󰃭 %A, %B %d"')
 (defpoll wifi-poll :initial '["󰤮", ""]' :interval '10s' 'scripts/wifi.sh')
 (defpoll bt-poll :initial '["󰂯", ""]' :interval '10s' 'scripts/bluetooth.sh')
 
@@ -19,17 +21,16 @@
 (deflisten sink-listen :initial '["󰕾", "0.0"]' 'scripts/sink.sh')
 
 (defwindow bar :monitor 0
-  :exclusive false :focusable false :namespace 'eww' :stacking 'bg'
-  :geometry (geometry :width '100%' :anchor 'bottom center')
-  (bar))
+  :exclusive true :focusable false :namespace 'eww' :stacking 'fg'
+  :geometry (geometry :width '100%' :anchor 'top center') (bar))
 
 (defwidget bar []
   (box :style 'padding: 0 0.125rem 0 0.125rem'
     (box :halign 'start' (bar-workspaces))
-    (box :halign 'center' date-poll)
     (box :halign 'end' :space-evenly false :spacing 4
       (systray :width icon-width :icon-size '${icon-width - 1}' :spacing 6)
-      (bar-spotify) (bar-wifi) (bar-bluetooth) (bar-sink) (bar-battery))))
+      (bar-spotify) (bar-wifi) (bar-bluetooth) (bar-sink) (bar-battery)
+      (bar-date))))
 
 (defwidget bar-workspaces []
   (box :space-evenly false :spacing 4
@@ -55,7 +56,8 @@
             :onclick 'playerctl -p spotify next' '󰒭'))))))
 
 (defwidget bar-wifi []
-  (eventbox :onhover 'eww update wifi-hover=true'
+  (eventbox :visible '${wifi-poll[1] != ""}'
+    :onhover 'eww update wifi-hover=true'
     :onhoverlost 'eww update wifi-hover=false'
     (button :onclick '${terminal} nmtui &'
       (box :space-evenly false :spacing 4
@@ -64,7 +66,8 @@
           :reveal wifi-hover '${wifi-poll[1]}')))))
 
 (defwidget bar-bluetooth []
-  (eventbox :onhover 'eww update bluetooth-hover=true'
+  (eventbox :visible '${bt-poll[1] != ""}'
+    :onhover 'eww update bluetooth-hover=true'
     :onhoverlost 'eww update bluetooth-hover=false'
     (button :onclick '${terminal} bluetui &'
       (box :space-evenly false :spacing 0
@@ -98,3 +101,9 @@
           (button :width icon-width :onclick 'reboot' '󰑓')
           (button :width icon-width :onclick 'scripts/power.sh -s &' '󰤄')
           (button :width icon-width :onclick 'scripts/power.sh -l &' '󰌾'))))))
+
+(defwidget bar-date []
+  (eventbox :onhover 'eww update date-hover=true'
+    :onhoverlost 'eww update date-hover=false'
+    (box :space-evenly false :spacing 8 time-poll
+      (revealer :transition 'slideleft' :reveal date-hover date-poll))))

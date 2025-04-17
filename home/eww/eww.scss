@@ -2,20 +2,21 @@
   all: unset;
 
   font-family: "JetbrainsMono Nerd Font";
-  font-size: 12px;
+  font-weight: bold;
+  font-size: 14px;
 
-  color: #ECEFF4;
+  color: #eceff4;
 }
 
 scale trough {
-  background-color: #4C566A;
+  background-color: #4c566a;
   border-radius: 0.25rem;
 
   min-width: 4rem;
   min-height: 0.4rem;
 
   highlight {
-    background-color: #ECEFF4;
+    background-color: #eceff4;
     border-radius: 0.25rem;
   }
 }

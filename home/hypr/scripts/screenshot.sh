@@ -3,16 +3,18 @@
 geometry=$(slurp)
 
 if [[ -z "$geometry" ]]; then
+    echo "No geometry"
     exit 1
 fi
 
-stamp=$(date +%H%M%S-%b%d)
-name="grim-$stamp.png"
+stamp=$(date +%b%d-%H%M%S)
+name="$stamp.png"
 dir="$HOME/Pictures/screenshots"
+target="$dir/$name"
 
 mkdir --parents "$dir"
 
 grim -g "$geometry" - | wl-copy -t image/png
-wl-paste > "$dir/$name"
+wl-paste > "$target"
 
-dunstify -u low "Screenshot" "Saved as $name"
+dunstify -u low -I "$target" "Screenshot" "Saved as $name"

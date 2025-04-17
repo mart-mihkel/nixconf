@@ -7,12 +7,8 @@
       vimAlias = true;
       defaultEditor = true;
       extraPackages = with pkgs; [
-        gnumake
         python3
         ripgrep
-        nodejs
-        cargo
-        gcc
         fd
       ];
     };
@@ -26,12 +22,9 @@
         set -g default-terminal "tmux-256color"
         set -ag terminal-overrides ",xterm-256color:RGB"
 
+        set -g status-style "fg=default bg=default"
         set -g pane-active-border-style "fg=default"
         set -g pane-border-style "fg=default"
-
-        set -g status-style "fg=default bg=default"
-        set -g status-right-length 100
-        set -g status-left-length 100
 
         bind v split-window -h -c "#{pane_current_path}"
         bind s split-window -c "#{pane_current_path}"
@@ -116,24 +109,15 @@
     username = "kubujuss";
     homeDirectory = "/home/kubujuss";
 
-    file.".config/nvim".source = ../conf/nvim;
+    file.".config/nvim".source = ./nvim;
 
     packages = with pkgs; [
       ripgrep
+      btop
       tree
       bat
       fzf
-      jq
       fd
-      uv
-
-      tty-clock
-      fastfetch
-      neofetch
-      cowsay
-      pipes
-      btop
-      cava
     ];
 
     stateVersion = "24.05";
