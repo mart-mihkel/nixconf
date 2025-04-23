@@ -195,6 +195,7 @@
 
       eduvpn-client
       qbittorrent
+      obsidian
       qdigidoc
       discord
       spotify

@@ -29,15 +29,22 @@
     bluetooth.enable = true;
   };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/c7dd8938-fe81-43d5-82bf-16a44fe28617";
-    fsType = "ext4";
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/2A12-F15C";
-    fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/c7dd8938-fe81-43d5-82bf-16a44fe28617";
+      fsType = "ext4";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/2A12-F15C";
+      fsType = "vfat";
+      options = ["fmask=0077" "dmask=0077"];
+    };
   };
 
   swapDevices = [
@@ -63,6 +70,25 @@
   };
 
   services = {
+    thermald.enable = true;
+
+    undervolt = {
+      enable = true;
+      gpuOffset = -100;
+      coreOffset = -100;
+    };
+
+    tlp = {
+      enable = true;
+      settings = {
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+        START_CHARGE_THRESH_BAT0 = 70;
+        STOP_CHARGE_THRESH_BAT0 = 90;
+      };
+    };
+
     pipewire = {
       enable = true;
       pulse.enable = true;
