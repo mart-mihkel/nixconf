@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   modulesPath,
   ...
@@ -27,11 +28,6 @@
   hardware = {
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     bluetooth.enable = true;
-  };
-
-  powerManagement = {
-    enable = true;
-    powertop.enable = true;
   };
 
   fileSystems = {
@@ -81,9 +77,6 @@
     tlp = {
       enable = true;
       settings = {
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
         START_CHARGE_THRESH_BAT0 = 70;
         STOP_CHARGE_THRESH_BAT0 = 90;
       };
@@ -94,6 +87,11 @@
       pulse.enable = true;
     };
   };
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    noto-fonts
+  ];
 
   system.stateVersion = "24.11";
 }
