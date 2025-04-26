@@ -171,7 +171,6 @@
           halign = "center";
           valign = "center";
         }
-
         {
           monitor = "";
 
@@ -258,8 +257,6 @@
         text = ''
           #!/usr/bin/env bash
 
-          cfg="$HOME/.config"
-          cache="$HOME/.cache"
           wals="$HOME/git/wallpapers"
           pick="$wals/$(ls "$wals" | grep -E 'jpg|jpeg|png' | rofi -dmenu -p '󰥷 ')"
 
@@ -268,7 +265,7 @@
               exit 1
           fi
 
-          cp -f $pick $cache/wallpaper
+          cp -f $pick ~/.cache/wallpaper
           hyprctl hyprpaper reload ,$pick
         '';
       };

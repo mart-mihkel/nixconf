@@ -7,21 +7,26 @@
         modules-left = ["hyprland/workspaces"];
         modules-center = ["clock"];
         modules-right = ["tray" "network" "bluetooth" "pulseaudio" "backlight" "battery"];
+
         tray = {
           icon-size = 14;
           spacing = 6;
         };
-        clock.format = "󰃰 {:%A %B %d %H:%M}";
+
+        clock.format = "󰃰 {:%A, %B-%d %H:%M}";
+
         network = {
-          format-wifi = "{essid} {signalStrength}% {icon}";
+          format-wifi = "{signalStrength}% {icon}";
           format-disconnected = "󰤮 ";
           format-icons = ["󰤯 " "󰤟 " "󰤢 " "󰤥 " "󰤨 "];
         };
+
         bluetooth = {
           format = " ";
-          format-connected = "{device_alias} 󰂱 ";
-          format-connected-battery = "{device_alias} {device_battery_percentage}% 󰂱 ";
+          format-connected = "󰂱 ";
+          format-connected-battery = "{device_battery_percentage}% 󰂱 ";
         };
+
         pulseaudio = {
           format = "{volume}% {icon} {format_source}";
           format-muted = "{volume}% 󰖁 {format_source}";
@@ -29,12 +34,15 @@
           format-source-muted = "󰍭 ";
           format-icons.default = ["󰕿" "󰖀" "󰕾"];
         };
+
         backlight = {
           format = "{percent}% {icon}";
           format-icons = ["󰃞 " "󰃟 " "󰃠 "];
         };
+
         battery = {
           format = "{capacity}% {icon} ";
+          format-plugged = "{capacity}% {icon}󱐋 ";
           format-charging = "{capacity}% {icon}󱐋 ";
           format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
         };

@@ -31,7 +31,7 @@
       zstyle ":completion::complete:*" gain-privileges 1
     '';
 
-    initExtra = ''
+    initContent = ''
       PROMPT="%F{4}%1~%f "
       precmd_functions+=(_rprompt)
 

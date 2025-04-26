@@ -1,11 +1,17 @@
 {pkgs, ...}: {
   imports = [
     ./kubujuss-headless.nix
+
+    ./services/polybar.nix
+    ./services/picom.nix
     ./services/dunst.nix
+
     ./programs/waybar.nix
-    ./programs/hypr.nix
+    ./programs/kitty.nix
     ./programs/foot.nix
+    ./programs/hypr.nix
     ./programs/rofi.nix
+    ./programs/i3.nix
   ];
 
   home = {
@@ -17,7 +23,6 @@
 
     packages = with pkgs; [
       networkmanager
-      brightnessctl
       cloudflared
       pulseaudio
       pulsemixer
@@ -25,16 +30,13 @@
       bluetui
       feh
 
-      eduvpn-client
-      qbittorrent
       obsidian
       chromium
-      qdigidoc
-      discord
       spotify
-      zoom-us
-      slack
       vlc
+
+      nerd-fonts.jetbrains-mono
+      noto-fonts
     ];
   };
 }

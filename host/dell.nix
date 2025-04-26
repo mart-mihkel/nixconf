@@ -86,11 +86,21 @@
       enable = true;
       pulse.enable = true;
     };
+
+    xserver = {
+      enable = true;
+      autorun = false;
+      displayManager.startx.enable = true;
+    };
   };
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    noto-fonts
+  environment.systemPackages = with pkgs; [
+    eduvpn-client
+    qbittorrent
+    qdigidoc
+    zoom-us
+    discord
+    slack
   ];
 
   system.stateVersion = "24.11";
