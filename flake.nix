@@ -14,26 +14,18 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.darwin.follows = "";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    nixpkgs,
-    home-manager,
-    sops-nix,
-    ...
-  }: let
+  outputs = {...} @ inputs: let
     build-modules = users: [
-      sops-nix.nixosModules.sops
-      home-manager.nixosModules.home-manager
+      inputs.agenix.nixosModules.default
+      inputs.home-manager.nixosModules.home-manager
       {
         home-manager = {
           useGlobalPkgs = true;
@@ -47,17 +39,17 @@
     modules-headless = build-modules {kubujuss = import ./home/kubujuss-headless.nix;};
   in {
     nixosConfigurations = {
-      dell = nixpkgs.lib.nixosSystem {
+      dell = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = modules ++ [./host/dell.nix];
       };
 
-      jaam = nixpkgs.lib.nixosSystem {
+      jaam = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = modules-headless ++ [./host/jaam.nix];
       };
 
-      alajaam = nixpkgs.lib.nixosSystem {
+      alajaam = inputs.nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = modules-headless ++ [./host/alajaam.nix];
       };

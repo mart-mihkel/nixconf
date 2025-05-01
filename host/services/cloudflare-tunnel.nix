@@ -4,9 +4,9 @@
   ...
 }: let
   tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
-  token = config.sops.secrets."tunnel/${host}/token".path;
+  token = config.age.secrets.cloudflare-tunnel.path;
 in {
-  sops.secrets."tunnel/${host}/token" = {};
+  age.secrets.cloudflare-tunnel.file = ../../secrets/${host}-tunnel.age;
 
   systemd.services.cloudflare-tunnel = {
     after = ["network.target" "systemd-resolved.service"];

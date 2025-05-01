@@ -1,9 +1,0 @@
-keys:
-  - &alajaam age1vrvsvkjyd6uqrsvj99hx95q9kjczsus3vr8770uxm7akmswmyflqn9sqg0
-  - &jaam age1nmgral2a4w00gscfnmhny604t6dpsn7wr3rv43gaacnk7su7zcqqd6wa0h
-creation_rules:
-  - path_regex: secrets.yaml
-    key_groups:
-    - age:
-      - *alajaam
-      - *jaam

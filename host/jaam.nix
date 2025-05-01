@@ -9,7 +9,6 @@
     (import ./services/cloudflare-tunnel.nix {host = "jaam";})
     ./services/jupyterhub.nix
     ./modules/common.nix
-    ./modules/sops.nix
   ];
 
   nixpkgs = {

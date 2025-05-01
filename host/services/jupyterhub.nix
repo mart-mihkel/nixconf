@@ -12,13 +12,6 @@
       tqdm
     ];
 in {
-  environment = {
-    systemPackages = with pkgs; [libGL glib];
-    variables = {
-      LD_LIBRARY_PATH = "/run/opengl-driver/lib:${pkgs.libGL}/lib:${pkgs.glib.out}/lib:$LD_LIBRARY_PATH";
-    };
-  };
-
   services = {
     jupyterhub = {
       enable = true;

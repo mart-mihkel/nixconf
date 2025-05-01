@@ -5,7 +5,7 @@
     settings = {
       ssh = {public_url = "ssh://git.risuhunnik.xyz";};
       initial_admin_keys = [
-        ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9gAe8X398YBgMrHoRIPjnEiDoTRMg0VMM3Ll/MxSYh kubujuss@uss''
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDvf3zuouOAR4EGLhsS5AWIE991ptA7gd1w0P0YoV1EF"
       ];
     };
   };

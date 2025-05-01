@@ -8,7 +8,6 @@
     (import ./services/cloudflare-tunnel.nix {host = "alajaam";})
     ./services/soft-serve.nix
     ./modules/common.nix
-    ./modules/sops.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
