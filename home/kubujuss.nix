@@ -6,9 +6,8 @@
     ./services/picom.nix
     ./services/dunst.nix
 
+    ./programs/alacritty.nix
     ./programs/waybar.nix
-    ./programs/kitty.nix
-    ./programs/foot.nix
     ./programs/hypr.nix
     ./programs/rofi.nix
     ./programs/i3.nix

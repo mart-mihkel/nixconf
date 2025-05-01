@@ -44,7 +44,7 @@
         "Mod4+n" = "exec --no-startup-id playerctl -a pause & xlock -mode blank";
         "Mod4+s" = "exec --no-startup-id ~/.config/i3/screenshot.sh";
         "Mod4+w" = "exec --no-startup-id ~/.config/i3/wallpaper.sh";
-        "Mod4+q" = "exec --no-startup-id kitty -1";
+        "Mod4+q" = "exec --no-startup-id alacritty";
 
         "Mod4+f" = "fullscreen toggle";
         "Mod4+v" = "floating toggle";
@@ -140,8 +140,6 @@
       ".xinitrc".text = ''
         setxkbmap -layout ee -variant nodeadkeys
         xset r rate 256 32
-
-        export XDG_CURRENT_DESKTOP="i3"
         exec i3
       '';
     };

@@ -13,6 +13,7 @@
     homeDirectory = "/home/kubujuss";
 
     packages = with pkgs; [
+      neofetch
       ripgrep
       unzip
       btop

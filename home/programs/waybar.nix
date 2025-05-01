@@ -9,7 +9,7 @@
         modules-right = ["tray" "network" "bluetooth" "pulseaudio" "backlight" "battery"];
 
         tray = {
-          icon-size = 14;
+          icon-size = 12;
           spacing = 6;
         };
 
@@ -55,7 +55,7 @@
 
         font-family: "JetbrainsMono Nerd Font";
         font-weight: bold;
-        font-size: 14px;
+        font-size: 12px;
 
         color: #eceff4;
       }

@@ -67,7 +67,7 @@
         "SUPER, N                    , exec, playerctl -a pause & hyprlock"
         "SUPER, S                    , exec, ~/.config/hypr/screenshot.sh"
         "SUPER, W                    , exec, ~/.config/hypr/wallpaper.sh"
-        "SUPER, Q                    , exec, foot"
+        "SUPER, Q                    , exec, alacritty"
 
         "SUPER, V, togglefloating,"
         "SUPER, F, fullscreen,"
