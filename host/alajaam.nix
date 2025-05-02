@@ -13,11 +13,8 @@
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
   boot = {
-    loader = {
-      grub.enable = false;
-      generic-extlinux-compatible.enable = true;
-    };
-
+    loader.grub.enable = false;
+    loader.generic-extlinux-compatible.enable = true;
     initrd.availableKernelModules = ["xhci_pci"];
   };
 
@@ -44,6 +41,13 @@
   services = {
     openssh.enable = true;
     getty.autologinUser = "kubujuss";
+    cron = {
+      enable = true;
+      systemCronJobs = [
+        "@reboot root echo 0 > /sys/class/leds/ACT/brightness"
+        "@reboot root echo 0 > /sys/class/leds/PWR/brightness"
+      ];
+    };
   };
 
   system.stateVersion = "24.05";
