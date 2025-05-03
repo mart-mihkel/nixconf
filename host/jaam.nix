@@ -13,15 +13,13 @@
 
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
-    config = {
-      allowUnfree = true;
-      cudaSupport = true;
-    };
+    config.allowUnfree = true;
+    config.cudaSupport = true;
   };
 
   boot = {
     loader.systemd-boot.enable = true;
-    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
     kernelModules = ["kvm-amd"];
   };
 

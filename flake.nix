@@ -27,11 +27,9 @@
       inputs.agenix.nixosModules.default
       inputs.home-manager.nixosModules.home-manager
       {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          inherit users;
-        };
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users = users;
       }
     ];
 
