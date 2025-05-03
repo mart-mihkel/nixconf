@@ -2,6 +2,7 @@
   imports = [
     ./programs/nvim
     ./programs/tmux.nix
+    ./programs/btop.nix
     ./programs/zsh.nix
     ./programs/git.nix
   ];
