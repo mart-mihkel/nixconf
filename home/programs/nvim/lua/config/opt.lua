@@ -2,6 +2,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.netrw_banner = false
 
+vim.opt.winborder = "single"
+vim.opt.background = "dark"
 vim.opt.titlestring = "vim"
 vim.opt.title = true
 
