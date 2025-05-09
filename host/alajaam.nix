@@ -6,7 +6,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (import ./services/cloudflare-tunnel.nix {host = "alajaam";})
-    ./services/soft-serve.nix
     ./modules/common.nix
   ];
 

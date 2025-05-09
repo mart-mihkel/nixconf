@@ -3,17 +3,19 @@
     enable = true;
     settings = {
       bar = {
-        spacing = 16;
-        modules-left = ["hyprland/workspaces"];
+        spacing = 12;
+        modules-left = ["custom/icon" "hyprland/workspaces"];
         modules-center = ["clock"];
         modules-right = ["tray" "network" "bluetooth" "pulseaudio" "backlight" "battery"];
+
+        "custom/icon".format = " 󱄅";
+
+        clock.format = "{:%a, %b-%d 󰃭 %H:%M 󰥔 }";
 
         tray = {
           icon-size = 12;
           spacing = 6;
         };
-
-        clock.format = "󰃰 {:%A, %B-%d %H:%M}";
 
         network = {
           format-wifi = "{signalStrength}% {icon}";

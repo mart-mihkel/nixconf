@@ -13,13 +13,13 @@
 
       decoration = {
         rounding = 0;
-        blur.enabled = false;
+        blur.enabled = true;
         shadow.enabled = false;
       };
 
       animations.animation = [
-        "global, 1, 4, default"
-        "layers, 1, 4, default, slide"
+        "global, 1, 2.5, default"
+        "layers, 1, 2.5, default, slide"
       ];
 
       input = {

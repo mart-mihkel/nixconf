@@ -6,6 +6,7 @@
     extraPackages = with pkgs; [
       python3
       ripgrep
+      nodejs
       fd
     ];
   };

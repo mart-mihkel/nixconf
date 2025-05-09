@@ -29,14 +29,14 @@
         location = mkLiteral "north";
         y-offset = 16;
 
-        background-color = mkLiteral "#2e3440";
+        background-color = mkLiteral "#2e3440e5";
         border-color = mkLiteral "#4c566a";
         border = 2;
       };
 
       entry.cursor-width = 8;
       element.padding = 1;
-      "element selected".background-color = mkLiteral "#4c566a";
+      "element selected".background-color = mkLiteral "#4c566ae5";
     };
 
     package = pkgs.rofi-wayland.override {

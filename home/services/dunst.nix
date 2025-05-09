@@ -11,6 +11,9 @@
         offset = "(12, 12)";
         origin = "top-right";
 
+        foreground = "#d8dee9";
+        background = "#2e3440e5";
+
         font = "JetbrainsMono Nerd Font 10";
         alignment = "right";
         markup = "full";
@@ -31,22 +34,16 @@
 
       urgency_low = {
         frame_color = "#eceff4";
-        foreground = "#d8dee9";
-        background = "#2e3440";
         timeout = 4;
       };
 
       urgency_normal = {
         frame_color = "#ebcb8b";
-        foreground = "#d8dee9";
-        background = "#2e3440";
         timeout = 8;
       };
 
       urgency_critical = {
         frame_color = "#bf616a";
-        foreground = "#d8dee9";
-        background = "#2e3440";
         timeout = 16;
       };
     };
