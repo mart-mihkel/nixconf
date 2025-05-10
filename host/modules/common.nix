@@ -53,6 +53,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      devcontainer
       gnumake
       openssl
       nodejs
