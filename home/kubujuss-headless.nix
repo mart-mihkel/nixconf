@@ -1,10 +1,12 @@
 {pkgs, ...}: {
   imports = [
-    ./programs/nvim
+    ./programs/fastfetch.nix
     ./programs/tmux.nix
     ./programs/btop.nix
     ./programs/zsh.nix
     ./programs/git.nix
+
+    ./programs/nvim
   ];
 
   programs.home-manager.enable = true;
@@ -14,7 +16,6 @@
     homeDirectory = "/home/kubujuss";
 
     packages = with pkgs; [
-      neofetch
       ripgrep
       unzip
       btop
