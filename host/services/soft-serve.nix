@@ -10,7 +10,5 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [
-    23231 # soft-serve ssh
-  ];
+  networking.firewall.allowedTCPPorts = [23231]; # soft-serve ssh
 }

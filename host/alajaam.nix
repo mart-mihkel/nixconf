@@ -32,9 +32,7 @@
   networking = {
     hostName = "alajaam";
     networkmanager.enable = false;
-    firewall.allowedTCPPorts = [
-      22 # ssh
-    ];
+    firewall.allowedTCPPorts = [22]; # ssh
   };
 
   services = {
