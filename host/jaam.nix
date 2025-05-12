@@ -9,6 +9,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (import ./services/cloudflare-tunnel.nix {host = "jaam";})
     ./services/jupyterhub.nix
+    ./services/ollama.nix
     ./modules/common.nix
   ];
 
@@ -28,13 +29,8 @@
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     graphics.enable = true;
 
-    nvidia = {
-      open = false;
-      nvidiaSettings = false;
-      nvidiaPersistenced = true;
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
-    };
-
+    nvidia.open = true;
+    nvidia.nvidiaPersistenced = true;
     nvidia-container-toolkit.enable = true;
   };
 
@@ -60,7 +56,6 @@
 
   networking = {
     hostName = "jaam";
-    networkmanager.enable = false;
     interfaces.enp9s0.wakeOnLan.enable = true;
 
     firewall.allowedUDPPorts = [9]; # wol

@@ -56,6 +56,7 @@
       devcontainer
       gnumake
       openssl
+      sqlite
       nodejs
       cacert
       cargo
