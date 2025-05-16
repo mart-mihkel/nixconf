@@ -4,13 +4,28 @@
     settings = {
       bar = {
         spacing = 12;
-        modules-left = ["custom/icon" "hyprland/workspaces"];
+        modules-left = ["hyprland/workspaces" "hyprland/window"];
         modules-center = ["clock"];
         modules-right = ["tray" "network" "bluetooth" "pulseaudio" "backlight" "battery"];
 
-        "custom/icon".format = " 󱄅";
+        "hyprland/window" = {
+          format = "{class}";
+          rewrite = {
+            "Chromium-browser" = "chromium  ";
+            "obsidian" = "obsidian  ";
+            "discord" = "discord  ";
+            "Spotify" = "spotify 󰓇 ";
+            "Slack" = "slack 󰒱 ";
+            "zoom" = "zoom 󰍉 ";
+            "vlc" = "vlc 󰕼 ";
 
-        clock.format = "{:%a, %b-%d 󰃭 %H:%M 󰥔 }";
+            "Alacritty" = "zsh  ";
+            "foot" = "zsh  ";
+            "" = "nix 󱄅 ";
+          };
+        };
+
+        clock.format = "{:%A, %B-%d 󰃭 %H:%M 󰥔 }";
 
         tray = {
           icon-size = 12;
@@ -44,7 +59,7 @@
 
         battery = {
           format = "{capacity}% {icon} ";
-          format-plugged = "{capacity}% {icon}󱐋 ";
+          format-plugged = "{capacity}% {icon} ";
           format-charging = "{capacity}% {icon}󱐋 ";
           format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
         };

@@ -8,8 +8,10 @@
 
     ./programs/alacritty.nix
     ./programs/waybar.nix
+    ./programs/kitty.nix
     ./programs/hypr.nix
     ./programs/rofi.nix
+    ./programs/foot.nix
     ./programs/i3.nix
   ];
 

@@ -6,7 +6,7 @@
   programs.rofi = {
     enable = true;
     font = "JetbrainsMono Nerd Font Bold 10";
-    terminal = "alacritty";
+    terminal = "foot";
     theme = let
       inherit (config.lib.formats.rasi) mkLiteral;
     in {
