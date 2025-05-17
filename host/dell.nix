@@ -10,34 +10,30 @@
     ./modules/common.nix
   ];
 
-  nixpkgs = {
-    hostPlatform = lib.mkDefault "x86_64-linux";
-    config.allowUnfree = true;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.config.allowUnfree = true;
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
+  boot.kernelModules = ["kvm-intel"];
+
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.bluetooth.enable = true;
+
+  networking.hostName = "dell";
+  networking.useDHCP = lib.mkDefault true;
+  networking.networkmanager.enable = true;
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/c7dd8938-fe81-43d5-82bf-16a44fe28617";
+    fsType = "ext4";
   };
 
-  boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
-    kernelModules = ["kvm-intel"];
-  };
-
-  hardware = {
-    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    bluetooth.enable = true;
-  };
-
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/c7dd8938-fe81-43d5-82bf-16a44fe28617";
-      fsType = "ext4";
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/2A12-F15C";
-      fsType = "vfat";
-      options = ["fmask=0077" "dmask=0077"];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/2A12-F15C";
+    fsType = "vfat";
+    options = ["fmask=0077" "dmask=0077"];
   };
 
   swapDevices = [
@@ -47,55 +43,46 @@
     }
   ];
 
-  networking = {
-    useDHCP = lib.mkDefault true;
-    networkmanager.enable = true;
-    hostName = "dell";
-  };
-
   security.sudo.wheelNeedsPassword = false;
 
   xdg.portal.enable = true;
 
-  programs = {
-    hyprland.enable = true;
-    steam.enable = true;
+  programs.hyprland.enable = true;
+  programs.steam.enable = true;
+
+  services.thermald.enable = true;
+  services.undervolt = {
+    enable = true;
+    gpuOffset = -100;
+    coreOffset = -100;
   };
 
-  services = {
-    thermald.enable = true;
-
-    undervolt = {
-      enable = true;
-      gpuOffset = -100;
-      coreOffset = -100;
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 70;
+      STOP_CHARGE_THRESH_BAT0 = 90;
     };
+  };
 
-    tlp = {
-      enable = true;
-      settings = {
-        START_CHARGE_THRESH_BAT0 = 70;
-        STOP_CHARGE_THRESH_BAT0 = 90;
-      };
-    };
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+  };
 
-    pipewire = {
-      enable = true;
-      pulse.enable = true;
-    };
-
-    xserver = {
-      enable = true;
-      autorun = false;
-      displayManager.startx.enable = true;
-    };
+  services.xserver = {
+    enable = true;
+    autorun = false;
+    displayManager.startx.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
     eduvpn-client
     qbittorrent
     qdigidoc
+    obsidian
     zoom-us
+    spotify
     discord
     slack
   ];

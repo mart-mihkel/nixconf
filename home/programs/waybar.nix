@@ -59,7 +59,7 @@
 
         battery = {
           format = "{capacity}% {icon} ";
-          format-plugged = "{capacity}% {icon} ";
+          format-plugged = "{capacity}% {icon}󱐋 ";
           format-charging = "{capacity}% {icon}󱐋 ";
           format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
         };

@@ -15,28 +15,26 @@
     ./programs/i3.nix
   ];
 
-  home = {
-    pointerCursor = {
-      enable = true;
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-    };
+  home.pointerCursor = {
+    enable = true;
+    hyprcursor.enable = true;
+    hyprcursor.size = 12;
 
-    packages = with pkgs; [
-      cloudflared
-      pulseaudio
-      pulsemixer
-      playerctl
-      bluetui
-      feh
-
-      obsidian
-      chromium
-      spotify
-      vlc
-
-      nerd-fonts.jetbrains-mono
-      noto-fonts
-    ];
+    name = "Adwaita";
+    package = pkgs.adwaita-icon-theme;
   };
+
+  home.packages = with pkgs; [
+    cloudflared
+    pulseaudio
+    pulsemixer
+    playerctl
+    chromium
+    bluetui
+    feh
+    vlc
+
+    nerd-fonts.jetbrains-mono
+    noto-fonts
+  ];
 }

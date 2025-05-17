@@ -11,22 +11,19 @@
 
   programs.home-manager.enable = true;
 
-  home = {
-    username = "kubujuss";
-    homeDirectory = "/home/kubujuss";
+  home.username = "kubujuss";
+  home.homeDirectory = "/home/kubujuss";
+  home.packages = with pkgs; [
+    ripgrep
+    unzip
+    btop
+    glow
+    tree
+    zip
+    bat
+    fzf
+    fd
+  ];
 
-    packages = with pkgs; [
-      ripgrep
-      unzip
-      btop
-      glow
-      tree
-      zip
-      bat
-      fzf
-      fd
-    ];
-
-    stateVersion = "24.05";
-  };
+  home.stateVersion = "24.05";
 }
