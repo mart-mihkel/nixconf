@@ -70,12 +70,6 @@
     pulse.enable = true;
   };
 
-  services.xserver = {
-    enable = true;
-    autorun = false;
-    displayManager.startx.enable = true;
-  };
-
   environment.systemPackages = with pkgs; [
     eduvpn-client
     qbittorrent
