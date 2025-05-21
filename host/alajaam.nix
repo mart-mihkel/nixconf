@@ -18,7 +18,6 @@
   networking.hostName = "alajaam";
   networking.useDHCP = lib.mkDefault true;
   networking.networkmanager.enable = true;
-  networking.firewall.allowedTCPPorts = [22]; # ssh
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_SD";
@@ -32,8 +31,13 @@
     }
   ];
 
-  services.openssh.enable = true;
   services.getty.autologinUser = "kubujuss";
+
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+  };
+
   services.cron = {
     enable = true;
     systemCronJobs = [

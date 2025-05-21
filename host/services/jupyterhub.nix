@@ -16,7 +16,7 @@
       tqdm
     ]);
 in {
-  services. jupyterhub = {
+  services.jupyterhub = {
     enable = true;
     jupyterlabEnv = pypkgs;
     extraConfig = ''

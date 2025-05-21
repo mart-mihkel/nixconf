@@ -32,7 +32,6 @@
   networking.networkmanager.enable = true;
   networking.interfaces.enp9s0.wakeOnLan.enable = true;
   networking.firewall.allowedUDPPorts = [9]; # wol
-  networking.firewall.allowedTCPPorts = [22]; # ssh
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -52,9 +51,13 @@
     }
   ];
 
-  services.openssh.enable = true;
   services.getty.autologinUser = "kubujuss";
   services.xserver.videoDrivers = ["nvidia"];
+
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+  };
 
   environment.variables = {
     LD_LIBRARY_PATH = "/run/opengl-driver/lib:${pkgs.libGL}/lib:${pkgs.glib.out}/lib:$LD_LIBRARY_PATH";
