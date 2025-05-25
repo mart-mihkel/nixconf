@@ -5,7 +5,6 @@
     ./programs/btop.nix
     ./programs/zsh.nix
     ./programs/git.nix
-
     ./programs/nvim
   ];
 
@@ -14,12 +13,11 @@
   home.username = "kubujuss";
   home.homeDirectory = "/home/kubujuss";
   home.packages = with pkgs; [
+    cloudflared
     ripgrep
-    unzip
     btop
     glow
     tree
-    zip
     bat
     fzf
     fd

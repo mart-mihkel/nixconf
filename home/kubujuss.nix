@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./kubujuss-headless.nix
-
+    ./services/dunst.nix
     ./programs/waybar.nix
     ./programs/hypr.nix
     ./programs/rofi.nix
@@ -18,7 +18,6 @@
   };
 
   home.packages = with pkgs; [
-    cloudflared
     pulseaudio
     pulsemixer
     playerctl

@@ -18,6 +18,7 @@
   networking.hostName = "alajaam";
   networking.useDHCP = lib.mkDefault true;
   networking.networkmanager.enable = true;
+  networking.usePredictableInterfaceNames = true;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_SD";
@@ -36,14 +37,6 @@
   services.openssh = {
     enable = true;
     openFirewall = true;
-  };
-
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-      "@reboot root echo 0 > /sys/class/leds/ACT/brightness"
-      "@reboot root echo 0 > /sys/class/leds/PWR/brightness"
-    ];
   };
 
   system.stateVersion = "24.05";

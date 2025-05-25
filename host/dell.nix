@@ -24,6 +24,7 @@
   networking.hostName = "dell";
   networking.useDHCP = lib.mkDefault true;
   networking.networkmanager.enable = true;
+  networking.usePredictableInterfaceNames = true;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/c7dd8938-fe81-43d5-82bf-16a44fe28617";

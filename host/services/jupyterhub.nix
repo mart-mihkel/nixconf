@@ -5,6 +5,10 @@
       jupyterlab
       jupyterhub
 
+      torchvision
+      torchaudio
+      torch
+
       scikit-learn
       matplotlib
       plotnine

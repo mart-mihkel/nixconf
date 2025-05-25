@@ -30,6 +30,7 @@
   networking.hostName = "jaam";
   networking.useDHCP = lib.mkDefault true;
   networking.networkmanager.enable = true;
+  networking.usePredictableInterfaceNames = true;
   networking.interfaces.enp9s0.wakeOnLan.enable = true;
   networking.firewall.allowedUDPPorts = [9]; # wol
 

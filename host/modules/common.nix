@@ -50,12 +50,16 @@
     sqlite
     nodejs
     cacert
+    p7zip
+    unzip
     cargo
     clang
     cmake
     tmux
     curl
     wget
+    zstd
+    zip
     gcc
     wol
     git
