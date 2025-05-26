@@ -3,10 +3,9 @@
     enable = true;
     settings = {
       bar = {
-        spacing = 12;
+        spacing = 8;
         modules-left = ["hyprland/workspaces" "hyprland/window"];
-        modules-center = ["clock"];
-        modules-right = ["tray" "network" "bluetooth" "pulseaudio" "backlight" "battery"];
+        modules-right = ["tray" "network" "bluetooth" "pulseaudio" "backlight" "battery" "clock"];
 
         "hyprland/window" = {
           format = "{class}";
@@ -16,16 +15,13 @@
             "discord" = "discord  ";
             "Spotify" = "spotify 󰓇 ";
             "Slack" = "slack 󰒱 ";
-            "zoom" = "zoom 󰍉 ";
+            "foot" = "foot  ";
             "vlc" = "vlc 󰕼 ";
-
-            "Alacritty" = "zsh  ";
-            "foot" = "zsh  ";
-            "" = "nix 󱄅 ";
+            "" = "󱄅 ";
           };
         };
 
-        clock.format = "{:%A, %B-%d 󰃭 %H:%M 󰥔 }";
+        clock.format = "{:%a, %b-%d 󰃭 %H:%M 󰥔 }";
 
         tray = {
           icon-size = 12;
@@ -78,12 +74,17 @@
       }
 
       #workspaces button {
-        padding: 0 2;
+        padding: 0 2px;
         opacity: 0.5;
       }
 
       #workspaces button.active {
         opacity: 1;
+      }
+
+      #tray menu {
+        background-color: #2e3440;
+        opacity: 0.9;
       }
     '';
   };

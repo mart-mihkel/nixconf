@@ -5,15 +5,12 @@
       general = {
         gaps_in = 4;
         gaps_out = 8;
-        border_size = 2;
-
-        "col.active_border" = "rgb(4c566a)";
-        "col.inactive_border" = "rgb(2e3440)";
+        border_size = 0;
       };
 
       decoration = {
         rounding = 0;
-        blur.enabled = true;
+        blur.enabled = false;
         shadow.enabled = false;
       };
 

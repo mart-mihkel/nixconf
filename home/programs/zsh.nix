@@ -9,6 +9,7 @@
       mv = "mv -v";
 
       ls = "ls --color";
+      ll = "ls -lAh --color";
       l = "ls -A --color";
 
       at = "source .venv/bin/activate";
@@ -27,20 +28,19 @@
     '';
 
     initContent = ''
-      PROMPT="%F{4}%1~%f "
-      precmd_functions+=(_rprompt)
-
       setopt list_packed
       setopt no_case_glob no_case_match
 
-      function _rprompt() {
+      precmd_functions+=(_prompt)
+      function _prompt() {
         items=""
-
         branch=$(git symbolic-ref --short HEAD 2> /dev/null)
-        [[ -n $branch ]] && items="󰊢 $branch"
-        [[ -n $SSH_TTY ]] && items="$items  %n@%M"
+        venv=$(echo $VIRTUAL_ENV_PROMPT | tr -d '()')
 
-        RPROMPT="%F{8}$items%f"
+        [[ -n $venv ]] && items="%F{3} $venv%f"
+        [[ -n $branch ]] && items="$items%F{5}󰊢 $branch%f "
+
+        PROMPT="%F{4}%~%f $items"
       }
     '';
   };

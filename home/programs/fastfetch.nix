@@ -2,35 +2,21 @@
   programs.fastfetch = {
     enable = true;
     settings = {
-      logo = null;
-      display.separator = " ›  ";
+      logo.type = "small";
+      display = {
+        separator = "  ";
+        key.type = "icon";
+      };
       modules = [
-        "break"
+        "title"
+        "os"
+        "kernel"
+        "packages"
+        "shell"
         {
-          type = "os";
-          key = "OS  ";
+          type = "colors";
+          block.range = [1 6];
         }
-        {
-          type = "kernel";
-          key = "KER ";
-        }
-        {
-          type = "packages";
-          key = "PKG ";
-        }
-        {
-          type = "shell";
-          key = "SH  ";
-        }
-        {
-          type = "terminal";
-          key = "TER ";
-        }
-        {
-          type = "wm";
-          key = "WM  ";
-        }
-        "break"
       ];
     };
   };

@@ -15,7 +15,6 @@
   home.packages = with pkgs; [
     cloudflared
     ripgrep
-    btop
     glow
     tree
     bat
