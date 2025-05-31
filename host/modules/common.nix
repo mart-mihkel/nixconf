@@ -36,7 +36,17 @@
 
   virtualisation.docker.enable = true;
 
-  programs.nix-ld.enable = true;
+  programs.nix-index = {
+    enable = true;
+    enableZshIntegration = false;
+    enableBashIntegration = false;
+  };
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [libGL glib];
+  };
+
   programs.zsh.enable = true;
 
   environment.variables = {

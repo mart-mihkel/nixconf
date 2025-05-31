@@ -28,8 +28,6 @@ in {
       c.Authenticator.admin_users = { 'kubujuss' }
       c.SystemdSpawner.environment = {
         'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
-
-        'LD_LIBRARY_PATH': '/run/opengl-driver/lib:${pkgs.libGL}/lib:${pkgs.glib.out}/lib:$LD_LIBRARY_PATH',
         'CUDA_HOME': '/run/opengl-driver',
         'CUDA_PATH': '/run/opengl-driver',
 
