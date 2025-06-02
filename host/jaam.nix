@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   modulesPath,
   ...
@@ -9,7 +8,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (import ./services/cloudflare-tunnel.nix {host = "jaam";})
     ./services/jupyterhub.nix
-    ./services/ollama.nix
     ./modules/common.nix
   ];
 
