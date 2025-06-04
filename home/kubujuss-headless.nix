@@ -5,7 +5,7 @@
     ./programs/btop.nix
     ./programs/zsh.nix
     ./programs/git.nix
-    ./programs/nvim
+    ./programs/vim.nix
   ];
 
   programs.home-manager.enable = true;

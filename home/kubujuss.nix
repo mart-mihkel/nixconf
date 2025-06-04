@@ -6,6 +6,7 @@
     ./programs/hypr.nix
     ./programs/rofi.nix
     ./programs/foot.nix
+    ./programs/nvim
   ];
 
   home.pointerCursor = {

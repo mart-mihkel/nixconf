@@ -65,6 +65,8 @@
     cargo
     clang
     cmake
+    ninja
+    meson
     tmux
     curl
     wget
