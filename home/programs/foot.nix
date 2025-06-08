@@ -9,8 +9,6 @@
 
       cursor.color = "282828 eceff4";
       colors = {
-        alpha = 0.9;
-
         foreground = "d8dee9";
         background = "2e3440";
 

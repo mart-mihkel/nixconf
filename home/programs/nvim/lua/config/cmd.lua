@@ -3,17 +3,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function() vim.highlight.on_yank() end,
 })
 
-vim.api.nvim_create_autocmd("User", {
-    pattern = "TelescopeFindPre",
-    callback = function()
-        vim.opt_local.winborder = "none"
-        vim.api.nvim_create_autocmd("WinLeave", {
-            once = true,
-            callback = function() vim.opt_local.winborder = "single" end,
-        })
-    end,
-})
-
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
     callback = function(e)

@@ -11,6 +11,7 @@ require("lazy").setup({
     spec = {
         { import = "plugins" },
         { "tpope/vim-sleuth" },
+        { "ellisonleao/gruvbox.nvim" },
         { "norcalli/nvim-colorizer.lua" },
     },
 })

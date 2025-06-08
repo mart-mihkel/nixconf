@@ -8,7 +8,6 @@ return {
                 lua = { "stylua" },
                 nix = { "alejandra" },
                 python = { "ruff_format" },
-                markdown = { "markdownlint" },
 
                 yml = { "yamlfmt" },
                 yaml = { "yamlfmt" },

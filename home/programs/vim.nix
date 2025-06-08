@@ -34,10 +34,10 @@
     set backupdir=~/.vim
     set directory=~/.vim
 
-    set incsearch
-    set hlsearch
-
     set ruler
+    set showcmd
+    set showmode
+    set incsearch
     set showmatch
     set cursorline
     set lazyredraw

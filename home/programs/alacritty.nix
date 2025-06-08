@@ -9,8 +9,8 @@
       };
 
       font = {
-        size = 13;
-        normal.family = "Jetbrains Mono Nerd Font";
+        size = 18;
+        normal.family = "cozette";
       };
 
       colors = {

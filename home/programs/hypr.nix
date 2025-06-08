@@ -3,9 +3,12 @@
     enable = true;
     settings = {
       general = {
-        gaps_in = 4;
-        gaps_out = 8;
-        border_size = 0;
+        gaps_in = 8;
+        gaps_out = 16;
+        border_size = 1;
+
+        "col.active_border" = "rgb(d8dee9)";
+        "col.inactive_border" = "rgb(d8dee9)";
       };
 
       decoration = {
@@ -59,8 +62,8 @@
         "     , XF86AudioPlay        , exec, playerctl play-pause"
         "     , XF86AudioPrev        , exec, playerctl previous"
         "     , XF86AudioNext        , exec, playerctl next"
-        "SUPER, code:60              , exec, rofi -show emoji -display-emoji '󰀖 '"
-        "SUPER, R                    , exec, rofi -show drun -display-drun '󱈆 '"
+        "SUPER, code:60              , exec, rofi -show emoji"
+        "SUPER, R                    , exec, rofi -show drun"
         "SUPER, N                    , exec, playerctl -a pause & hyprlock"
         "SUPER, S                    , exec, ~/.config/hypr/screenshot.sh"
         "SUPER, W                    , exec, ~/.config/hypr/wallpaper.sh"
@@ -117,34 +120,24 @@
   programs.hyprlock = {
     enable = true;
     settings = {
-      general = {
-        hide_cursor = true;
-      };
-
-      background = [
-        {
-          monitor = "";
-          path = "screenshot";
-          blur_passes = 2;
-          blur_size = 4;
-        }
-      ];
+      general = {hide_cursor = true;};
+      background = [{path = "~/.cache/wallpaper";}];
 
       input-field = [
         {
-          monitor = "";
+          size = "256, 64";
+          outline_thickness = 1;
 
           rounding = 0;
-          size = "512, 128";
-          outline_thickness = 0;
+          dots_rounding = 0;
 
-          font_family = "JetbrainsMono Nerd Font";
-          font_color = "rgb(eceff4)";
+          font_family = "cozette";
+          font_color = "rgb(d8dee9)";
 
-          inner_color = "rgba(2e344000)";
-          outer_color = "rgba(eceff400)";
-          check_color = "rgba(5e81ac80)";
-          fail_color = "rgba(d0877080)";
+          inner_color = "rgb(2e3440)";
+          outer_color = "rgb(d8dee9)";
+          check_color = "rgb(ebcb8b)";
+          fail_color = "rgb(bf616a)";
 
           fade_on_empty = true;
 
@@ -156,28 +149,13 @@
 
       label = [
         {
-          monitor = "";
-
-          text = "cmd[update:1000] date +'%A, %B %d'";
+          text = "cmd[update:1000] date +'󰃰 %A, %B %d %H:%M'";
           color = "rgb(eceff4)";
 
-          font_family = "JetbrainsMono Nerd Font";
+          font_family = "cozette";
           font_size = 28;
 
-          position = "0, 300";
-          halign = "center";
-          valign = "center";
-        }
-        {
-          monitor = "";
-
-          text = "cmd[update:1000] date +'%H:%M'";
-          color = "rgb(eceff4)";
-
-          font_family = "JetbrainsMono Nerd Font";
-          font_size = 100;
-
-          position = "0, 200";
+          position = "0, 100";
           halign = "center";
           valign = "center";
         }
@@ -229,23 +207,18 @@
           #!/usr/bin/env bash
 
           geometry=$(slurp)
+          [[ -z "$geometry" ]] && exit 1
 
-          if [[ -z "$geometry" ]]; then
-              echo "No geometry"
-              exit 1
-          fi
-
-          stamp=$(date +%b%d-%H%M%S)
-          name="$stamp.png"
-          dir="$HOME/Pictures/screenshots"
+          name="$(date +%b%d%H%M%S | tr '[:upper:]' '[:lower:]').png"
+          dir="Pictures/screenshots"
           target="$dir/$name"
-
-          mkdir --parents "$dir"
+          mkdir -p "$dir"
 
           grim -g "$geometry" - | wl-copy -t image/png
           wl-paste > "$target"
 
-          dunstify -u low -I "$target" "Screenshot" "Saved as $name"
+          action=$(dunstify -A "preview,feh" -u low -I "$target" "Screenshot" "Saved as $name")
+          [[ "$action" == "2" ]] && feh $target
         '';
       };
 
@@ -254,13 +227,9 @@
         text = ''
           #!/usr/bin/env bash
 
-          wals="$HOME/git/wallpapers"
-          pick="$wals/$(ls "$wals" | grep -E 'jpg|jpeg|png' | rofi -dmenu -p '󰥷 ')"
-
-          if [[ "$pick" == "$wals/" ]]; then
-              echo "No wallpaper selected"
-              exit 1
-          fi
+          wals="git/wallpapers"
+          pick="$wals/$(ls "$wals" | grep -E 'jpg|jpeg|png' | rofi -dmenu)"
+          [[ "$pick" == "$wals/" ]] && exit 1
 
           cp -f $pick ~/.cache/wallpaper
           hyprctl hyprpaper reload ,$pick
@@ -276,6 +245,7 @@
       wtype
       slurp
       grim
+      feh
     ];
   };
 }

@@ -2,6 +2,7 @@
   imports = [
     ./kubujuss-headless.nix
     ./services/dunst.nix
+    ./programs/alacritty.nix
     ./programs/waybar.nix
     ./programs/hypr.nix
     ./programs/rofi.nix
@@ -22,12 +23,13 @@
     pulseaudio
     pulsemixer
     playerctl
-    chromium
     bluetui
+    brave
     feh
     vlc
 
     nerd-fonts.jetbrains-mono
     noto-fonts
+    cozette
   ];
 }

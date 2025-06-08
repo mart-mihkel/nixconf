@@ -11,12 +11,9 @@
         "title"
         "os"
         "kernel"
+        "wm"
         "packages"
         "shell"
-        {
-          type = "colors";
-          block.range = [1 6];
-        }
       ];
     };
   };

@@ -4,61 +4,48 @@
     settings = {
       bar = {
         spacing = 8;
-        modules-left = ["hyprland/workspaces" "hyprland/window"];
-        modules-right = ["tray" "network" "bluetooth" "pulseaudio" "backlight" "battery" "clock"];
+        margin = "4";
 
-        "hyprland/window" = {
-          format = "{class}";
-          rewrite = {
-            "Chromium-browser" = "chromium  ";
-            "obsidian" = "obsidian  ";
-            "discord" = "discord  ";
-            "Spotify" = "spotify 󰓇 ";
-            "Slack" = "slack 󰒱 ";
-            "foot" = "foot  ";
-            "vlc" = "vlc 󰕼 ";
-            "" = "󱄅 ";
-          };
-        };
+        modules-left = ["hyprland/workspaces" "hyprland/window" "tray"];
+        modules-center = ["clock"];
+        modules-right = ["cpu" "memory" "network" "bluetooth" "pulseaudio" "backlight" "battery"];
 
-        clock.format = "{:%a, %b-%d 󰃭 %H:%M 󰥔 }";
+        "hyprland/window".format = "{class}";
+        "hyprland/window".rewrite."Brave-browser" = "brave";
+        "hyprland/window".rewrite."Alacritty" = " alacritty";
+        "hyprland/window".rewrite."foot" = " foot";
+        "hyprland/window".rewrite."" = " nixos";
 
-        tray = {
-          icon-size = 12;
-          spacing = 6;
-        };
+        clock.format = "󰃰 {:%A, %B %d %H:%M}";
 
-        network = {
-          format-wifi = "{signalStrength}% {icon}";
-          format-disconnected = "󰤮 ";
-          format-icons = ["󰤯 " "󰤟 " "󰤢 " "󰤥 " "󰤨 "];
-        };
+        tray.icon-size = 10;
+        tray.spacing = 4;
 
-        bluetooth = {
-          format = " ";
-          format-connected = "󰂱 ";
-          format-connected-battery = "{device_battery_percentage}% 󰂱 ";
-        };
+        cpu.format = " {usage}%";
+        cpu.states.warning = 90;
+        cpu.states.critical = 95;
 
-        pulseaudio = {
-          format = "{volume}% {icon} {format_source}";
-          format-muted = "{volume}% 󰖁 {format_source}";
-          format-source = "󰍬 ";
-          format-source-muted = "󰍭 ";
-          format-icons.default = ["󰕿" "󰖀" "󰕾"];
-        };
+        memory.format = " {percentage}%";
+        memory.states.warning = 90;
+        memory.states.critical = 95;
 
-        backlight = {
-          format = "{percent}% {icon}";
-          format-icons = ["󰃞 " "󰃟 " "󰃠 "];
-        };
+        network.format-wifi = "直 {signalStrength}%";
+        network.format-disconnected = "睊";
 
-        battery = {
-          format = "{capacity}% {icon} ";
-          format-plugged = "{capacity}% {icon}󱐋 ";
-          format-charging = "{capacity}% {icon}󱐋 ";
-          format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
-        };
+        bluetooth.format = "";
+        bluetooth.format-connected = "";
+        bluetooth.format-connected-battery = " {device_battery_percentage}%";
+
+        pulseaudio.format = "{icon}{volume}%";
+        pulseaudio.format-muted = "婢 {volume}%";
+        pulseaudio.format-icons.default = ["奄 " "奔 " "墳 "];
+
+        backlight.format = " {percent}%";
+
+        battery.format = "{icon}{capacity}%";
+        battery.format-icons = [" " " " " " " " " "];
+        battery.states.warning = 20;
+        battery.states.critical = 10;
       };
     };
 
@@ -66,25 +53,57 @@
       * {
         all: unset;
 
-        font-family: "JetbrainsMono Nerd Font";
-        font-weight: bold;
+        font-family: "cozette";
         font-size: 12px;
 
-        color: #eceff4;
+        color: #d8dee9;
       }
 
       #workspaces button {
         padding: 0 2px;
-        opacity: 0.5;
+        opacity: 0.6;
       }
 
       #workspaces button.active {
         opacity: 1;
       }
 
+      tooltip,
       #tray menu {
         background-color: #2e3440;
-        opacity: 0.9;
+        border: 1px solid #d8dee9;
+        padding: 2px 4px;
+      }
+
+      #workspaces,
+      #window,
+      #cpu,
+      #clock,
+      #memory,
+      #tray,
+      #network,
+      #bluetooth,
+      #pulseaudio,
+      #backlight,
+      #battery {
+        background-color: #2e3440;
+        border: 1px solid #d8dee9;
+        padding: 2px 4px;
+      }
+
+      #cpu.warning,
+      #memory.warning,
+      #battery.warning {
+        border: 1px solid #ebcb8b;
+        color: #ebcb8b;;
+      }
+
+      #workspaces button.urgent,
+      #cpu.critical,
+      #memory.critical,
+      #battery.critical {
+        border: 1px solid #bf616a;
+        color: #bf616a;
       }
     '';
   };

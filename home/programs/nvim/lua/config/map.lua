@@ -6,5 +6,3 @@ vim.keymap.set({ "n", "v" }, "<C-k>", "<cmd>cprevious<CR>")
 
 vim.keymap.set({ "n", "v" }, "<C-l>", "<cmd>lnext<CR>")
 vim.keymap.set({ "n", "v" }, "<C-h>", "<cmd>lprevious<CR>")
-
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")

@@ -12,9 +12,9 @@
         origin = "top-right";
 
         foreground = "#d8dee9";
-        background = "#2e3440e5";
+        background = "#2e3440";
 
-        font = "JetbrainsMono Nerd Font 10";
+        font = "cozette 10";
         alignment = "right";
         markup = "full";
 
@@ -27,7 +27,7 @@
 
         separator_height = 2;
         corner_radius = 0;
-        frame_width = 2;
+        frame_width = 1;
 
         idle_threshold = 300;
       };

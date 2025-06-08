@@ -21,8 +21,7 @@
         font-0 = "JetbrainsMono Nerd Font:size=10:weight=bold";
 
         modules-left = "workspaces";
-        modules-center = "date";
-        modules-right = "network bluetooth audio backlight battery";
+        modules-right = "network bluetooth audio backlight battery date";
 
         enable-ipc = true;
       };
