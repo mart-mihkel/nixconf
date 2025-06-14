@@ -11,72 +11,29 @@
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
   ];
 
-  networking.hosts = {
-    "192.168.10.2" = ["jaam"];
-    "192.168.10.3" = ["dell"];
-    "192.168.10.4" = ["alajaam"];
-  };
-
   time.timeZone = "Europe/Tallinn";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  console = {
-    keyMap = "et";
-    font = "ter-u20n";
-    earlySetup = true;
-    packages = with pkgs; [terminus_font];
-  };
+  console.keyMap = "et";
+  console.font = "ter-u20n";
+  console.earlySetup = true;
+  console.packages = with pkgs; [terminus_font];
 
-  users.users.kubujuss = {
-    shell = pkgs.zsh;
-    createHome = true;
-    isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "docker"];
-  };
-
-  virtualisation.docker.enable = true;
-
-  programs.nix-index = {
-    enable = true;
-    enableZshIntegration = false;
-    enableBashIntegration = false;
-  };
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [libGL glib];
-  };
+  users.users.kubujuss.shell = pkgs.zsh;
+  users.users.kubujuss.createHome = true;
+  users.users.kubujuss.isNormalUser = true;
+  users.users.kubujuss.extraGroups = ["wheel" "networkmanager"];
 
   programs.zsh.enable = true;
-
-  environment.variables = {
-    SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
-  };
+  programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
-    devcontainer
-    gnumake
     openssl
-    sqlite
-    nodejs
     cacert
-    p7zip
-    unzip
-    cargo
-    clang
-    cmake
-    ninja
-    meson
     tmux
     curl
     wget
-    zstd
-    zip
-    gcc
-    wol
     git
     vim
-    jq
-    uv
   ];
 }

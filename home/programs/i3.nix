@@ -3,30 +3,9 @@
     enable = true;
 
     config = {
-      gaps.inner = 8;
       floating.modifier = "Mod4";
       defaultWorkspace = "workspace number 1";
-
-      bars = [];
       window.titlebar = false;
-
-      colors = {
-        focused = {
-          text = "#d8dee9";
-          border = "#4c566a";
-          indicator = "#4c566a";
-          background = "#4c566a";
-          childBorder = "#4c566a";
-        };
-
-        unfocused = {
-          text = "#d8dee9";
-          border = "#2e3440";
-          indicator = "#2e3440";
-          background = "#2e3440";
-          childBorder = "#2e3440";
-        };
-      };
 
       keybindings = {
         "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl s 2%-";
@@ -39,12 +18,11 @@
         "XF86AudioPlay" = "exec --no-startup-id playerctl play-pause";
         "XF86AudioPrev" = "exec --no-startup-id playerctl previous";
         "XF86AudioNext" = "exec --no-startup-id playerctl next";
-        "Mod4+period" = "exec --no-startup-id rofi -show emoji -display-emoji '󰀖 '";
-        "Mod4+r" = "exec --no-startup-id rofi -show drun -display-drun '󱈆 '";
+        "Mod4+period" = "exec --no-startup-id rofi -show emoji";
+        "Mod4+r" = "exec --no-startup-id rofi -show drun";
         "Mod4+n" = "exec --no-startup-id playerctl -a pause & xlock -mode blank";
         "Mod4+s" = "exec --no-startup-id ~/.config/i3/screenshot.sh";
-        "Mod4+w" = "exec --no-startup-id ~/.config/i3/wallpaper.sh";
-        "Mod4+q" = "exec --no-startup-id alacritty";
+        "Mod4+q" = "exec --no-startup-id kitty -1";
 
         "Mod4+f" = "fullscreen toggle";
         "Mod4+v" = "floating toggle";
@@ -85,13 +63,7 @@
       };
 
       startup = [
-        {
-          command = "--no-startup-id autotiling";
-          always = true;
-        }
-        {command = "--no-startup-id feh --no-fehbg --bg-fill ~/.cache/wallpaper";}
         {command = "--no-startup-id gammastep -l 58.38:26.72 -t 6500:3000";}
-        {command = "--no-startup-id polybar";}
         {command = "--no-startup-id picom";}
         {command = "--no-startup-id dunst";}
       ];
@@ -105,35 +77,16 @@
         text = ''
           #!/usr/bin/env bash
 
-          stamp=$(date +%b%d-%H%M%S)
-          name="$stamp.png"
+          name="$(date +%b%d%H%M%S | tr '[:upper:]' '[:lower:]').png"
           dir="$HOME/Pictures/screenshots"
           target="$dir/$name"
-
           mkdir --parents "$dir"
 
           maim -s | xclip -selection clipboard -t image/png
           xclip -selection clipboard -t image/png -o > "$target"
 
-          dunstify -u low -I "$target" "Screenshot" "Saved as $name"
-        '';
-      };
-
-      ".config/i3/wallpaper.sh" = {
-        executable = true;
-        text = ''
-          #!/usr/bin/env bash
-
-          wals="$HOME/git/wallpapers"
-          pick="$wals/$(ls "$wals" | grep -E 'jpg|jpeg|png' | rofi -dmenu -p '󰥷 ')"
-
-          if [[ "$pick" == "$wals/" ]]; then
-              echo "No wallpaper selected"
-              exit 1
-          fi
-
-          cp -f $pick ~/.cache/wallpaper
-          feh --no-fehbg --bg-fill ~/.cache/wallpaper
+          action=$(dunstify -A "preview,feh" -u low -I "$target" "Screenshot" "Saved as $name")
+          [[ "$action" == "2" ]] && feh $target
         '';
       };
 

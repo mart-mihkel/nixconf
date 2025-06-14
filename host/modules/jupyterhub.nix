@@ -20,6 +20,11 @@
       tqdm
     ]);
 in {
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [libGL glib];
+  };
+
   services.jupyterhub = {
     enable = true;
     jupyterlabEnv = pypkgs;
@@ -27,9 +32,8 @@ in {
       c.Authenticator.allowed_users = { 'kubujuss' }
       c.Authenticator.admin_users = { 'kubujuss' }
       c.SystemdSpawner.environment = {
-        'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
-        'CUDA_HOME': '/run/opengl-driver',
-        'CUDA_PATH': '/run/opengl-driver',
+        # 'CUDA_HOME': '/run/opengl-driver',
+        # 'CUDA_PATH': '/run/opengl-driver',
         'PYTORCH_CUDA_ALLOC_CONF': 'expandable_segments:True',
         'TF_CPP_MIN_LOG_LEVEL': '3',
       }

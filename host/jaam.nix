@@ -1,13 +1,14 @@
 {
   lib,
+  pkgs,
   config,
   modulesPath,
   ...
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./services/cloudflare-tunnel.nix {host = "jaam";})
-    ./services/jupyterhub.nix
+    (import ./modules/cloudflare-tunnel.nix {host = "jaam";})
+    ./modules/jupyterhub.nix
     ./modules/common.nix
   ];
 
@@ -30,18 +31,13 @@
   networking.networkmanager.enable = true;
   networking.usePredictableInterfaceNames = true;
   networking.interfaces.enp9s0.wakeOnLan.enable = true;
-  networking.firewall.allowedUDPPorts = [9]; # wol
+  networking.firewall.allowedUDPPorts = [9]; # wakeonlan
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
-  };
+  fileSystems."/".device = "/dev/disk/by-label/nixos";
+  fileSystems."/".fsType = "ext4";
+  fileSystems."/boot".device = "/dev/disk/by-label/boot";
+  fileSystems."/boot".fsType = "vfat";
+  fileSystems."/boot".options = ["fmask=0077" "dmask=0077"];
 
   swapDevices = [
     {
@@ -52,16 +48,14 @@
 
   services.getty.autologinUser = "kubujuss";
   services.xserver.videoDrivers = ["nvidia"];
-
   services.openssh = {
     enable = true;
     openFirewall = true;
   };
 
-  environment.variables = {
-    CUDA_HOME = "/run/opengl-driver";
-    CUDA_PATH = "/run/opengl-driver";
-  };
+  environment.variables.CUDA_HOME = "/run/opengl-driver";
+  environment.variables.CUDA_PATH = "/run/opengl-driver";
+  environment.systemPackages = with pkgs; [uv];
 
   system.stateVersion = "24.05";
 }

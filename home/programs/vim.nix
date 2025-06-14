@@ -2,6 +2,7 @@
   home.packages = with pkgs; [vim];
   home.file.".vimrc".text = ''
     set nocompatible
+    set encoding=utf-8
 
     set number
     set relativenumber
@@ -35,6 +36,7 @@
     set directory=~/.vim
 
     set ruler
+    set nowrap
     set showcmd
     set showmode
     set incsearch
@@ -51,7 +53,6 @@
     set laststatus=2
 
     set termguicolors
-    set encoding=utf-8
     set background=dark
 
     let mapleader=" "

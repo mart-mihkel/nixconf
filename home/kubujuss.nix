@@ -2,11 +2,13 @@
   imports = [
     ./kubujuss-headless.nix
     ./services/dunst.nix
+    ./services/picom.nix
     ./programs/alacritty.nix
     ./programs/waybar.nix
     ./programs/hypr.nix
     ./programs/rofi.nix
     ./programs/foot.nix
+    ./programs/i3.nix
     ./programs/nvim
   ];
 
@@ -24,9 +26,7 @@
     pulsemixer
     playerctl
     bluetui
-    brave
     feh
-    vlc
 
     nerd-fonts.jetbrains-mono
     noto-fonts

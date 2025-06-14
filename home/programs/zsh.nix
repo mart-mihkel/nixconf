@@ -17,7 +17,7 @@
       nb = ".venv/bin/jupyter-notebook";
 
       hs = "bluetoothctl connect 14:3F:A6:DA:AA:00";
-      wj = "ssh alajaam.risuhunnik.xyz wol --port=9 9C:6B:00:13:EE:B0";
+      wj = "ssh alajaam.risuhunnik.xyz wakeonlan 9C:6B:00:13:EE:B0";
     };
 
     completionInit = ''
@@ -37,10 +37,10 @@
         branch=$(git symbolic-ref --short HEAD 2> /dev/null)
         venv=$(echo $VIRTUAL_ENV_PROMPT | tr -d '()')
 
-        [[ -n $venv ]] && items="%F{3} $venv%f"
-        [[ -n $branch ]] && items="$items%F{5}󰊢 $branch%f "
+        [[ -n $venv ]] && items="%F{3}$venv%f"
+        [[ -n $branch ]] && items="$items%F{5}$branch%f "
 
-        PROMPT="%F{4}%~%f $items"
+        PROMPT="%F{2}%m%f %F{4}%~%f $items"
       }
     '';
   };

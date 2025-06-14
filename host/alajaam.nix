@@ -5,7 +5,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./services/cloudflare-tunnel.nix {host = "alajaam";})
+    (import ./modules/cloudflare-tunnel.nix {host = "alajaam";})
     ./modules/common.nix
   ];
 
@@ -20,10 +20,8 @@
   networking.networkmanager.enable = true;
   networking.usePredictableInterfaceNames = true;
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/NIXOS_SD";
-    fsType = "ext4";
-  };
+  fileSystems."/".device = "/dev/disk/by-label/NIXOS_SD";
+  fileSystems."/".fsType = "ext4";
 
   swapDevices = [
     {
@@ -33,7 +31,6 @@
   ];
 
   services.getty.autologinUser = "kubujuss";
-
   services.openssh = {
     enable = true;
     openFirewall = true;

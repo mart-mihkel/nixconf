@@ -25,17 +25,14 @@
   networking.useDHCP = lib.mkDefault true;
   networking.networkmanager.enable = true;
   networking.usePredictableInterfaceNames = true;
+  networking.hosts."192.168.0.1" = ["alajaam"];
+  networking.hosts."192.168.0.2" = ["jaam"];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/c7dd8938-fe81-43d5-82bf-16a44fe28617";
-    fsType = "ext4";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/2A12-F15C";
-    fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
-  };
+  fileSystems."/".device = "/dev/disk/by-uuid/c7dd8938-fe81-43d5-82bf-16a44fe28617";
+  fileSystems."/".fsType = "ext4";
+  fileSystems."/boot".device = "/dev/disk/by-uuid/2A12-F15C";
+  fileSystems."/boot".fsType = "vfat";
+  fileSystems."/boot".options = ["fmask=0077" "dmask=0077"];
 
   swapDevices = [
     {
@@ -44,12 +41,19 @@
     }
   ];
 
+  users.users.kubujuss.extraGroups = ["docker"];
+  virtualisation.docker.enable = true;
+
   security.sudo.wheelNeedsPassword = false;
 
   xdg.portal.enable = true;
 
   programs.hyprland.enable = true;
   programs.steam.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [libGL glib glibc stdenv.cc.cc];
+  };
 
   services.thermald.enable = true;
   services.undervolt = {
@@ -60,10 +64,8 @@
 
   services.tlp = {
     enable = true;
-    settings = {
-      START_CHARGE_THRESH_BAT0 = 70;
-      STOP_CHARGE_THRESH_BAT0 = 90;
-    };
+    settings.START_CHARGE_THRESH_BAT0 = 70;
+    settings.STOP_CHARGE_THRESH_BAT0 = 90;
   };
 
   services.pipewire = {
@@ -71,15 +73,41 @@
     pulse.enable = true;
   };
 
+  services.xserver = {
+    enable = true;
+    displayManager.startx.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     eduvpn-client
     qbittorrent
     qdigidoc
     obsidian
-    zoom-us
     spotify
+    zoom-us
     discord
     slack
+    brave
+    vlc
+
+    gnumake
+    sqlite
+    nodejs
+    cargo
+    clang
+    cmake
+    ninja
+    meson
+    nmap
+    gcc
+    wol
+    uv
+    jq
+
+    p7zip
+    unzip
+    zstd
+    zip
   ];
 
   system.stateVersion = "24.11";
