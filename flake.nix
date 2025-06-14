@@ -21,7 +21,7 @@
   };
 
   outputs = {...} @ inputs: let
-    mk-user = users: {
+    mk-users = users: {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users = users;
@@ -30,7 +30,7 @@
     mk-modules = users: [
       inputs.agenix.nixosModules.default
       inputs.home-manager.nixosModules.home-manager
-      (mk-user users)
+      (mk-users users)
     ];
 
     headed = mk-modules {kubujuss = import ./home/kubujuss.nix;};

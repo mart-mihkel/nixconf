@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ./programs/fastfetch.nix
     ./programs/tmux.nix
     ./programs/btop.nix
     ./programs/zsh.nix
@@ -14,6 +13,7 @@
   home.homeDirectory = "/home/kubujuss";
   home.packages = with pkgs; [
     cloudflared
+    fastfetch
     ripgrep
     glow
     tree

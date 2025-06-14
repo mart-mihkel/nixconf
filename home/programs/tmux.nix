@@ -9,7 +9,6 @@
       set -ag terminal-overrides ",xterm-256color:RGB"
 
       set -g status-style "fg=default bg=default"
-      set -g status-right "%H:%M #(whoami)@#H"
       set -g pane-active-border-style "fg=default"
       set -g pane-border-style "fg=default"
 

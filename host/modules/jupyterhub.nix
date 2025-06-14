@@ -32,10 +32,10 @@ in {
       c.Authenticator.allowed_users = { 'kubujuss' }
       c.Authenticator.admin_users = { 'kubujuss' }
       c.SystemdSpawner.environment = {
-        # 'CUDA_HOME': '/run/opengl-driver',
-        # 'CUDA_PATH': '/run/opengl-driver',
-        'PYTORCH_CUDA_ALLOC_CONF': 'expandable_segments:True',
-        'TF_CPP_MIN_LOG_LEVEL': '3',
+        'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
+        'SSL_CERT_DIR': '/etc/ssl/certs',
+        'CUDA_HOME': '/run/opengl-driver',
+        'CUDA_PATH': '/run/opengl-driver',
       }
     '';
   };

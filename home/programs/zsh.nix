@@ -9,15 +9,15 @@
       mv = "mv -v";
 
       ls = "ls --color";
+      la = "la -A --color";
       ll = "ls -lAh --color";
-      l = "ls -A --color";
 
       at = "source .venv/bin/activate";
       jl = ".venv/bin/jupyter-lab";
       nb = ".venv/bin/jupyter-notebook";
 
       hs = "bluetoothctl connect 14:3F:A6:DA:AA:00";
-      wj = "ssh alajaam.risuhunnik.xyz wakeonlan 9C:6B:00:13:EE:B0";
+      wj = "ssh alajaam.risuhunnik.xyz /usr/sbin/etherwake -i eth0 9C:6B:00:13:EE:B0";
     };
 
     completionInit = ''
