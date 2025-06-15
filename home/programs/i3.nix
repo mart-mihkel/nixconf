@@ -74,27 +74,31 @@
     file = {
       ".config/i3/screenshot.sh" = {
         executable = true;
-        text = ''
-          #!/usr/bin/env bash
+        text =
+          # bash
+          ''
+            #!/usr/bin/env bash
 
-          name="$(date +%b%d%H%M%S | tr '[:upper:]' '[:lower:]').png"
-          dir="$HOME/Pictures/screenshots"
-          target="$dir/$name"
-          mkdir --parents "$dir"
+            name="$(date +%b%d%H%M%S | tr '[:upper:]' '[:lower:]').png"
+            dir="$HOME/Pictures/screenshots"
+            target="$dir/$name"
+            mkdir --parents "$dir"
 
-          maim -s | xclip -selection clipboard -t image/png
-          xclip -selection clipboard -t image/png -o > "$target"
+            maim -s | xclip -selection clipboard -t image/png
+            xclip -selection clipboard -t image/png -o > "$target"
 
-          action=$(dunstify -A "preview,feh" -u low -I "$target" "Screenshot" "Saved as $name")
-          [[ "$action" == "2" ]] && feh $target
-        '';
+            action=$(dunstify -A "preview,feh" -u low -I "$target" "Screenshot" "Saved as $name")
+            [[ "$action" == "2" ]] && feh $target
+          '';
       };
 
-      ".xinitrc".text = ''
-        setxkbmap -layout ee -variant nodeadkeys
-        xset r rate 256 32
-        exec i3
-      '';
+      ".xinitrc".text =
+        # bash
+        ''
+          setxkbmap -layout ee -variant nodeadkeys
+          xset r rate 256 32
+          exec i3
+        '';
     };
 
     packages = with pkgs; [

@@ -28,16 +28,18 @@ in {
   services.jupyterhub = {
     enable = true;
     jupyterlabEnv = pypkgs;
-    extraConfig = ''
-      c.Authenticator.allowed_users = { 'kubujuss' }
-      c.Authenticator.admin_users = { 'kubujuss' }
-      c.SystemdSpawner.environment = {
-        'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
-        'SSL_CERT_DIR': '/etc/ssl/certs',
-        'CUDA_HOME': '/run/opengl-driver',
-        'CUDA_PATH': '/run/opengl-driver',
-      }
-    '';
+    extraConfig =
+      # python
+      ''
+        c.Authenticator.allowed_users = { 'kubujuss' }
+        c.Authenticator.admin_users = { 'kubujuss' }
+        c.SystemdSpawner.environment = {
+          'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
+          'SSL_CERT_DIR': '/etc/ssl/certs',
+          'CUDA_HOME': '/run/opengl-driver',
+          'CUDA_PATH': '/run/opengl-driver',
+        }
+      '';
   };
 
   networking.firewall.allowedTCPPorts = [8000]; # jupyterhub

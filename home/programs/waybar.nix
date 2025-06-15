@@ -53,63 +53,65 @@
       battery.states.critical = 10;
     };
 
-    style = ''
-      * {
-        all: unset;
+    style =
+      # css
+      ''
+        * {
+          all: unset;
+          font-size: 12px;
+          font-family: "cozette";
+        }
 
-        font-family: "cozette";
-        font-size: 12px;
+        #workspaces button {
+          padding: 0 2px;
+        }
 
-        color: #d8dee9;
-      }
+        #workspaces button.active {
+          color: #a3be8c;
+        }
 
-      #workspaces button {
-        padding: 0 2px;
-        opacity: 0.6;
-      }
+        #workspaces button.urgent {
+          color: #bf616a;
+        }
 
-      #workspaces button.active {
-        opacity: 1;
-      }
+        tooltip,
+        #tray menu,
+        #workspaces,
+        #window,
+        #tray,
+        #mpris,
+        #clock,
+        #cpu,
+        #memory,
+        #network,
+        #bluetooth,
+        #pulseaudio.source-muted,
+        #backlight,
+        #battery {
+          color: #d8dee9;
+          border: 1px solid #d8dee9;
+          background-color: #2e3440;
+          padding: 2px;
+        }
 
-      tooltip,
-      #tray menu {
-        background-color: #2e3440;
-        border: 1px solid #d8dee9;
-        padding: 2px 4px;
-      }
+        #cpu.warning,
+        #memory.warning,
+        #battery.warning {
+          color: #ebcb8b;
+          border: 1px solid #ebcb8b;
+          background-color: #2e3440;
+          padding: 2px;
+        }
 
-      #workspaces,
-      #window,
-      #tray,
-      #mpris,
-      #clock,
-      #cpu,
-      #memory,
-      #network,
-      #bluetooth,
-      #pulseaudio,
-      #backlight,
-      #battery {
-        background-color: #2e3440;
-        border: 1px solid #d8dee9;
-        padding: 2px 4px;
-      }
-
-      #cpu.warning,
-      #memory.warning,
-      #battery.warning {
-        border: 1px solid #ebcb8b;
-        color: #ebcb8b;;
-      }
-
-      #workspaces button.urgent,
-      #cpu.critical,
-      #memory.critical,
-      #battery.critical {
-        border: 1px solid #bf616a;
-        color: #bf616a;
-      }
-    '';
+        #pulseaudio,
+        #cpu.critical,
+        #memory.critical,
+        #battery.critical {
+          color: #bf616a;
+          border: 1px solid #bf616a;
+          background-color: #2e3440;
+          padding: 2px;
+        }
+      '';
   };
 }

@@ -20,28 +20,32 @@
       wj = "ssh alajaam.risuhunnik.xyz /usr/sbin/etherwake -i eth0 9C:6B:00:13:EE:B0";
     };
 
-    completionInit = ''
-      autoload -Uz compinit && compinit
-      zstyle ":completion:*" menu yes select
-      zstyle ":completion:*" special-dirs true
-      zstyle ":completion::complete:*" gain-privileges 1
-    '';
+    completionInit =
+      # bash
+      ''
+        autoload -Uz compinit && compinit
+        zstyle ":completion:*" menu yes select
+        zstyle ":completion:*" special-dirs true
+        zstyle ":completion::complete:*" gain-privileges 1
+      '';
 
-    initContent = ''
-      setopt list_packed
-      setopt no_case_glob no_case_match
+    initContent =
+      # bash
+      ''
+        setopt list_packed
+        setopt no_case_glob no_case_match
 
-      precmd_functions+=(_prompt)
-      function _prompt() {
-        items=""
-        branch=$(git symbolic-ref --short HEAD 2> /dev/null)
-        venv=$(echo $VIRTUAL_ENV_PROMPT | tr -d '()')
+        precmd_functions+=(_prompt)
+        function _prompt() {
+          items=""
+          branch=$(git symbolic-ref --short HEAD 2> /dev/null)
+          venv=$(echo $VIRTUAL_ENV_PROMPT | tr -d '()')
 
-        [[ -n $venv ]] && items="%F{3}$venv%f"
-        [[ -n $branch ]] && items="$items%F{5}$branch%f "
+          [[ -n $venv ]] && items="%F{3}$venv%f"
+          [[ -n $branch ]] && items="$items%F{5}$branch%f "
 
-        PROMPT="%F{2}%m%f %F{4}%~%f $items"
-      }
-    '';
+          PROMPT="%F{2}%m%f %F{4}%~%f $items"
+        }
+      '';
   };
 }

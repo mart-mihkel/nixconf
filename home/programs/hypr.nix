@@ -203,37 +203,41 @@
     file = {
       ".config/hypr/screenshot.sh" = {
         executable = true;
-        text = ''
-          #!/usr/bin/env bash
+        text =
+          # bash
+          ''
+            #!/usr/bin/env bash
 
-          geometry=$(slurp)
-          [[ -z "$geometry" ]] && exit 1
+            geometry=$(slurp)
+            [[ -z "$geometry" ]] && exit 1
 
-          name="$(date +%b%d%H%M%S | tr '[:upper:]' '[:lower:]').png"
-          dir="Pictures/screenshots"
-          target="$dir/$name"
-          mkdir -p "$dir"
+            name="$(date +%b%d%H%M%S | tr '[:upper:]' '[:lower:]').png"
+            dir="Pictures/screenshots"
+            target="$dir/$name"
+            mkdir -p "$dir"
 
-          grim -g "$geometry" - | wl-copy -t image/png
-          wl-paste > "$target"
+            grim -g "$geometry" - | wl-copy -t image/png
+            wl-paste > "$target"
 
-          action=$(dunstify -A "preview,feh" -u low -I "$target" "Screenshot" "Saved as $name")
-          [[ "$action" == "2" ]] && feh $target
-        '';
+            action=$(dunstify -A "preview,feh" -u low -I "$target" "Screenshot" "Saved as $name")
+            [[ "$action" == "2" ]] && feh $target
+          '';
       };
 
       ".config/hypr/wallpaper.sh" = {
         executable = true;
-        text = ''
-          #!/usr/bin/env bash
+        text =
+          # bash
+          ''
+            #!/usr/bin/env bash
 
-          wals="git/wallpapers"
-          pick="$wals/$(ls "$wals" | grep -E 'jpg|jpeg|png' | rofi -dmenu)"
-          [[ "$pick" == "$wals/" ]] && exit 1
+            wals="git/wallpapers"
+            pick="$wals/$(ls "$wals" | grep -E 'jpg|jpeg|png' | rofi -dmenu)"
+            [[ "$pick" == "$wals/" ]] && exit 1
 
-          cp -f $pick ~/.cache/wallpaper
-          hyprctl hyprpaper reload ,$pick
-        '';
+            cp -f $pick ~/.cache/wallpaper
+            hyprctl hyprpaper reload ,$pick
+          '';
       };
     };
 
