@@ -22,7 +22,7 @@
   users.users.kubujuss.shell = pkgs.zsh;
   users.users.kubujuss.createHome = true;
   users.users.kubujuss.isNormalUser = true;
-  users.users.kubujuss.extraGroups = ["wheel" "networkmanager"];
+  users.users.kubujuss.extraGroups = ["wheel"];
 
   programs.zsh.enable = true;
   programs.nix-ld.enable = true;

@@ -62,18 +62,6 @@
           font-family: "cozette";
         }
 
-        #workspaces button {
-          padding: 0 2px;
-        }
-
-        #workspaces button.active {
-          color: #a3be8c;
-        }
-
-        #workspaces button.urgent {
-          color: #bf616a;
-        }
-
         tooltip,
         #tray menu,
         #workspaces,
@@ -91,7 +79,7 @@
           color: #d8dee9;
           border: 1px solid #d8dee9;
           background-color: #2e3440;
-          padding: 2px;
+          padding: 2px 6px;
         }
 
         #cpu.warning,
@@ -100,7 +88,7 @@
           color: #ebcb8b;
           border: 1px solid #ebcb8b;
           background-color: #2e3440;
-          padding: 2px;
+          padding: 2px 6px;
         }
 
         #pulseaudio,
@@ -110,7 +98,23 @@
           color: #bf616a;
           border: 1px solid #bf616a;
           background-color: #2e3440;
+          padding: 2px 6px;
+        }
+
+        #workspaces {
           padding: 2px;
+        }
+
+        #workspaces button {
+          padding: 0 2px;
+        }
+
+        #workspaces button.active {
+          color: #a3be8c;
+        }
+
+        #workspaces button.urgent {
+          color: #bf616a;
         }
       '';
   };

@@ -44,7 +44,6 @@
       set incsearch
       set showmatch
       set cursorline
-      set lazyredraw
       set scrolloff=4
 
       set list
@@ -54,34 +53,13 @@
       set splitbelow
       set laststatus=2
 
-      set termguicolors
-      set background=dark
-
       let mapleader=" "
       let g:netrw_banner=0
-
-      colorscheme sorbet
 
       syntax on
       filetype plugin on
 
       nnoremap <space> <nop>
-
-      nnoremap j gj
-      vnoremap j gj
-      nnoremap k gk
-      vnoremap k gk
-
-      nnoremap <C-j> :cnext<CR>
-      vnoremap <C-j> :cnext<CR>
-      nnoremap <C-k> :cprevious<CR>
-      vnoremap <C-k> :cprevious<CR>
-
-      nnoremap <C-l> :lnext<CR>
-      vnoremap <C-l> :lnext<CR>
-      nnoremap <C-h> :lprevious<CR>
-      vnoremap <C-h> :lprevious<CR>
-
       nnoremap <leader>f :%s/\s\+$//e<CR>
     '';
 }

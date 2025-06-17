@@ -41,7 +41,7 @@
     }
   ];
 
-  users.users.kubujuss.extraGroups = ["docker"];
+  users.users.kubujuss.extraGroups = ["docker" "networkmanager"];
   virtualisation.docker.enable = true;
 
   security.sudo.wheelNeedsPassword = false;
@@ -91,6 +91,7 @@
     vlc
 
     gnumake
+    luajit
     sqlite
     nodejs
     cargo
