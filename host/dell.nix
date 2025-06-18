@@ -10,29 +10,47 @@
     ./modules/common.nix
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    hostPlatform = lib.mkDefault "x86_64-linux";
+    config.allowUnfree = true;
+  };
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
-  boot.kernelModules = ["kvm-intel"];
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
+    kernelModules = ["kvm-intel"];
+  };
 
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.bluetooth.enable = true;
+  hardware = {
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    bluetooth.enable = true;
+  };
 
-  networking.hostName = "dell";
-  networking.useDHCP = lib.mkDefault true;
-  networking.networkmanager.enable = true;
-  networking.usePredictableInterfaceNames = true;
-  networking.hosts."192.168.0.1" = ["alajaam"];
-  networking.hosts."192.168.0.2" = ["jaam"];
+  networking = {
+    hostName = "dell";
+    useDHCP = lib.mkDefault true;
+    networkmanager.enable = true;
+    usePredictableInterfaceNames = true;
+    hosts = {
+      "192.168.0.1" = ["alajaam"];
+      "192.168.0.2" = ["jaam"];
+    };
+  };
 
-  fileSystems."/".device = "/dev/disk/by-uuid/c7dd8938-fe81-43d5-82bf-16a44fe28617";
-  fileSystems."/".fsType = "ext4";
-  fileSystems."/boot".device = "/dev/disk/by-uuid/2A12-F15C";
-  fileSystems."/boot".fsType = "vfat";
-  fileSystems."/boot".options = ["fmask=0077" "dmask=0077"];
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/de099741-5035-4505-906a-81718b7ebc02";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/3E9B-209A";
+      fsType = "vfat";
+      options = ["fmask=0077" "dmask=0077"];
+    };
+  };
 
   swapDevices = [
     {
@@ -41,44 +59,96 @@
     }
   ];
 
-  users.users.kubujuss.extraGroups = ["docker" "networkmanager"];
-  virtualisation.docker.enable = true;
+  users.users.kubujuss = {
+    shell = pkgs.zsh;
+    extraGroups = ["docker" "networkmanager"];
+  };
 
   security.sudo.wheelNeedsPassword = false;
-
+  virtualisation.docker.enable = true;
   xdg.portal.enable = true;
 
-  programs.hyprland.enable = true;
-  programs.steam.enable = true;
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [libGL glib glibc stdenv.cc.cc];
+  programs = {
+    zsh.enable = true;
+    steam.enable = true;
+    hyprland.enable = true;
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      withNodeJs = true;
+      withPython3 = true;
+    };
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [libGL glib glibc stdenv.cc.cc];
+    };
   };
 
-  services.thermald.enable = true;
-  services.undervolt = {
-    enable = true;
-    gpuOffset = -100;
-    coreOffset = -100;
+  services = {
+    thermald.enable = true;
+    undervolt = {
+      enable = true;
+      gpuOffset = -100;
+      coreOffset = -100;
+    };
+    tlp = {
+      enable = true;
+      settings = {
+        START_CHARGE_THRESH_BAT0 = 70;
+        STOP_CHARGE_THRESH_BAT0 = 90;
+      };
+    };
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+    };
   };
 
-  services.tlp = {
-    enable = true;
-    settings.START_CHARGE_THRESH_BAT0 = 70;
-    settings.STOP_CHARGE_THRESH_BAT0 = 90;
-  };
-
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
-
-  services.xserver = {
-    enable = true;
-    displayManager.startx.enable = true;
-  };
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    noto-fonts
+    cozette
+  ];
 
   environment.systemPackages = with pkgs; [
+    pulseaudio
+    pulsemixer
+    playerctl
+    bluetui
+    gnumake
+    luajit
+    sqlite
+    nodejs
+    cargo
+    clang
+    cmake
+    ninja
+    meson
+    p7zip
+    unzip
+    nmap
+    zstd
+    zip
+    gcc
+    wol
+    uv
+
+    wl-clipboard
+    hyprpaper
+    hyprland
+    hypridle
+    hyprlock
+    waybar
+    dunst
+    wtype
+    foot
+    feh
+    (rofi-wayland.override {
+      plugins = with pkgs; [
+        rofi-emoji
+      ];
+    })
+
     eduvpn-client
     qbittorrent
     qdigidoc
@@ -89,27 +159,7 @@
     slack
     brave
     vlc
-
-    gnumake
-    luajit
-    sqlite
-    nodejs
-    cargo
-    clang
-    cmake
-    ninja
-    meson
-    nmap
-    gcc
-    wol
-    uv
-    jq
-
-    p7zip
-    unzip
-    zstd
-    zip
   ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

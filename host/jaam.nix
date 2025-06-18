@@ -12,32 +12,48 @@
     ./modules/common.nix
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.cudaSupport = true;
+  nixpkgs = {
+    hostPlatform = lib.mkDefault "x86_64-linux";
+    config.allowUnfree = true;
+    config.cudaSupport = true;
+  };
 
-  boot.loader.systemd-boot.enable = true;
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
-  boot.kernelModules = ["kvm-amd"];
+  boot = {
+    loader.systemd-boot.enable = true;
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
+    kernelModules = ["kvm-amd"];
+  };
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.graphics.enable = true;
-  hardware.nvidia.open = true;
-  hardware.nvidia.nvidiaPersistenced = true;
-  hardware.nvidia-container-toolkit.enable = true;
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    graphics.enable = true;
+    nvidia-container-toolkit.enable = true;
+    nvidia = {
+      open = true;
+      nvidiaPersistenced = true;
+    };
+  };
 
-  networking.hostName = "jaam";
-  networking.useDHCP = lib.mkDefault true;
-  networking.networkmanager.enable = true;
-  networking.usePredictableInterfaceNames = true;
-  networking.interfaces.enp9s0.wakeOnLan.enable = true;
-  networking.firewall.allowedUDPPorts = [9]; # wakeonlan
+  networking = {
+    hostName = "jaam";
+    useDHCP = lib.mkDefault true;
+    networkmanager.enable = true;
+    usePredictableInterfaceNames = true;
+    interfaces.enp9s0.wakeOnLan.enable = true;
+    firewall.allowedUDPPorts = [9]; # wakeonlan
+  };
 
-  fileSystems."/".device = "/dev/disk/by-label/nixos";
-  fileSystems."/".fsType = "ext4";
-  fileSystems."/boot".device = "/dev/disk/by-label/boot";
-  fileSystems."/boot".fsType = "vfat";
-  fileSystems."/boot".options = ["fmask=0077" "dmask=0077"];
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/nixos";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-label/boot";
+      fsType = "vfat";
+      options = ["fmask=0077" "dmask=0077"];
+    };
+  };
 
   swapDevices = [
     {
@@ -46,16 +62,22 @@
     }
   ];
 
-  services.getty.autologinUser = "kubujuss";
-  services.xserver.videoDrivers = ["nvidia"];
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
+  services = {
+    getty.autologinUser = "kubujuss";
+    xserver.videoDrivers = ["nvidia"];
+    openssh = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
-  environment.variables.CUDA_HOME = "/run/opengl-driver";
-  environment.variables.CUDA_PATH = "/run/opengl-driver";
-  environment.systemPackages = with pkgs; [uv];
+  environment = {
+    variables = {
+      CUDA_HOME = "/run/opengl-driver";
+      CUDA_PATH = "/run/opengl-driver";
+    };
+    systemPackages = with pkgs; [uv];
+  };
 
   system.stateVersion = "24.05";
 }

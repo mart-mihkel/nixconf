@@ -11,17 +11,25 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
-  boot.initrd.availableKernelModules = ["xhci_pci"];
+  boot = {
+    loader = {
+      grub.enable = false;
+      generic-extlinux-compatible.enable = true;
+    };
+    initrd.availableKernelModules = ["xhci_pci"];
+  };
 
-  networking.hostName = "alajaam";
-  networking.useDHCP = lib.mkDefault true;
-  networking.networkmanager.enable = true;
-  networking.usePredictableInterfaceNames = true;
+  networking = {
+    hostName = "alajaam";
+    useDHCP = lib.mkDefault true;
+    networkmanager.enable = true;
+    usePredictableInterfaceNames = true;
+  };
 
-  fileSystems."/".device = "/dev/disk/by-label/NIXOS_SD";
-  fileSystems."/".fsType = "ext4";
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
+  };
 
   swapDevices = [
     {
@@ -30,10 +38,12 @@
     }
   ];
 
-  services.getty.autologinUser = "kubujuss";
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
+  services = {
+    getty.autologinUser = "kubujuss";
+    openssh = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   system.stateVersion = "24.05";
