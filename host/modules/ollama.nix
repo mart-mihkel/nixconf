@@ -10,5 +10,5 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [3000]; # nextjs-ollama
+  networking.firewall.allowedTCPPorts = [3000];
 }

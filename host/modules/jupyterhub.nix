@@ -14,6 +14,8 @@
       plotnine
       seaborn
       opencv4
+      plotly
+      polars
       pandas
       numpy
       scipy
@@ -42,5 +44,5 @@ in {
       '';
   };
 
-  networking.firewall.allowedTCPPorts = [8000]; # jupyterhub
+  networking.firewall.allowedTCPPorts = [8000];
 }

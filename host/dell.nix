@@ -111,10 +111,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    pulseaudio
-    pulsemixer
-    playerctl
-    bluetui
+    nettools
     gnumake
     luajit
     sqlite
@@ -133,21 +130,26 @@
     wol
     uv
 
+    (rofi-wayland.override {plugins = with pkgs; [rofi-emoji];})
+    wayland-pipewire-idle-inhibit
+    brightnessctl
     wl-clipboard
+    pulseaudio
+    pulsemixer
+    gammastep
+    playerctl
     hyprpaper
     hyprland
     hypridle
     hyprlock
+    bluetui
     waybar
     dunst
     wtype
+    slurp
+    grim
     foot
     feh
-    (rofi-wayland.override {
-      plugins = with pkgs; [
-        rofi-emoji
-      ];
-    })
 
     eduvpn-client
     qbittorrent

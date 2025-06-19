@@ -8,7 +8,10 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (import ./modules/cloudflare-tunnel.nix {host = "jaam";})
+    ./modules/soft-serve.nix
     ./modules/jupyterhub.nix
+    ./modules/rstudio.nix
+    ./modules/ollama.nix
     ./modules/common.nix
   ];
 
