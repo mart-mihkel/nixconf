@@ -4,7 +4,7 @@
     settings = {
       main = {
         term = "xterm-256color";
-        font = "Jetbrains Mono Nerd Font:size=13";
+        font = "Jetbrains Mono Nerd Font:size=12";
       };
 
       cursor.color = "282828 eceff4";

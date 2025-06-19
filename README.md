@@ -11,6 +11,14 @@ nix-shell -p vim -p git --experimental-features 'nix-command flakes'
 nixos-rebuild switch --flake .#target-configuration
 ```
 
+## Home
+
+Dotfiles with home manager
+
+```bash
+home-manager switch --flake .#target-home
+```
+
 ## Secrets
 
 Add the recipient public key from `/etc/ssh` to [secrets/secrets.nix](./secrets/secrets.nix) and reference the relevant secrets

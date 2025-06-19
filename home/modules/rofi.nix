@@ -27,9 +27,17 @@
         background-color = mkLiteral "#2e3440";
       };
 
-      entry.cursor-width = 8;
-      inputbar.children = map mkLiteral ["entry"];
-      "element selected".background-color = mkLiteral "#4c566a";
+      entry = {
+        cursor-width = 8;
+      };
+
+      inputbar = {
+        children = map mkLiteral ["entry"];
+      };
+
+      "element selected" = {
+        background-color = mkLiteral "#4c566a";
+      };
     };
 
     package = pkgs.rofi-wayland.override {

@@ -12,28 +12,52 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/release-25.05";
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.darwin.follows = "";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {...} @ inputs: let
+    nixos = inputs.nixpkgs.lib.nixosSystem;
     agenix = inputs.agenix.nixosModules.default;
+    home-man = inputs.home-manager.lib.homeManagerConfiguration;
   in {
     nixosConfigurations = {
-      dell = inputs.nixpkgs.lib.nixosSystem {
+      dell = nixos {
         system = "x86_64-linux";
         modules = [./host/dell.nix];
       };
 
-      jaam = inputs.nixpkgs.lib.nixosSystem {
+      jaam = nixos {
         system = "x86_64-linux";
         modules = [./host/jaam.nix agenix];
       };
 
-      alajaam = inputs.nixpkgs.lib.nixosSystem {
+      alajaam = nixos {
         system = "aarch64-linux";
         modules = [./host/alajaam.nix agenix];
+      };
+    };
+
+    homeConfigurations = {
+      kubujuss = home-man {
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+        modules = [./home/kubujuss.nix];
+      };
+
+      kubujuss-x86 = home-man {
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+        modules = [./home/kubujuss-headless.nix];
+      };
+
+      kubujuss-arm = home-man {
+        pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
+        modules = [./home/kubujuss-headless.nix];
       };
     };
   };

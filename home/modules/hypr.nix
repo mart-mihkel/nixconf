@@ -6,21 +6,28 @@
         gaps_in = 8;
         gaps_out = 16;
         border_size = 1;
-
         "col.active_border" = "rgb(d8dee9)";
-        "col.inactive_border" = "rgb(d8dee9)";
+        "col.inactive_border" = "rgb(4c566a)";
       };
 
       decoration = {
         rounding = 0;
-        blur.enabled = false;
-        shadow.enabled = false;
+
+        blur = {
+          enabled = false;
+        };
+
+        shadow = {
+          enabled = false;
+        };
       };
 
-      animations.animation = [
-        "global, 1, 2.5, default"
-        "layers, 1, 2.5, default, slide"
-      ];
+      animations = {
+        animation = [
+          "global, 1, 2.5, default"
+          "layers, 1, 2.5, default, slide"
+        ];
+      };
 
       input = {
         kb_layout = "ee";
@@ -32,7 +39,9 @@
         follow_mouse = 1;
         sensitivity = 0;
 
-        touchpad.natural_scroll = false;
+        touchpad = {
+          natural_scroll = false;
+        };
       };
 
       gestures = {
@@ -40,8 +49,13 @@
         workspace_swipe_invert = true;
       };
 
-      cursor.inactive_timeout = 1;
-      misc.disable_hyprland_logo = true;
+      cursor = {
+        inactive_timeout = 1;
+      };
+
+      misc = {
+        disable_hyprland_logo = true;
+      };
 
       # monitor = ", preferred, auto, 1";
       monitor = ", preferred, auto, 1, mirror, eDP-1";
@@ -65,8 +79,8 @@
         "SUPER, code:60              , exec, rofi -show emoji"
         "SUPER, R                    , exec, rofi -show drun"
         "SUPER, N                    , exec, playerctl -a pause & hyprlock"
-        "SUPER, S                    , exec, ~/.config/hypr/screenshot.sh"
-        "SUPER, W                    , exec, ~/.config/hypr/wallpaper.sh"
+        "SUPER, S                    , exec, ~/.scripts/wl-screenshot.sh"
+        "SUPER, W                    , exec, ~/.scripts/hypr-wallpaper.sh"
         "SUPER, Q                    , exec, foot"
 
         "SUPER, V, togglefloating,"
@@ -120,8 +134,13 @@
   programs.hyprlock = {
     enable = true;
     settings = {
-      general = {hide_cursor = true;};
-      background = [{path = "~/.cache/wallpaper";}];
+      general = {
+        hide_cursor = true;
+      };
+
+      background = [
+        {path = "~/.cache/wallpaper";}
+      ];
 
       input-field = [
         {
@@ -201,7 +220,7 @@
 
   home = {
     file = {
-      ".config/hypr/screenshot.sh" = {
+      ".scripts/wl-screenshot.sh" = {
         executable = true;
         text =
           # bash
@@ -224,7 +243,7 @@
           '';
       };
 
-      ".config/hypr/wallpaper.sh" = {
+      ".scripts/hypr-wallpaper.sh" = {
         executable = true;
         text =
           # bash

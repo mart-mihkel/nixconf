@@ -21,7 +21,7 @@
         "Mod4+period" = "exec --no-startup-id rofi -show emoji";
         "Mod4+r" = "exec --no-startup-id rofi -show drun";
         "Mod4+n" = "exec --no-startup-id playerctl -a pause & xlock -mode blank";
-        "Mod4+s" = "exec --no-startup-id ~/.config/i3/screenshot.sh";
+        "Mod4+s" = "exec --no-startup-id ~/.scripts/xorg-screenshot.sh";
         "Mod4+q" = "exec --no-startup-id kitty -1";
 
         "Mod4+f" = "fullscreen toggle";
@@ -72,7 +72,7 @@
 
   home = {
     file = {
-      ".config/i3/screenshot.sh" = {
+      ".scripts/xorg-screenshot.sh" = {
         executable = true;
         text =
           # bash
