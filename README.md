@@ -1,4 +1,4 @@
-# Nix dotfiles and various devenvs
+# Nix dotfiles
 
 The thing
 
@@ -16,6 +16,7 @@ nixos-rebuild switch --flake .#target-configuration
 Dotfiles with home manager
 
 ```bash
+nix run home-manager/master -- init --switch
 home-manager switch --flake .#target-home
 ```
 
@@ -33,17 +34,15 @@ EDITOR=vim agenix -e secret.age
 Make the secret usable
 
 ```nix
-{
-  age.secrets.secret.file = ./secrets/secret.age;
-}
-
 let
   secret-file = config.age.secrets.secret.path;
-in {}
+in {
+  age.secrets.secret.file = ./secrets/secret.age;
+}
 ```
 
 ## Devenvs
 
-Run `nix develop` in the dir with a flake, or `docker compose up` for Docker based envs
+Run `nix develop` in the dir with a flake.
 
 See [dev-templates](https://github.com/the-nix-way/dev-templates) repo for dev flake templates
