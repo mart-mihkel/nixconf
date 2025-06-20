@@ -66,7 +66,11 @@
 
   security.sudo.wheelNeedsPassword = false;
   virtualisation.docker.enable = true;
-  xdg.portal.enable = true;
+
+  xdg = {
+    portal.enable = true;
+    icons.fallbackCursorThemes = ["Adwaita"];
+  };
 
   programs = {
     zsh.enable = true;
@@ -132,6 +136,7 @@
 
     (rofi-wayland.override {plugins = with pkgs; [rofi-emoji];})
     wayland-pipewire-idle-inhibit
+    adwaita-icon-theme
     brightnessctl
     wl-clipboard
     pulseaudio
