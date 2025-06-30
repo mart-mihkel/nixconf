@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   modulesPath,
   ...
 }: {
@@ -24,6 +25,12 @@
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
     usePredictableInterfaceNames = true;
+    interfaces.wlan0.ipv4.addresses = [
+      {
+        address = "192.168.0.1";
+        prefixLength = 24;
+      }
+    ];
   };
 
   fileSystems."/" = {
@@ -38,11 +45,35 @@
     }
   ];
 
+  age.secrets.kukerpall-passkey.file = ./secrets/kukerpall-passkey.age;
+
   services = {
     getty.autologinUser = "kubujuss";
     openssh = {
       enable = true;
       openFirewall = true;
+    };
+    dnsmasq = {
+      enable = true;
+      settings = {
+        interface = "wlan0";
+        server = ["8.8.8.8" "1.1.1.1"];
+        dhcp-range = ["192.168.0.50,192.168.0.150,12h"];
+      };
+    };
+    hostapd = {
+      enable = true;
+      radios.wlan0 = {
+        channel = 0;
+        band = "5g";
+        countryCode = "EE";
+        networks.wlan0 = {
+          ssid = "kukerpall83";
+          authentication.saePasswords = [
+            {passwordFile = config.age.secrets.kukerpall-passkey.path;}
+          ];
+        };
+      };
     };
   };
 

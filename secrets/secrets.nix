@@ -4,4 +4,5 @@ let
 in {
   "jaam-tunnel.age".publicKeys = [jaam];
   "alajaam-tunnel.age".publicKeys = [alajaam];
+  "kukerpall-passkey.age".publicKeys = [alajaam];
 }
