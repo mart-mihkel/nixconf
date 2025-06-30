@@ -43,6 +43,6 @@ in {
 
 ## Devenvs
 
-Run `nix develop` in the dir with a flake.
+Run `nix develop` in the dir with a flake. The root flake also includes a development environment for this project.
 
 See [dev-templates](https://github.com/the-nix-way/dev-templates) repo for dev flake templates

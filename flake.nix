@@ -26,6 +26,11 @@
     nixos = inputs.nixpkgs.lib.nixosSystem;
     agenix = inputs.agenix.nixosModules.default;
     home-man = inputs.home-manager.lib.homeManagerConfiguration;
+
+    forEachSupportedSystem = f:
+      inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (
+        system: f {pkgs = import inputs.nixpkgs {inherit system;};}
+      );
   in {
     nixosConfigurations = {
       dell = nixos {
@@ -60,5 +65,27 @@
         modules = [./home/kubujuss-headless.nix];
       };
     };
+
+    devShells = forEachSupportedSystem ({pkgs}: {
+      default = pkgs.mkShell {
+        packages = with pkgs; [
+          home-manager
+          tree-sitter
+          alejandra
+          ragenix
+          ripgrep
+          gnumake
+          neovim
+          gcc
+          nil
+          fzf
+          git
+          fd
+        ];
+
+        env.EDITOR = "nvim";
+        shellHook = "alias vim=nvim";
+      };
+    });
   };
 }

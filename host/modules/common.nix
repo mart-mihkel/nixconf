@@ -39,10 +39,32 @@
     ];
   };
 
+  programs.bash = {
+    promptInit = "PS1='\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$ '";
+    shellAliases = {
+      rm = "rm -v";
+      cp = "cp -v";
+      mv = "mv -v";
+      ls = "ls --color";
+      la = "la -A --color";
+      ll = "ls -lAh --color";
+    };
+    shellInit =
+      # bash
+      ''
+        bind "set completion-ignore-case on"
+        bind "set show-all-if-unmodified on"
+        bind "set show-all-if-ambiguous on"
+        bind "set menu-complete-display-prefix on"
+        bind '"\t":menu-complete'
+      '';
+  };
+
   environment = {
     variables = {
       SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
       SSL_CERT_DIR = "/etc/ssl/certs";
+      EDITOR = "vim";
     };
     systemPackages = with pkgs; [
       cloudflared
