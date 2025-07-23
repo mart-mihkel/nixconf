@@ -70,21 +70,9 @@
       default = pkgs.mkShell {
         packages = with pkgs; [
           home-manager
-          tree-sitter
-          alejandra
           ragenix
-          ripgrep
-          gnumake
-          neovim
-          gcc
-          nil
-          fzf
           git
-          fd
         ];
-
-        env.EDITOR = "nvim";
-        shellHook = "alias vim=nvim";
       };
     });
   };

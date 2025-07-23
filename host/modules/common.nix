@@ -7,6 +7,7 @@
         "https://cuda-maintainers.cachix.org"
         "https://nix-community.cachix.org"
       ];
+
       extra-trusted-public-keys = [
         "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -28,44 +29,110 @@
     createHome = true;
     isNormalUser = true;
     extraGroups = ["wheel"];
+    shell = pkgs.zsh;
     packages = with pkgs; [
+      lua-language-server
+      tree-sitter
+      alejandra
       fastfetch
       ripgrep
+      gnumake
       glow
       btop
+      gcc
+      nil
       bat
       fzf
       fd
     ];
   };
 
-  programs.bash = {
-    promptInit = "PS1='\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$ '";
-    shellAliases = {
-      rm = "rm -v";
-      cp = "cp -v";
-      mv = "mv -v";
-      ls = "ls --color";
-      la = "la -A --color";
-      ll = "ls -lAh --color";
+  programs = {
+    zsh = {
+      enable = true;
+      autosuggestions.enable = true;
+
+      shellAliases = {
+        rm = "rm -v";
+        cp = "cp -v";
+        mv = "mv -v";
+
+        ls = "ls --color";
+        la = "la -A --color";
+        ll = "ls -lAh --color";
+
+        at = "source .venv/bin/activate";
+        jl = ".venv/bin/jupyter-lab";
+        nb = ".venv/bin/jupyter-notebook";
+
+        neofetch = "fastfetch --config neofetch";
+      };
+
+      shellInit =
+        # bash
+        ''
+          precmd_functions+=(pprecmd)
+          function pprecmd() {
+              items=""
+              branch=$(git symbolic-ref --short HEAD 2> /dev/null)
+              [[ -n $VIRTUAL_ENV_PROMPT ]] && items="%F{3}%f "
+              [[ -n $branch ]] && items="$items%F{5} $branch%f "
+              PROMPT="%F{2}%n@%m%f:%F{4}%~%f $items"
+          }
+
+          function tm() {
+              dir=$(fd -t=d -d=2 . ~ | fzf)
+              [[ -z $dir ]] && return
+              name=$(basename $dir | tr . _)
+              tmux new-session -A -D -c $dir -s $name
+          }
+
+          zstyle ":completion:*" menu yes select
+          zstyle ":completion:*" special-dirs true
+          zstyle ":completion::complete:*" gain-privileges 1
+
+          setopt list_packed
+          setopt no_case_glob no_case_match
+        '';
     };
-    shellInit =
-      # bash
-      ''
-        bind "set completion-ignore-case on"
-        bind "set show-all-if-unmodified on"
-        bind "set show-all-if-ambiguous on"
-        bind "set menu-complete-display-prefix on"
-        bind '"\t":menu-complete'
-      '';
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      withPython3 = true;
+      withNodeJs = true;
+      withRuby = true;
+      vimAlias = true;
+    };
+
+    tmux = {
+      enable = true;
+      baseIndex = 1;
+      keyMode = "vi";
+      extraConfig =
+        # tmux
+        ''
+          set  -g mouse              on
+
+          set -ag terminal-overrides ",xterm-256color:RGB"
+          set  -g default-terminal   "tmux-256color"
+
+          set  -g status-left-length 100
+          set  -g status-right       ""
+
+          bind % split-window -h -c  "#{pane_current_path}"
+          bind \" split-window   -c  "#{pane_current_path}"
+          bind c new-window      -c  "#{pane_current_path}"
+        '';
+    };
   };
 
   environment = {
     variables = {
       SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
       SSL_CERT_DIR = "/etc/ssl/certs";
-      EDITOR = "vim";
     };
+
     systemPackages = with pkgs; [
       cloudflared
       openssl
