@@ -56,6 +56,7 @@
         pull.rebase = true;
         core.editor = "nvim";
         init.defaultBranch = "main";
+        url."https://github.com/".insteadOf = [ "gh:" ];
       };
     };
 
@@ -84,18 +85,18 @@
         ''
           precmd_functions+=(pprecmd)
           function pprecmd() {
-              items=""
-              branch=$(git symbolic-ref --short HEAD 2> /dev/null)
-              [[ -n $VIRTUAL_ENV_PROMPT ]] && items="%F{3}%f "
-              [[ -n $branch ]] && items="$items%F{5} $branch%f "
-              PROMPT="%F{2}%n@%m%f:%F{4}%~%f $items"
+          items=""
+          branch=$(git symbolic-ref --short HEAD 2> /dev/null)
+          [[ -n $VIRTUAL_ENV_PROMPT ]] && items="%F{3}%f "
+          [[ -n $branch ]] && items="$items%F{5} $branch%f "
+          PROMPT="%F{2}%n@%m%f:%F{4}%~%f $items"
           }
 
           function tm() {
-              dir=$(fd -t=d -d=2 . ~ | fzf)
-              [[ -z $dir ]] && return
-              name=$(basename $dir | tr . _)
-              tmux new-session -A -D -c $dir -s $name
+          dir=$(fd -t=d -d=2 . ~ | fzf)
+          [[ -z $dir ]] && return
+          name=$(basename $dir | tr . _)
+          tmux new-session -A -D -c $dir -s $name
           }
 
           zstyle ":completion:*" menu yes select
@@ -104,7 +105,7 @@
 
           setopt list_packed
           setopt no_case_glob no_case_match
-        '';
+          '';
     };
 
     neovim = {
@@ -123,17 +124,17 @@
       extraConfig =
         # tmux
         ''
-          set  -g mouse              on
+        set  -g mouse              on
 
-          set -ag terminal-overrides ",xterm-256color:RGB"
-          set  -g default-terminal   "tmux-256color"
+        set -ag terminal-overrides ",xterm-256color:RGB"
+        set  -g default-terminal   "tmux-256color"
 
-          set  -g status-left-length 100
-          set  -g status-right       ""
+        set  -g status-left-length 100
+        set  -g status-right       ""
 
-          bind % split-window -h -c  "#{pane_current_path}"
-          bind \" split-window   -c  "#{pane_current_path}"
-          bind c new-window      -c  "#{pane_current_path}"
+        bind % split-window -h -c  "#{pane_current_path}"
+        bind \" split-window   -c  "#{pane_current_path}"
+        bind c new-window      -c  "#{pane_current_path}"
         '';
     };
   };
