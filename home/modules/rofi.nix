@@ -2,50 +2,74 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  cfg = ''
+    configuration {
+      font: "cozette Regular 10";
+      terminal: "foot";
+      modes: [drun];
+    }
+
+    @theme "~/.config/rofi/theme.rasi"
+  '';
+
+  theme = ''
+    * {
+      text-color: #d8dee9;
+      background-color: transparent;
+    }
+
+    window {
+      padding: 2;
+      width: 100%;
+      anchor: south;
+      location: south;
+      background-color: #2e3440;
+      children: [ horibox ];
+    }
+
+    horibox {
+      orientation: horizontal;
+      children: [ prompt, entry, listview ];
+    }
+
+    listview {
+      layout: horizontal;
+    }
+
+    entry {
+      cursor-width: 8px;
+      expand: false;
+      width: 4em;
+    }
+
+    element-text {
+      highlight: underline;
+    }
+
+    element {
+      padding: 0 0.25em;
+      margin: 0 0.25em;
+    }
+
+    element.selected {
+      background-color: #4c566a;
+    }
+  '';
+in{
   programs.rofi = {
     enable = true;
-    font = "cozette Regular 10";
-    terminal = "foot";
-    theme = let
-      inherit (config.lib.formats.rasi) mkLiteral;
-    in {
-      "*" = {
-        text-color = mkLiteral "#d8dee9";
-        background-color = mkLiteral "transparent";
-      };
-
-      window = {
-        border = 1;
-        padding = 2;
-        y-offset = 8;
-        width = mkLiteral "10%";
-        height = mkLiteral "30%";
-        anchor = mkLiteral "center";
-        location = mkLiteral "north";
-        border-color = mkLiteral "#d8dee9";
-        background-color = mkLiteral "#2e3440";
-      };
-
-      entry = {
-        cursor-width = 8;
-      };
-
-      inputbar = {
-        children = map mkLiteral ["entry"];
-      };
-
-      "element selected" = {
-        background-color = mkLiteral "#4c566a";
-      };
-    };
-
     package = pkgs.rofi-wayland.override {
-      plugins = with pkgs; [
-        wl-clipboard
-        rofi-emoji
-        wtype
-      ];
+      plugins = with pkgs; [ rofi-emoji ];
     };
+  };
+
+  home = {
+    file = {
+      ".config/rofi/config.rasi".text = cfg;
+      ".config/rofi/theme.rasi".text = theme;
+    };
+
+    packages = with pkgs; [ cozette ];
   };
 }

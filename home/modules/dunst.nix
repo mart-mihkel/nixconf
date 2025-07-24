@@ -1,51 +1,37 @@
-{
-  services.dunst = {
-    enable = true;
-    settings = {
-      global = {
-        monitor = 0;
-        follow = "none";
+{config,...}: let
+  dunstrc = ''
+    [global]
+    font    = Jetbrains Mono Nerd Font 10
+    format  = "%s\n%b"
+    markup  = full
 
-        width = "(16, 512)";
-        height = "(16, 256)";
-        offset = "(12, 12)";
-        origin = "top-right";
+    alignment     = right
+    icon_position = right
 
-        foreground = "#d8dee9";
-        background = "#2e3440";
+    width  = (16, 512)
+    height = (16, 256)
+    offset = (10, 10)
 
-        font = "cozette 10";
-        alignment = "right";
-        markup = "full";
+    min_icon_size = 64
+    max_icon_size = 64
+    frame_width   = 2
 
-        icon_position = "right";
-        min_icon_size = 64;
-        max_icon_size = 64;
+    foreground = "#d8dee9"
+    background = "#2e3440"
 
-        horizontal_padding = 6;
-        padding = 6;
+    [urgency_low]
+    frame_color = "#eceff4"
+    timeout = 4
 
-        separator_height = 2;
-        corner_radius = 0;
-        frame_width = 1;
+    [urgency_normal]
+    frame_color = "#ebcb8b"
+    timeout = 8
 
-        idle_threshold = 300;
-      };
-
-      urgency_low = {
-        frame_color = "#eceff4";
-        timeout = 4;
-      };
-
-      urgency_normal = {
-        frame_color = "#ebcb8b";
-        timeout = 8;
-      };
-
-      urgency_critical = {
-        frame_color = "#bf616a";
-        timeout = 16;
-      };
-    };
-  };
+    [urgency_critical]
+    frame_color = "#bf616a"
+    timeout = 16
+  '';
+in {
+  services.dunst.enable = true;
+  home.file.".config/dunst/dunstrc".text = dunstrc;
 }

@@ -1,10 +1,9 @@
 {
   services.picom = {
     enable = true;
-    fade = true;
-    fadeDelta = 4;
-
     backend = "glx";
     vSync = true;
+    glx-no-stencil = true;
+    glx-no-rebind-pixmap = true;
   };
 }

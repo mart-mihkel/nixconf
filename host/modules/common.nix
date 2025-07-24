@@ -48,6 +48,17 @@
   };
 
   programs = {
+    git = {
+      enable = true;
+      config = {
+        user.name = "mart-mihkel";
+        user.email = "mart.mihkel.aun@gmail.com";
+        pull.rebase = true;
+        core.editor = "nvim";
+        init.defaultBranch = "main";
+      };
+    };
+
     zsh = {
       enable = true;
       autosuggestions.enable = true;
