@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   cfg = ''
     configuration {
       font: "cozette Regular 10";
@@ -56,20 +52,16 @@
       background-color: #4c566a;
     }
   '';
-in{
-  programs.rofi = {
-    enable = true;
-    package = pkgs.rofi-wayland.override {
-      plugins = with pkgs; [ rofi-emoji ];
-    };
-  };
-
+in {
   home = {
     file = {
       ".config/rofi/config.rasi".text = cfg;
       ".config/rofi/theme.rasi".text = theme;
     };
 
-    packages = with pkgs; [ cozette ];
+    packages = with pkgs; [
+      (pkgs.rofi-wayland.override {plugins = with pkgs; [rofi-emoji];})
+      cozette
+    ];
   };
 }

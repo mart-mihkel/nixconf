@@ -1,4 +1,4 @@
-{config,...}: let
+{pkgs, ...}: let
   dunstrc = ''
     [global]
     font    = Jetbrains Mono Nerd Font 10
@@ -32,6 +32,12 @@
     timeout = 16
   '';
 in {
-  services.dunst.enable = true;
-  home.file.".config/dunst/dunstrc".text = dunstrc;
+  home = {
+    file.".config/dunst/dunstrc".text = dunstrc;
+
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+      dunst
+    ];
+  };
 }

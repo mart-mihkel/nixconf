@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  hyprland = ''
+  hyprcfg = ''
     general {
         gaps_in = 16
         gaps_out = 64
@@ -63,7 +63,7 @@
     bindm = SUPER, mouse:272, movewindow
 
     bind = , XF86MonBrightnessDown, exec, brightnessctl s 2%-
-    bind = , XF86MonBrightnessUp,   exec, brightnessctl s +2% 
+    bind = , XF86MonBrightnessUp,   exec, brightnessctl s +2%
 
     bind = , XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
     bind = , XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+
@@ -123,7 +123,7 @@
     exec-once = dunst
   '';
 
-  hyprlock = ''
+  hyprlockcfg = ''
     general {
         hide_cursor = true
     }
@@ -188,12 +188,11 @@
     }
   '';
 
-  hyprpaper = ''
+  hyprpapercfg = ''
     preload = ~/Pictures/walls/opattern.png
     wallpaper = ,~/Pictures/walls/opattern.png
   '';
 in {
-  wayland.windowManager.hyprland.enable = true;
   programs.hyprlock.enable = true;
   services = {
     hypridle.enable = true;
@@ -202,19 +201,20 @@ in {
 
   home = {
     file = {
-      ".config/hypr/hyprland.conf" = hyprland;
-      ".config/hypr/hyprlock.conf" = hyprlock;
-      ".config/hypr/hyprpaper.conf" = hyprpaper;
+      ".config/hypr/hyprland.conf".text = hyprcfg;
+      ".config/hypr/hyprlock.conf".text = hyprlockcfg;
+      ".config/hypr/hyprpaper.conf".text = hyprpapercfg;
     };
 
     packages = with pkgs; [
       nerd-fonts.jetbrains-mono
+      sway-contrib.grimshot
       brightnessctl
       wl-clipboard
       wireplumber
+      xfce.thunar
       noto-fonts
-      grimshot
-      thunar
+      hyprland
       wtype
     ];
   };

@@ -75,7 +75,7 @@ in {
   home = {
     username = "kubujuss";
     homeDirectory = "/home/kubujuss";
-    file.".vimrc" = vimrc;
+    file.".vimrc".text = vimrc;
     stateVersion = "24.05";
   };
 }

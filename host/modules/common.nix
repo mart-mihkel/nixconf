@@ -34,16 +34,8 @@
       lua-language-server
       tree-sitter
       alejandra
-      fastfetch
-      ripgrep
-      gnumake
       glow
-      btop
-      gcc
       nil
-      bat
-      fzf
-      fd
     ];
   };
 
@@ -56,7 +48,7 @@
         pull.rebase = true;
         core.editor = "nvim";
         init.defaultBranch = "main";
-        url."https://github.com/".insteadOf = [ "gh:" ];
+        url."https://github.com/".insteadOf = ["gh:"];
       };
     };
 
@@ -80,32 +72,30 @@
         neofetch = "fastfetch --config neofetch";
       };
 
-      shellInit =
-        # bash
-        ''
-          precmd_functions+=(pprecmd)
-          function pprecmd() {
-          items=""
-          branch=$(git symbolic-ref --short HEAD 2> /dev/null)
-          [[ -n $VIRTUAL_ENV_PROMPT ]] && items="%F{3}%f "
-          [[ -n $branch ]] && items="$items%F{5} $branch%f "
-          PROMPT="%F{2}%n@%m%f:%F{4}%~%f $items"
-          }
+      shellInit = ''
+        precmd_functions+=(pprecmd)
+        function pprecmd() {
+        items=""
+        branch=$(git symbolic-ref --short HEAD 2> /dev/null)
+        [[ -n $VIRTUAL_ENV_PROMPT ]] && items="%F{3}%f "
+        [[ -n $branch ]] && items="$items%F{5} $branch%f "
+        PROMPT="%F{2}%n@%m%f:%F{4}%~%f $items"
+        }
 
-          function tm() {
-          dir=$(fd -t=d -d=2 . ~ | fzf)
-          [[ -z $dir ]] && return
-          name=$(basename $dir | tr . _)
-          tmux new-session -A -D -c $dir -s $name
-          }
+        function tm() {
+        dir=$(fd -t=d -d=2 . ~ | fzf)
+        [[ -z $dir ]] && return
+        name=$(basename $dir | tr . _)
+        tmux new-session -A -D -c $dir -s $name
+        }
 
-          zstyle ":completion:*" menu yes select
-          zstyle ":completion:*" special-dirs true
-          zstyle ":completion::complete:*" gain-privileges 1
+        zstyle ":completion:*" menu yes select
+        zstyle ":completion:*" special-dirs true
+        zstyle ":completion::complete:*" gain-privileges 1
 
-          setopt list_packed
-          setopt no_case_glob no_case_match
-          '';
+        setopt list_packed
+        setopt no_case_glob no_case_match
+      '';
     };
 
     neovim = {
@@ -121,9 +111,7 @@
       enable = true;
       baseIndex = 1;
       keyMode = "vi";
-      extraConfig =
-        # tmux
-        ''
+      extraConfig = ''
         set  -g mouse              on
 
         set -ag terminal-overrides ",xterm-256color:RGB"
@@ -135,7 +123,7 @@
         bind % split-window -h -c  "#{pane_current_path}"
         bind \" split-window   -c  "#{pane_current_path}"
         bind c new-window      -c  "#{pane_current_path}"
-        '';
+      '';
     };
   };
 
@@ -147,14 +135,22 @@
 
     systemPackages = with pkgs; [
       cloudflared
+      fastfetch
       openssl
+      gnumake
+      ripgrep
       cacert
       tmux
       curl
       wget
       tree
+      btop
       git
       vim
+      gcc
+      bat
+      fzf
+      fd
       jq
     ];
   };

@@ -1,4 +1,4 @@
-let
+{pkgs, ...}: let
   cfg = ''
     {
       "spacing": 16,
@@ -88,6 +88,6 @@ in {
       ".config/waybar/style.css".text = css;
     };
 
-    packages = with pkgs; [ wireplumber ];
+    packages = with pkgs; [wireplumber];
   };
 }

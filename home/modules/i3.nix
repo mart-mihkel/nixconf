@@ -96,7 +96,7 @@
     exec --no-startup-id dunst
   '';
 
-  i3blocks = ''
+  i3b = ''
     [net]
     command=[ $(cat /sys/class/net/wlp2s0/operstate) = "down" ] && echo "net off" || echo "net $(iw dev wlp2s0 link | grep 'dBm$' | grep -Eoe '-[0-9]{2}' | awk '{print  ($1 > -50 ? 100 :($1 < -100 ? 0 : ($1+100)*2))}')%"
     interval=5
@@ -132,13 +132,10 @@
 
     exec i3
   '';
-in{
-  xsession.windowManager.i3.enable = true;
-  programs.i3blocks.enable = true;
-
+in {
   home = {
     file = {
-      ".config/i3blocks/config".text = i3blocks;
+      ".config/i3blocks/config".text = i3b;
       ".config/i3/config".text = i3cfg;
       ".xinitrc".text = xinitrc;
     };
@@ -147,15 +144,17 @@ in{
       nerd-fonts.jetbrains-mono
       brightnessctl
       wireplumber
+      xfce.thunar
       noto-fonts
       autotiling
       playerctl
+      i3blocks
       cozette
       xdotool
-      thunar
       xclip
       maim
       feh
+      i3
     ];
   };
 }
