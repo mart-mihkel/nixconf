@@ -30,13 +30,6 @@
     isNormalUser = true;
     extraGroups = ["wheel"];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      lua-language-server
-      tree-sitter
-      alejandra
-      glow
-      nil
-    ];
   };
 
   programs = {
@@ -48,7 +41,7 @@
         pull.rebase = true;
         core.editor = "nvim";
         init.defaultBranch = "main";
-        url."https://github.com/".insteadOf = ["gh:"];
+        url."git@github.com:".insteadOf = ["gh:"];
       };
     };
 
@@ -75,18 +68,18 @@
       shellInit = ''
         precmd_functions+=(pprecmd)
         function pprecmd() {
-        items=""
-        branch=$(git symbolic-ref --short HEAD 2> /dev/null)
-        [[ -n $VIRTUAL_ENV_PROMPT ]] && items="%F{3}%f "
-        [[ -n $branch ]] && items="$items%F{5} $branch%f "
-        PROMPT="%F{2}%n@%m%f:%F{4}%~%f $items"
+          items=""
+          branch=$(git symbolic-ref --short HEAD 2> /dev/null)
+          [[ -n $VIRTUAL_ENV_PROMPT ]] && items="%F{3}%f "
+          [[ -n $branch ]] && items="$items%F{5} $branch%f "
+          PROMPT="%F{2}%n@%m%f:%F{4}%~%f $items"
         }
 
         function tm() {
-        dir=$(fd -t=d -d=2 . ~ | fzf)
-        [[ -z $dir ]] && return
-        name=$(basename $dir | tr . _)
-        tmux new-session -A -D -c $dir -s $name
+          dir=$(fd -t=d -d=2 . ~ | fzf)
+          [[ -z $dir ]] && return
+          name=$(basename $dir | tr . _)
+          tmux new-session -A -D -c $dir -s $name
         }
 
         zstyle ":completion:*" menu yes select
@@ -136,16 +129,21 @@
     systemPackages = with pkgs; [
       cloudflared
       fastfetch
+      nettools
       openssl
       gnumake
       ripgrep
       cacert
+      unzip
+      ninja
+      meson
+      cmake
       tmux
       curl
       wget
       tree
       btop
-      git
+      zip
       vim
       gcc
       bat

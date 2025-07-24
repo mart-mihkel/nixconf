@@ -1,4 +1,4 @@
-let
+{pkgs, ...}: let
   vimrc = ''
     set nocompatible
     set encoding=utf-8
@@ -76,6 +76,7 @@ in {
     username = "kubujuss";
     homeDirectory = "/home/kubujuss";
     file.".vimrc".text = vimrc;
+    packages = with pkgs; [vim];
     stateVersion = "24.05";
   };
 }

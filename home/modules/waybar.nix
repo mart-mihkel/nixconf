@@ -88,6 +88,9 @@ in {
       ".config/waybar/style.css".text = css;
     };
 
-    packages = with pkgs; [wireplumber];
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+      wireplumber
+    ];
   };
 }

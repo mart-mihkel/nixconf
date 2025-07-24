@@ -1,4 +1,4 @@
-let
+{pkgs, ...}: let
   cfg = ''
     font             = Jetbrains Mono Nerd Font
     font-size        = 10
@@ -22,5 +22,8 @@ let
   '';
 in {
   programs.tofi.enable = true;
-  home.file.".config/waybar/config.jsonc".text = cfg;
+  home = {
+    file.".config/waybar/config.jsonc".text = cfg;
+    packages = with pkgs; [cozette];
+  };
 }

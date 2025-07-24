@@ -1,4 +1,4 @@
-let
+{pkgs, ...}: let
   cfg = ''
     [env]
     TERM = "xterm-256color"
@@ -45,5 +45,8 @@ let
   '';
 in {
   programs.alacritty.enable = true;
-  home.file.".config/alacritty/alacritty.toml".text = cfg;
+  home = {
+    file.".config/alacritty/alacritty.toml".text = cfg;
+    packages = with pkgs; [nerd-fonts.jetbrains-mono];
+  };
 }

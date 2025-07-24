@@ -51,6 +51,7 @@
       device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
+
     "/boot" = {
       device = "/dev/disk/by-label/boot";
       fsType = "vfat";
@@ -79,7 +80,13 @@
       CUDA_HOME = "/run/opengl-driver";
       CUDA_PATH = "/run/opengl-driver";
     };
-    systemPackages = with pkgs; [uv];
+
+    systemPackages = with pkgs; [
+      tree-sitter
+      alejandra
+      nil
+      uv
+    ];
   };
 
   system.stateVersion = "24.05";

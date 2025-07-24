@@ -25,7 +25,7 @@
   outputs = {...} @ inputs: let
     nixos = inputs.nixpkgs.lib.nixosSystem;
     agenix = inputs.agenix.nixosModules.default;
-    home-man = inputs.home-manager.lib.homeManagerConfiguration;
+    hman = inputs.home-manager.lib.homeManagerConfiguration;
 
     forEachSupportedSystem = f:
       inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (
@@ -50,17 +50,17 @@
     };
 
     homeConfigurations = {
-      kubujuss = home-man {
+      kubujuss = hman {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
         modules = [./home/kubujuss.nix];
       };
 
-      kubujuss-x86 = home-man {
+      kubujuss-x86 = hman {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
         modules = [./home/kubujuss-headless.nix];
       };
 
-      kubujuss-arm = home-man {
+      kubujuss-arm = hman {
         pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
         modules = [./home/kubujuss-headless.nix];
       };
@@ -70,7 +70,9 @@
       default = pkgs.mkShell {
         packages = with pkgs; [
           home-manager
+          alejandra
           ragenix
+          nil
           git
         ];
       };

@@ -1,4 +1,4 @@
-let
+{pkgs, ...}: let
   cfg = ''
     [main]
     font=Jetbrains Mono Nerd Font:size=15
@@ -32,5 +32,8 @@ let
   '';
 in {
   programs.foot.enable = true;
-  home.file.".config/foot/foot.ini".text = cfg;
+  home = {
+    file.".config/foot/foot.ini".text = cfg;
+    packages = with pkgs; [nerd-fonts.jetbrains-mono];
+  };
 }

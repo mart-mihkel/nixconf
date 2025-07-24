@@ -8,8 +8,6 @@
 in {
   home = {
     file.".config/picom/picom.conf".text = cfg;
-    packages = with pkgs; [
-      picom
-    ];
+    packages = with pkgs; [picom];
   };
 }

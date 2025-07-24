@@ -60,8 +60,10 @@ in {
     };
 
     packages = with pkgs; [
-      (pkgs.rofi-wayland.override {plugins = with pkgs; [rofi-emoji];})
+      (pkgs.rofi.override {plugins = [pkgs.rofi-emoji];})
       cozette
+      xdotool
+      xclip
     ];
   };
 }

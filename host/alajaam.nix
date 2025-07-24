@@ -17,6 +17,7 @@
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
     };
+
     initrd.availableKernelModules = ["xhci_pci"];
   };
 
@@ -53,6 +54,7 @@
       enable = true;
       openFirewall = true;
     };
+
     dnsmasq = {
       enable = true;
       settings = {
@@ -61,6 +63,7 @@
         dhcp-range = ["192.168.0.50,192.168.0.150,12h"];
       };
     };
+
     hostapd = {
       enable = true;
       radios.wlan0 = {

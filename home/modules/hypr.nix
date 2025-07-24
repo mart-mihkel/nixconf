@@ -54,7 +54,6 @@
 
     env = XDG_SCREENSHOTS_DIR,~/Pictures/screenshots
 
-    # monitor = , preferred, auto, 1
     monitor = , preferred, auto, 1, mirror, edp-1
 
     layerrule = blur, notifications
@@ -123,7 +122,7 @@
     exec-once = dunst
   '';
 
-  hyprlockcfg = ''
+  lockcfg = ''
     general {
         hide_cursor = true
     }
@@ -188,22 +187,19 @@
     }
   '';
 
-  hyprpapercfg = ''
+  papercfg = ''
     preload = ~/Pictures/walls/opattern.png
     wallpaper = ,~/Pictures/walls/opattern.png
   '';
 in {
   programs.hyprlock.enable = true;
-  services = {
-    hypridle.enable = true;
-    hyprpaper.enable = true;
-  };
+  services.hyprpaper.enable = true;
 
   home = {
     file = {
       ".config/hypr/hyprland.conf".text = hyprcfg;
-      ".config/hypr/hyprlock.conf".text = hyprlockcfg;
-      ".config/hypr/hyprpaper.conf".text = hyprpapercfg;
+      ".config/hypr/hyprlock.conf".text = lockcfg;
+      ".config/hypr/hyprpaper.conf".text = papercfg;
     };
 
     packages = with pkgs; [
@@ -213,9 +209,10 @@ in {
       wl-clipboard
       wireplumber
       xfce.thunar
-      noto-fonts
       hyprland
       wtype
+      tofi
+      foot
     ];
   };
 }

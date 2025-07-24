@@ -141,16 +141,19 @@ in {
     };
 
     packages = with pkgs; [
+      (pkgs.rofi.override {plugins = [pkgs.rofi-emoji];})
       nerd-fonts.jetbrains-mono
       brightnessctl
       wireplumber
       xfce.thunar
       noto-fonts
       autotiling
+      alacritty
       playerctl
       i3blocks
       cozette
       xdotool
+      i3lock
       xclip
       maim
       feh
