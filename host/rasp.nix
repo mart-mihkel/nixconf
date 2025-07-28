@@ -22,7 +22,7 @@
   };
 
   networking = {
-    hostName = "alajaam";
+    hostName = "rasp";
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
     usePredictableInterfaceNames = true;
@@ -46,7 +46,7 @@
     }
   ];
 
-  age.secrets.kukerpall-passkey.file = ./secrets/kukerpall-passkey.age;
+  age.secrets.kukerpall-psk.file = ./secrets/kukerpall-psk.age;
 
   services = {
     getty.autologinUser = "kubujuss";
@@ -73,7 +73,7 @@
         networks.wlan0 = {
           ssid = "kukerpall83";
           authentication.saePasswords = [
-            {passwordFile = config.age.secrets.kukerpall-passkey.path;}
+            {passwordFile = config.age.secrets.kukerpall-psk.path;}
           ];
         };
       };
