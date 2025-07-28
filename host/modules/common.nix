@@ -62,6 +62,7 @@
         jl = ".venv/bin/jupyter-lab";
         nb = ".venv/bin/jupyter-notebook";
 
+        vim = "nvim";
         neofetch = "fastfetch --config neofetch";
       };
 

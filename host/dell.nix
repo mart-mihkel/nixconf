@@ -36,7 +36,7 @@
     networkmanager.enable = true;
     usePredictableInterfaceNames = true;
     hosts = {
-      "192.168.0.1" = ["alajaam"];
+      "192.168.0.1" = ["rasp"];
       "192.168.0.2" = ["jaam"];
     };
   };

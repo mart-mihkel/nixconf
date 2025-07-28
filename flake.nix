@@ -4,6 +4,7 @@
       "https://cuda-maintainers.cachix.org"
       "https://nix-community.cachix.org"
     ];
+
     extra-trusted-public-keys = [
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -16,6 +17,7 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,7 +28,6 @@
     nixos = inputs.nixpkgs.lib.nixosSystem;
     agenix = inputs.agenix.nixosModules.default;
     hman = inputs.home-manager.lib.homeManagerConfiguration;
-
     forEachSupportedSystem = f:
       inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (
         system: f {pkgs = import inputs.nixpkgs {inherit system;};}
@@ -43,9 +44,9 @@
         modules = [./host/jaam.nix agenix];
       };
 
-      alajaam = nixos {
+      rasp = nixos {
         system = "aarch64-linux";
-        modules = [./host/alajaam.nix agenix];
+        modules = [./host/rasp.nix agenix];
       };
     };
 
