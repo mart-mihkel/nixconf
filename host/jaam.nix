@@ -66,6 +66,15 @@
     }
   ];
 
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    withPython3 = true;
+    withNodeJs = true;
+    withRuby = true;
+    vimAlias = true;
+  };
+
   services = {
     getty.autologinUser = "kubujuss";
     xserver.videoDrivers = ["nvidia"];

@@ -61,9 +61,8 @@
     }
   ];
 
-  users.users.kubujuss.extraGroups = ["docker" "networkmanager"];
+  users.users.kubujuss.extraGroups = ["networkmanager"];
   security.sudo.wheelNeedsPassword = false;
-  virtualisation.docker.enable = true;
 
   xdg = {
     portal.enable = true;
@@ -78,8 +77,10 @@
     neovim = {
       enable = true;
       defaultEditor = true;
-      withNodeJs = true;
       withPython3 = true;
+      withNodeJs = true;
+      withRuby = true;
+      vimAlias = true;
     };
 
     nix-ld = {

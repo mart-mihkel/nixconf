@@ -28,7 +28,7 @@
   users.users.kubujuss = {
     createHome = true;
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = ["wheel" "docker"];
     shell = pkgs.zsh;
   };
 
@@ -39,7 +39,7 @@
         user.name = "mart-mihkel";
         user.email = "mart.mihkel.aun@gmail.com";
         pull.rebase = true;
-        core.editor = "nvim";
+        core.editor = "vim";
         init.defaultBranch = "main";
         url."git@github.com:".insteadOf = ["gh:"];
       };
@@ -53,21 +53,15 @@
         rm = "rm -v";
         cp = "cp -v";
         mv = "mv -v";
-
         ls = "ls --color";
-        la = "la -A --color";
+        grep = "grep --color";
         ll = "ls -lAh --color";
-
-        at = "source .venv/bin/activate";
-        jl = ".venv/bin/jupyter-lab";
-        nb = ".venv/bin/jupyter-notebook";
-
-        vim = "nvim";
         neofetch = "fastfetch --config neofetch";
       };
 
       shellInit = ''
         precmd_functions+=(pprecmd)
+
         function pprecmd() {
           items=""
           branch=$(git symbolic-ref --short HEAD 2> /dev/null)
@@ -77,10 +71,8 @@
         }
 
         function tm() {
-          dir=$(fd -t=d -d=2 . ~ | fzf)
-          [[ -z $dir ]] && return
-          name=$(basename $dir | tr . _)
-          tmux new-session -A -D -c $dir -s $name
+          dir=$(fdfind -t=d -d=2 . ~ | fzf --preview 'tmux ls' --preview-window=down,25%)
+          [[ -n $dir ]] && tmux new-session -A -D -c $dir -s $(basename $dir | tr . _)
         }
 
         zstyle ":completion:*" menu yes select
@@ -88,17 +80,9 @@
         zstyle ":completion::complete:*" gain-privileges 1
 
         setopt list_packed
-        setopt no_case_glob no_case_match
+        setopt no_case_glob
+        setopt no_case_match
       '';
-    };
-
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      withPython3 = true;
-      withNodeJs = true;
-      withRuby = true;
-      vimAlias = true;
     };
 
     tmux = {
@@ -111,8 +95,9 @@
         set -ag terminal-overrides ",xterm-256color:RGB"
         set  -g default-terminal   "tmux-256color"
 
-        set  -g status-left-length 100
+        set  -g status-style       "fg=default bg=default"
         set  -g status-right       ""
+        set  -g status-left-length 128
 
         bind % split-window -h -c  "#{pane_current_path}"
         bind \" split-window   -c  "#{pane_current_path}"
@@ -120,6 +105,8 @@
       '';
     };
   };
+
+  virtualisation.docker.enable = true;
 
   environment = {
     variables = {
