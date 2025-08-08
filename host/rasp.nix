@@ -6,7 +6,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./modules/cloudflare-tunnel.nix {host = "alajaam";})
+    (import ./modules/cloudflare-tunnel.nix {host = "rasp";})
     ./modules/common.nix
   ];
 
@@ -23,15 +23,35 @@
 
   networking = {
     hostName = "rasp";
-    useDHCP = lib.mkDefault true;
-    networkmanager.enable = true;
-    usePredictableInterfaceNames = true;
-    interfaces.wlan0.ipv4.addresses = [
-      {
-        address = "192.168.0.1";
-        prefixLength = 24;
-      }
-    ];
+    networkmanager.enable = false;
+
+    interfaces = {
+      wlan0.ipv4.addresses = [
+        {
+          address = "192.168.0.1";
+          prefixLength = 24;
+        }
+      ];
+
+      enp1s0u1.ipv4.routes = [
+        {
+          address = "0.0.0.0";
+          prefixLength = 0;
+          via = "0.0.0.0";
+        }
+      ];
+    };
+
+    nat = {
+      enable = true;
+      internalInterfaces = ["wlan0"];
+      externalInterface = "enp1s0u1";
+    };
+
+    firewall = {
+      allowedUDPPorts = [53 67]; # dns dhcp
+      allowedTCPPorts = [53]; # dns
+    };
   };
 
   fileSystems."/" = {
@@ -46,7 +66,7 @@
     }
   ];
 
-  age.secrets.kukerpall-psk.file = ./secrets/kukerpall-psk.age;
+  age.secrets.kukerpall-psk.file = ../secrets/kukerpall-psk.age;
 
   services = {
     getty.autologinUser = "kubujuss";
@@ -59,7 +79,8 @@
       enable = true;
       settings = {
         interface = "wlan0";
-        server = ["8.8.8.8" "1.1.1.1"];
+        bind-interfaces = true;
+        server = ["9.9.9.9" "8.8.8.8" "1.1.1.1"];
         dhcp-range = ["192.168.0.50,192.168.0.150,12h"];
       };
     };
@@ -67,14 +88,15 @@
     hostapd = {
       enable = true;
       radios.wlan0 = {
-        channel = 0;
         band = "5g";
+        channel = 0;
         countryCode = "EE";
         networks.wlan0 = {
           ssid = "kukerpall83";
-          authentication.saePasswords = [
-            {passwordFile = config.age.secrets.kukerpall-psk.path;}
-          ];
+          authentication = {
+            mode = "wpa2-sha1";
+            wpaPasswordFile = config.age.secrets.kukerpall-psk.path;
+          };
         };
       };
     };
