@@ -1,12 +1,9 @@
 {pkgs, ...}: let
   cfg = ''
     [main]
-    font=Jetbrains Mono Nerd Font:size=15
+    font=Jetbrains Mono Nerd Font:size=12
     term=xterm-256color
     pad=0x0 center
-
-    [cursor]
-    color=282828 eceff4
 
     [colors]
     foreground=d8dee9

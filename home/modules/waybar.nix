@@ -1,57 +1,41 @@
 {pkgs, ...}: let
   cfg = ''
     {
-      "spacing": 16,
-      "height": 26,
-      "modules-left": ["hyprland/workspaces", "tray"],
-      "modules-center": ["clock"],
-      "modules-right": ["network", "bluetooth", "wireplumber", "backlight", "battery"],
-      "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "format": "{icon}",
-        "format-icons": {
-          "urgent": "",
-          "focused": "",
-          "default": ""
-        }
-      },
+      "spacing": 24,
+      "modules-left": [
+        "sway/workspaces",
+        "tray"
+      ],
+      "modules-right": [
+        "network",
+        "bluetooth",
+        "wireplumber",
+        "backlight",
+        "battery",
+        "clock"
+      ],
       "tray": {
-        "icon-size": 10,
-        "spacing": 8
-      },
-      "clock": {
-        "format": "󰃰 {:%A, %B-%d %H:%M}"
+        "icon-size": 12
       },
       "network": {
-        "format-wifi": "{icon}{signalStrength}%",
-        "format-disconnected": "󰤮 ",
-        "format-icons": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "]
+        "format-wifi": "net: {signalStrength}%",
+        "format-ethernet": "net: eth",
+        "format-disconnected": "net: off"
       },
       "bluetooth": {
-        "format": "",
-        "format-connected": "󰂱",
-        "format-connected-battery": "󰂱 {device_battery_percentage}%"
-      },
-      "backlight": {
-        "format": "{icon}{percent}%",
-        "format-icons": ["󰃞 ", "󰃟 ", "󰃠 "]
+        "format": "blu: off",
+        "format-connected": "blu: con",
+        "format-connected-battery": "blu: {device_battery_percentage}%"
       },
       "wireplumber": {
-        "format": "{icon}{volume}%",
-        "format-muted": "󰖁 {volume}%",
-        "format-icons": {
-          "default": ["󰕾 ", "󰖀 ", "󰕿 "]
-        }
+        "format": "vol: {volume}%",
+        "format-muted": "vol: off"
+      },
+      "backlight": {
+        "format": "bkl: {percent}%"
       },
       "battery": {
-        "format": "{icon}{capacity}%",
-        "format-charging": "󱐋{icon}{capacity}%",
-        "format-icons": ["󰁺 ", "󰁻 ", "󰁼 ", "󰁽 ", "󰁾 ", "󰁿 ", "󰂀 ", "󰂁 ", "󰂂 ", "󰁹 "],
-        "states": {
-          "critical": 10,
-          "warning": 20
-        }
+        "format": "bat: {capacity}%"
       }
     }
   '';
@@ -59,25 +43,14 @@
   css = ''
     * {
       all: unset;
-    }
-
-    window {
       font-family: "Jetbrains Mono Nerd Font";
+      font-weight: bold;
       font-size: 12px;
-      background: rgba(46, 52, 64, 0.8);
       color: #d8dee9;
     }
 
-    #battery.warning {
-      color: #ebcb8b;
-    }
-
-    #battery.critical {
-      color: #bf616a;
-    }
-
     #workspaces button {
-      padding: 0 4px;
+      padding: 0 2px;
     }
   '';
 in {
@@ -88,9 +61,6 @@ in {
       ".config/waybar/style.css".text = css;
     };
 
-    packages = with pkgs; [
-      nerd-fonts.jetbrains-mono
-      wireplumber
-    ];
+    packages = with pkgs; [nerd-fonts.jetbrains-mono wireplumber];
   };
 }
