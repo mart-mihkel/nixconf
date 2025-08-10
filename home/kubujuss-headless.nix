@@ -59,6 +59,10 @@
 
     nnoremap <C-D> <C-D>zz
     nnoremap <C-U> <C-U>zz
+    nnoremap <C-j> :cnext<CR>
+    nnoremap <C-k> :cprevious<CR>
+    nnoremap <C-l> :lnext<CR>
+    nnoremap <C-h> :lprevious<CR>
 
     nnoremap Y y$
     nnoremap D d$

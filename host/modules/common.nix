@@ -54,25 +54,17 @@
         cp = "cp -v";
         mv = "mv -v";
         ls = "ls --color";
-        grep = "grep --color";
         ll = "ls -lAh --color";
-        neofetch = "fastfetch --config neofetch";
       };
 
+      promptInit = ''
+        PROMPT="%F{2}%n@%m%f:%F{4}%~%f "
+      '';
+
       shellInit = ''
-        precmd_functions+=(pprecmd)
-
-        function pprecmd() {
-          items=""
-          branch=$(git symbolic-ref --short HEAD 2> /dev/null)
-          [[ -n $VIRTUAL_ENV_PROMPT ]] && items="%F{3}%f "
-          [[ -n $branch ]] && items="$items%F{5} $branch%f "
-          PROMPT="%F{2}%n@%m%f:%F{4}%~%f $items"
-        }
-
         function tm() {
-          dir=$(fdfind -t=d -d=2 . ~ | fzf --preview 'tmux ls' --preview-window=down,25%)
-          [[ -n $dir ]] && tmux new-session -A -D -c $dir -s $(basename $dir | tr . _)
+          dir=$(fd -t d -d 2 . ~ | fzf --preview 'tmux ls')
+          [[ -n $dir ]] && tmux new-session -ADc $dir -s $(basename $dir | tr . _)
         }
 
         zstyle ":completion:*" menu yes select
