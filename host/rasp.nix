@@ -66,6 +66,7 @@
     }
   ];
 
+  zramSwap.enable = true;
   age.secrets.kukerpall-psk.file = ../secrets/kukerpall-psk.age;
 
   services = {
