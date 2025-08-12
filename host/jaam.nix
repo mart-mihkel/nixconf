@@ -22,8 +22,8 @@
   };
 
   boot = {
-    loader.systemd-boot.enable = true;
     initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci"];
+    loader.systemd-boot.enable = true;
     kernelModules = ["kvm-amd"];
   };
 
@@ -39,10 +39,20 @@
 
   networking = {
     hostName = "jaam";
-    useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
-    usePredictableInterfaceNames = true;
-    interfaces.enp9s0.wakeOnLan.enable = true;
+    interfaces = {
+      eth0.wakeOnLan.enable = true;
+      wlan0 = {
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = "192.168.0.1";
+            prefixLength = 24;
+          }
+        ];
+      };
+    };
+
     firewall.allowedUDPPorts = [9]; # wakeonlan
   };
 
@@ -68,15 +78,6 @@
 
   zramSwap.enable = true;
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    withPython3 = true;
-    withNodeJs = true;
-    withRuby = true;
-    vimAlias = true;
-  };
-
   services = {
     getty.autologinUser = "kubujuss";
     xserver.videoDrivers = ["nvidia"];
@@ -92,12 +93,7 @@
       CUDA_PATH = "/run/opengl-driver";
     };
 
-    systemPackages = with pkgs; [
-      tree-sitter
-      alejandra
-      nil
-      uv
-    ];
+    systemPackages = with pkgs; [uv];
   };
 
   system.stateVersion = "24.05";

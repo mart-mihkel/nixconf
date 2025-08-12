@@ -13,18 +13,16 @@
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
   boot = {
+    initrd.availableKernelModules = ["xhci_pci"];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
     };
-
-    initrd.availableKernelModules = ["xhci_pci"];
   };
 
   networking = {
     hostName = "rasp";
     networkmanager.enable = false;
-
     interfaces = {
       wlan0.ipv4.addresses = [
         {
@@ -33,7 +31,7 @@
         }
       ];
 
-      enp1s0u1.ipv4.routes = [
+      usb0.ipv4.routes = [
         {
           address = "0.0.0.0";
           prefixLength = 0;
@@ -45,7 +43,7 @@
     nat = {
       enable = true;
       internalInterfaces = ["wlan0"];
-      externalInterface = "enp1s0u1";
+      externalInterface = "usb0";
     };
 
     firewall = {

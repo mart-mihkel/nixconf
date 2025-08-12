@@ -16,13 +16,12 @@
   };
 
   boot = {
+    initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
+    kernelModules = ["kvm-intel"];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-
-    initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
-    kernelModules = ["kvm-intel"];
   };
 
   hardware = {
@@ -32,9 +31,7 @@
 
   networking = {
     hostName = "dell";
-    useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
-    usePredictableInterfaceNames = true;
     hosts = {
       "192.168.0.1" = ["rasp"];
       "192.168.0.2" = ["jaam"];
