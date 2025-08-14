@@ -21,34 +21,34 @@
   console = {
     keyMap = "et";
     font = "ter-u20n";
-    earlySetup = true;
     packages = with pkgs; [terminus_font];
   };
 
   users.users.kubujuss = {
+    shell = pkgs.zsh;
     createHome = true;
     isNormalUser = true;
     extraGroups = ["wheel" "docker"];
-    shell = pkgs.zsh;
   };
 
   programs = {
     git = {
       enable = true;
       config = {
-        user.name = "mart-mihkel";
-        user.email = "mart.mihkel.aun@gmail.com";
         pull.rebase = true;
         core.editor = "vim";
         init.defaultBranch = "main";
         url."git@github.com:".insteadOf = ["gh:"];
+        user = {
+          name = "mart-mihkel";
+          email = "mart.mihkel.aun@gmail.com";
+        };
       };
     };
 
     zsh = {
       enable = true;
       autosuggestions.enable = true;
-
       shellAliases = {
         rm = "rm -v";
         cp = "cp -v";
@@ -57,10 +57,7 @@
         ll = "ls -lAh --color";
       };
 
-      promptInit = ''
-        PROMPT="%F{2}%n@%m%f:%F{4}%~%f "
-      '';
-
+      promptInit = "PROMPT='%F{2}%n@%m%f:%F{4}%~%f '";
       shellInit = ''
         zstyle ":completion:*" menu yes select
         zstyle ":completion:*" special-dirs true
@@ -72,9 +69,8 @@
     tmux = {
       enable = true;
       baseIndex = 1;
-      keyMode = "vi";
       extraConfig = ''
-        set -g default-terminal   "tmux-256color"
+        set -g default-terminal "tmux-256color"
         set -g terminal-overrides "xterm-256color:RGB"
       '';
     };

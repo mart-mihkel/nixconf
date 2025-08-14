@@ -42,15 +42,7 @@
     networkmanager.enable = true;
     interfaces = {
       eth0.wakeOnLan.enable = true;
-      wlan0 = {
-        useDHCP = false;
-        ipv4.addresses = [
-          {
-            address = "192.168.0.1";
-            prefixLength = 24;
-          }
-        ];
-      };
+      wlan0.useDHCP = false;
     };
 
     firewall.allowedUDPPorts = [9]; # wakeonlan

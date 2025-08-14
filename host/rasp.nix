@@ -78,8 +78,8 @@
       enable = true;
       settings = {
         interface = "wlan0";
-        bind-interfaces = true;
         server = ["9.9.9.9" "8.8.8.8" "1.1.1.1"];
+        dhcp-host = ["10:3d:1c:4b:6d:b5,192.168.0.2"];
         dhcp-range = ["192.168.0.50,192.168.0.150,12h"];
       };
     };
