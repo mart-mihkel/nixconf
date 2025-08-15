@@ -57,13 +57,12 @@
 
   xdg = {
     portal.enable = true;
-    icons.fallbackCursorThemes = ["Adwaita"];
+    wlr.portal.enable = true;
   };
 
   programs = {
-    zsh.enable = true;
+    sway.enable = true;
     steam.enable = true;
-    hyprland.enable = true;
 
     neovim = {
       enable = true;
@@ -82,10 +81,7 @@
 
   services = {
     thermald.enable = true;
-    xserver = {
-      windowManager.i3.enable = true;
-      displayManager.startx.enable = true;
-    };
+    auto-cpufreq.enable = true;
 
     undervolt = {
       enable = true;
@@ -93,49 +89,11 @@
       coreOffset = -100;
     };
 
-    tlp = {
-      enable = true;
-      settings = {
-        START_CHARGE_THRESH_BAT0 = 75;
-        STOP_CHARGE_THRESH_BAT0 = 80;
-      };
-    };
-
     pipewire = {
       enable = true;
       wireplumber.enable = true;
     };
   };
-
-  fonts.packages = with pkgs; [noto-fonts];
-
-  environment.systemPackages = with pkgs; [
-    lua-language-server
-    tree-sitter
-    alejandra
-    luajit
-    stylua
-    sqlite
-    nodejs
-    cargo
-    clang
-    nil
-    wol
-    uv
-
-    eduvpn-client
-    qbittorrent
-    gammastep
-    qdigidoc
-    obsidian
-    spotify
-    zoom-us
-    discord
-    slack
-    brave
-    vlc
-    feh
-  ];
 
   system.stateVersion = "25.05";
 }

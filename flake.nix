@@ -73,8 +73,6 @@
           home-manager
           alejandra
           ragenix
-          nil
-          git
         ];
       };
     });

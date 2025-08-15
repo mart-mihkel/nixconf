@@ -2,6 +2,7 @@
   nix = {
     gc.automatic = true;
     settings = {
+      trusted-users = ["kubujuss"];
       experimental-features = ["nix-command" "flakes"];
       extra-substituters = [
         "https://cuda-maintainers.cachix.org"
@@ -17,15 +18,9 @@
 
   time.timeZone = "Europe/Tallinn";
   i18n.defaultLocale = "en_US.UTF-8";
-
-  console = {
-    keyMap = "et";
-    font = "ter-u20n";
-    packages = with pkgs; [terminus_font];
-  };
+  console.keyMap = "et";
 
   users.users.kubujuss = {
-    shell = pkgs.zsh;
     createHome = true;
     isNormalUser = true;
     extraGroups = ["wheel" "docker"];
@@ -46,33 +41,9 @@
       };
     };
 
-    zsh = {
-      enable = true;
-      autosuggestions.enable = true;
-      shellAliases = {
-        rm = "rm -v";
-        cp = "cp -v";
-        mv = "mv -v";
-        ls = "ls --color";
-        ll = "ls -lAh --color";
-      };
-
-      promptInit = "PROMPT='%F{2}%n@%m%f:%F{4}%~%f '";
-      shellInit = ''
-        zstyle ":completion:*" menu yes select
-        zstyle ":completion:*" special-dirs true
-        zstyle ":completion::complete:*" gain-privileges 1
-        setopt list_packed no_case_glob no_case_match
-      '';
-    };
-
     tmux = {
       enable = true;
       baseIndex = 1;
-      extraConfig = ''
-        set -g default-terminal "tmux-256color"
-        set -g terminal-overrides "xterm-256color:RGB"
-      '';
     };
   };
 
@@ -85,29 +56,11 @@
     };
 
     systemPackages = with pkgs; [
-      cloudflared
-      fastfetch
-      nettools
       openssl
-      gnumake
-      ripgrep
       cacert
-      unzip
-      ninja
-      meson
-      cmake
       tmux
-      curl
-      wget
-      tree
-      btop
-      zip
       vim
-      gcc
-      bat
-      fzf
-      fd
-      jq
+      git
     ];
   };
 }

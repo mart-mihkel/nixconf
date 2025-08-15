@@ -6,11 +6,12 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./modules/cloudflare-tunnel.nix {host = "rasp";})
-    ./modules/common.nix
+    (import ./cloudflare-tunnel.nix {host = "rasp";})
+    ./common.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  age.secrets.kukerpall-psk.file = ../secrets/kukerpall-psk.age;
 
   boot = {
     initrd.availableKernelModules = ["xhci_pci"];
@@ -24,6 +25,7 @@
     hostName = "rasp";
     networkmanager.enable = false;
     interfaces = {
+      eth0.useDHCP = false;
       wlan0.ipv4.addresses = [
         {
           address = "192.168.0.1";
@@ -57,15 +59,7 @@
     fsType = "ext4";
   };
 
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 8 * 1024;
-    }
-  ];
-
   zramSwap.enable = true;
-  age.secrets.kukerpall-psk.file = ../secrets/kukerpall-psk.age;
 
   services = {
     getty.autologinUser = "kubujuss";
