@@ -6,12 +6,12 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./cloudflare-tunnel.nix {host = "rasp";})
+    (import ./cloudflare-tunnel.nix {host = "rpi";})
     ./common.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-  age.secrets.kukerpall-psk.file = ../secrets/kukerpall-psk.age;
+  age.secrets.wpa-psk.file = ../secrets/wpa-psk.age;
 
   boot = {
     initrd.availableKernelModules = ["xhci_pci"];
@@ -22,7 +22,7 @@
   };
 
   networking = {
-    hostName = "rasp";
+    hostName = "rpi";
     networkmanager.enable = false;
     interfaces = {
       eth0.useDHCP = false;
@@ -62,7 +62,7 @@
   zramSwap.enable = true;
 
   services = {
-    getty.autologinUser = "kubujuss";
+    getty.autologinUser = "nixos";
     openssh = {
       enable = true;
       openFirewall = true;
@@ -88,7 +88,7 @@
           ssid = "kukerpall83";
           authentication = {
             mode = "wpa2-sha1";
-            wpaPasswordFile = config.age.secrets.kukerpall-psk.path;
+            wpaPasswordFile = config.age.secrets.wpa-psk.path;
           };
         };
       };

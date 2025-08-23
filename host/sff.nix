@@ -7,7 +7,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./cloudflare-tunnel.nix {host = "jaam";})
+    (import ./cloudflare-tunnel.nix {host = "sff";})
     ./common.nix
   ];
 
@@ -34,7 +34,7 @@
   };
 
   networking = {
-    hostName = "jaam";
+    hostName = "sff";
     networkmanager.enable = true;
     interfaces = {
       eth0.wakeOnLan.enable = true;
@@ -68,7 +68,7 @@
   };
 
   services = {
-    getty.autologinUser = "kubujuss";
+    getty.autologinUser = "nixos";
     xserver.videoDrivers = ["nvidia"];
 
     openssh = {
@@ -119,8 +119,8 @@
         ]);
 
       extraConfig = ''
-        c.Authenticator.allowed_users = { 'kubujuss' }
-        c.Authenticator.admin_users = { 'kubujuss' }
+        c.Authenticator.allowed_users = { 'nixos' }
+        c.Authenticator.admin_users = { 'nixos' }
         c.SystemdSpawner.environment = {
           'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
           'SSL_CERT_DIR': '/etc/ssl/certs',

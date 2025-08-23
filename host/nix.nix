@@ -30,11 +30,11 @@
   };
 
   networking = {
-    hostName = "dell";
+    hostName = "nix";
     networkmanager.enable = true;
     hosts = {
-      "192.168.0.1" = ["rasp"];
-      "192.168.0.2" = ["jaam"];
+      "192.168.0.1" = ["rpi"];
+      "192.168.0.2" = ["sff"];
     };
   };
 
@@ -52,7 +52,7 @@
   };
 
   zramSwap.enable = true;
-  users.users.kubujuss.extraGroups = ["networkmanager"];
+  users.users.nixos.extraGroups = ["networkmanager"];
   security.sudo.wheelNeedsPassword = false;
 
   xdg = {

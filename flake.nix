@@ -34,36 +34,36 @@
       );
   in {
     nixosConfigurations = {
-      dell = nixos {
+      nix = nixos {
         system = "x86_64-linux";
-        modules = [./host/dell.nix];
+        modules = [./host/nix.nix];
       };
 
-      jaam = nixos {
+      sff = nixos {
         system = "x86_64-linux";
-        modules = [./host/jaam.nix agenix];
+        modules = [./host/sff.nix agenix];
       };
 
-      rasp = nixos {
+      rpi = nixos {
         system = "aarch64-linux";
-        modules = [./host/rasp.nix agenix];
+        modules = [./host/rpi.nix agenix];
       };
     };
 
     homeConfigurations = {
-      kubujuss = hman {
+      headed = hman {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-        modules = [./home/kubujuss.nix];
+        modules = [./home/headed.nix];
       };
 
-      kubujuss-x86 = hman {
+      headless-x86 = hman {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-        modules = [./home/kubujuss-headless.nix];
+        modules = [./home/headless.nix];
       };
 
-      kubujuss-arm = hman {
+      headless-arm = hman {
         pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
-        modules = [./home/kubujuss-headless.nix];
+        modules = [./home/headless.nix];
       };
     };
 

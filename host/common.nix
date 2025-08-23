@@ -2,7 +2,7 @@
   nix = {
     gc.automatic = true;
     settings = {
-      trusted-users = ["kubujuss"];
+      trusted-users = ["nixos"];
       experimental-features = ["nix-command" "flakes"];
       extra-substituters = [
         "https://cuda-maintainers.cachix.org"
@@ -20,9 +20,10 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "et";
 
-  users.users.kubujuss = {
+  users.users.nixos = {
     createHome = true;
     isNormalUser = true;
+    initialPassword = "nixos";
     extraGroups = ["wheel" "docker"];
   };
 

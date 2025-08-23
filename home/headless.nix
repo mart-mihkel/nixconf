@@ -155,9 +155,10 @@ in {
       ".vimrc".text = vimrc;
     };
 
-    username = "kubujuss";
-    homeDirectory = "/home/kubujuss";
     packages = with pkgs; [neovim vim];
+    homeDirectory = "/home/nixos";
+    username = "nixos";
+
     stateVersion = "24.05";
   };
 }

@@ -168,7 +168,7 @@ let
     lon=26.7
   '';
 in {
-  imports = [./kubujuss-headless.nix];
+  imports = [./headless.nix];
 
   programs = {
     tofi.enable = true;
