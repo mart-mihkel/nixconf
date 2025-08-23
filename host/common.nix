@@ -27,23 +27,23 @@
   };
 
   programs = {
+    vim.enable = true;
+
+    tmux = {
+      enable = true;
+      baseIndex = 1;
+    };
+
     git = {
       enable = true;
       config = {
         pull.rebase = true;
         core.editor = "vim";
-        init.defaultBranch = "main";
-        url."git@github.com:".insteadOf = ["gh:"];
         user = {
           name = "mart-mihkel";
           email = "mart.mihkel.aun@gmail.com";
         };
       };
-    };
-
-    tmux = {
-      enable = true;
-      baseIndex = 1;
     };
   };
 
@@ -55,12 +55,6 @@
       SSL_CERT_DIR = "/etc/ssl/certs";
     };
 
-    systemPackages = with pkgs; [
-      openssl
-      cacert
-      tmux
-      vim
-      git
-    ];
+    systemPackages = with pkgs; [openssl cacert];
   };
 }

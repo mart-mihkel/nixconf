@@ -33,7 +33,7 @@ let
     bindsym Print+Mod1 exec grimshot --notify savecopy window
     bindsym Print exec grimshot --notify savecopy area
 
-    bindsym Mod4+Shift+c exec swaylock -uei ~/Pictures/walls/debian.png
+    bindsym Mod4+Shift+c exec swaylock -uei ~/Pictures/walls/flowers.png
     bindsym Mod4+period exec tofi-emoji
     bindsym Mod4+r exec tofi-drun
     bindsym Mod4+q exec alacritty
@@ -81,21 +81,19 @@ let
     exec autotiling
     exec gammastep
     exec waybar
-    exec dunst
   '';
 
   waybarcfg = ''
     {
       "spacing": 24,
       "modules-left": [
-        "sway/workspaces",
-        "tray"
+        "sway/workspaces"
       ],
       "modules-right": [
+        "tray",
         "network",
         "bluetooth",
         "wireplumber",
-        "backlight",
         "battery",
         "clock"
       ],
@@ -108,16 +106,13 @@ let
         "format-disconnected": "net: off"
       },
       "bluetooth": {
-        "format": "blu: off",
-        "format-connected": "blu: con",
-        "format-connected-battery": "blu: {device_battery_percentage}%"
+        "format": "blt: off",
+        "format-connected": "blt: con",
+        "format-connected-battery": "blt: {device_battery_percentage}%"
       },
       "wireplumber": {
         "format": "vol: {volume}%",
         "format-muted": "vol: off"
-      },
-      "backlight": {
-        "format": "bkl: {percent}%"
       },
       "battery": {
         "format": "bat: {capacity}%"
@@ -138,60 +133,39 @@ let
   '';
 
   toficfg = ''
-    font             = Jetbrains Mono Nerd Font
-    font-size        = 10
-    fuzzy-match      = true
-    drun-launch      = true
-    terminal         = foot
-    result-spacing   = 25
-    num-results      = 5
-    width            = 100%
-    height           = 100%
-    padding-left     = 45%
-    padding-top      = 35%
-    outline-width    = 0
-    border-width     = 0
-    text-color       = #d8dee9
-    selection-color  = #88c0d0
-    background-color = #2e3440cc
-  '';
-
-  dunstrc = ''
-    [global]
-    font          = Jetbrains Mono Nerd Font 10
-    format        = "%s\n%b"
-    markup        = full
-    alignment     = right
-    icon_position = right
-    width         = (0, 512)
-    height        = (0, 256)
-    offset        = (8, 8)
-    min_icon_size = 64
-    max_icon_size = 64
-    frame_width   = 2
-    foreground    = "#d8dee9"
-    background    = "#2e3440"
-
-    [urgency_low]
-    frame_color   = "#eceff4"
-    timeout       = 4
-
-    [urgency_normal]
-    frame_color   = "#ebcb8b"
-    timeout       = 8
-
-    [urgency_critical]
-    frame_color   = "#bf616a"
-    timeout       = 16
+    font = Jetbrains Mono Nerd Font
+    font-size = 10
+    fuzzy-match = true
+    drun-launch = true
+    result-spacing = 25
+    num-results = 5
+    width = 100%
+    height = 100%
+    padding-left = 45%
+    padding-top = 35%
+    outline-width = 0
+    border-width = 0
   '';
 
   alacrittycfg = ''
-    [window]
-    dynamic_padding = true
-
     [font]
     normal = { family = "JetBrains Mono Nerd Font" }
     size = 12.0
+
+    [window]
+    dynamic_padding = true
+  '';
+
+  gammastepcfg = ''
+    [general]
+    temp-day=6500
+    temp-night=3000
+    adjustment-method=wayland
+    location-provider=manual
+
+    [manual]
+    lat=58.4
+    lon=26.7
   '';
 in {
   imports = [./kubujuss-headless.nix];
@@ -205,9 +179,9 @@ in {
   home = {
     file = {
       ".config/alacritty/alacritty.toml".text = alacrittycfg;
+      ".config/gammastep/config.ini".text = gammastepcfg;
       ".config/waybar/config.jsonc".text = waybarcfg;
       ".config/waybar/style.css".text = waybarcss;
-      ".config/dunst/dunstrc".text = dunstrc;
       ".config/sway/config".text = swaycfg;
       ".config/tofi/config".text = toficfg;
     };
