@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   modulesPath,
   ...
@@ -94,6 +95,8 @@
       };
     };
   };
+
+  environment.systemPackages = with pkgs; [wol];
 
   system.stateVersion = "24.05";
 }

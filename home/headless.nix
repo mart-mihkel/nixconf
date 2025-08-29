@@ -13,14 +13,12 @@
     vim.o.expandtab = true
     vim.o.smartcase = true
     vim.o.swapfile = false
-    vim.o.hlsearch = false
     vim.o.undofile = true
     vim.o.laststatus = 3
     vim.o.scrolloff = 4
     vim.o.number = true
     vim.o.wrap = false
     vim.o.list = true
-    vim.o.tabstop = 4
 
     vim.pack.add({
         "https://github.com/vague2k/vague.nvim",
@@ -36,8 +34,6 @@
     })
 
     vim.cmd.colorscheme("vague")
-    vim.lsp.config("*", { root_markers = { ".git" } })
-    vim.diagnostic.config({ virtual_text = { current_line = true } })
 
     require("mason").setup()
     require("gitsigns").setup()
@@ -64,17 +60,16 @@
         },
     })
 
-    vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
-    vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
-    vim.keymap.set("n", "<C-k>", ":cprevious<CR>")
-    vim.keymap.set("n", "<C-j>", ":cnext<CR>")
-    vim.keymap.set("n", "<M-t>", ":tabnew %<CR>")
     vim.keymap.set("n", "<M-1>", "1gt")
     vim.keymap.set("n", "<M-2>", "2gt")
     vim.keymap.set("n", "<M-3>", "3gt")
     vim.keymap.set("n", "<M-4>", "4gt")
+    vim.keymap.set("n", "<M-t>", ":tabnew %<CR>")
+    vim.keymap.set("n", "<C-j>", ":cnext<CR>")
+    vim.keymap.set("n", "<C-k>", ":cprevious<CR>")
+    vim.keymap.set({ "n", "v" }, "<C-d>", "<C-d>zz")
+    vim.keymap.set({ "n", "v" }, "<C-u>", "<C-u>zz")
     vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-    vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
     vim.keymap.set("n", "<leader>gf", require("conform").format)
     vim.keymap.set("n", "<leader>gr", require("gitsigns").reset_hunk)
     vim.keymap.set("n", "<leader>gp", require("gitsigns").preview_hunk)
@@ -88,74 +83,14 @@
         end
     end)
   '';
-
-  vimrc = ''
-    let mapleader=" "
-    let g:netrw_banner=0
-
-    set wildignore=*.pyc,*.o,*/node_modules/*,*/.venv/*
-    set viminfofile=~/.vim/viminfo
-    set clipboard+=unnamedplus
-    set complete=.,w,b,u,t
-    set backupdir=~/.vim
-    set directory=~/.vim
-    set undolevels=10000
-    set undodir=~/.vim
-    set encoding=utf-8
-    set colorcolumn=80
-    set relativenumber
-    set history=10000
-    set softtabstop=4
-    set nocompatible
-    set laststatus=2
-    set shiftwidth=4
-    set breakindent
-    set scrolloff=4
-    set autoindent
-    set copyindent
-    set ignorecase
-    set noswapfile
-    set cursorline
-    set splitright
-    set splitbelow
-    set shiftround
-    set expandtab
-    set smartcase
-    set incsearch
-    set showmatch
-    set tabstop=4
-    set smarttab
-    set wildmenu
-    set undofile
-    set showmode
-    set path+=**
-    set showcmd
-    set backup
-    set number
-    set nowrap
-    set hidden
-    set ruler
-    set list
-
-    syntax on
-    filetype plugin on
-    colorscheme habamax
-
-    nnoremap <space> <nop>
-    nnoremap <leader>gf :%s/\s\+$//e<CR>
-    nnoremap Y y$
-    nnoremap D d$
-  '';
 in {
-  programs.home-manager.enable = true;
+  programs = {
+    home-manager.enable = true;
+    neovim.enable = true;
+  };
 
   home = {
-    file = {
-      ".config/nvim/init.lua".text = nvimrc;
-      ".vimrc".text = vimrc;
-    };
-
-    packages = with pkgs; [neovim vim];
+    file.".config/nvim/init.lua".text = nvimrc;
     homeDirectory = "/home/nixos";
     username = "nixos";
 
