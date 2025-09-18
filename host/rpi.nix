@@ -7,8 +7,8 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./cloudflare-tunnel.nix {host = "rpi";})
-    ./common.nix
+    (import ./modules/cloudflare-tunnel.nix {host = "rpi";})
+    ./modules/common.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";

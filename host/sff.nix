@@ -7,8 +7,8 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./cloudflare-tunnel.nix {host = "sff";})
-    ./common.nix
+    (import ./modules/cloudflare-tunnel.nix {host = "sff";})
+    ./modules/common.nix
   ];
 
   nixpkgs = {
