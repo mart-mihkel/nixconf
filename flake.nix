@@ -13,28 +13,20 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/release-25.05";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {...} @ inputs: let
     nixos = inputs.nixpkgs.lib.nixosSystem;
+    nixos-unstable = inputs.nixpkgs-unstable.lib.nixosSystem;
     agenix = inputs.agenix.nixosModules.default;
-    hman = inputs.home-manager.lib.homeManagerConfiguration;
-    forEachSupportedSystem = f:
-      inputs.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (
-        system: f {pkgs = import inputs.nixpkgs {inherit system;};}
-      );
   in {
     nixosConfigurations = {
-      nix = nixos {
+      nix = nixos-unstable {
         system = "x86_64-linux";
         modules = [./host/nix.nix];
       };
@@ -49,32 +41,5 @@
         modules = [./host/rpi.nix agenix];
       };
     };
-
-    homeConfigurations = {
-      headed = hman {
-        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-        modules = [./home/headed.nix];
-      };
-
-      headless-x86 = hman {
-        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-        modules = [./home/headless.nix];
-      };
-
-      headless-arm = hman {
-        pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
-        modules = [./home/headless.nix];
-      };
-    };
-
-    devShells = forEachSupportedSystem ({pkgs}: {
-      default = pkgs.mkShell {
-        packages = with pkgs; [
-          home-manager
-          alejandra
-          ragenix
-        ];
-      };
-    });
   };
 }
