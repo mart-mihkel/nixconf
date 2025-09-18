@@ -42,7 +42,7 @@
     };
 
     firewall = {
-      allowedTCPPorts = [8000 8787 23231]; # jupyterhub rstudio softserve
+      allowedTCPPorts = [2718 8000 8787 23231]; # marimo jupyterhub rstudio softserve
       allowedUDPPorts = [9]; # wakeonlan
     };
   };
@@ -95,29 +95,6 @@
 
     jupyterhub = {
       enable = true;
-      jupyterlabEnv = pkgs.python3.withPackages (p:
-        with p; [
-          jupyterlab-widgets
-          jupyterlab
-          jupyterhub
-
-          torchvision
-          torchaudio
-          torch
-
-          scikit-learn
-          matplotlib
-          plotnine
-          seaborn
-          opencv4
-          plotly
-          polars
-          pandas
-          numpy
-          scipy
-          tqdm
-        ]);
-
       extraConfig = ''
         c.Authenticator.allowed_users = { 'nixos' }
         c.Authenticator.admin_users = { 'nixos' }
