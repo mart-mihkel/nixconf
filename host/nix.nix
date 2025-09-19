@@ -13,6 +13,12 @@
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
     config.allowUnfree = true;
+    # TODO: delete when neovim 0.12 is released
+    overlays = [
+      (import (builtins.fetchTarball {
+        url = "https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz";
+      }))
+    ];
   };
 
   boot = {
@@ -40,46 +46,66 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/de099741-5035-4505-906a-81718b7ebc02";
+      device = "/dev/nvme0n1p2";
       fsType = "ext4";
     };
 
     "/boot" = {
-      device = "/dev/disk/by-uuid/3E9B-209A";
+      device = "/dev/nvme0n1p1";
       fsType = "vfat";
       options = ["fmask=0077" "dmask=0077"];
     };
   };
 
-  zramSwap.enable = true;
-  users.users.nixos.extraGroups = ["networkmanager"];
-  security.sudo.wheelNeedsPassword = false;
+  swapDevices = [
+    {
+      device = "/dev/nvme0n1p3";
+    }
+  ];
 
-  xdg = {
-    portal.enable = true;
-    wlr.portal.enable = true;
+  zramSwap.enable = true;
+
+  users.users.nixos = {
+    shell = pkgs.zsh;
+    extraGroups = ["networkmanager"];
   };
 
+  security.sudo.wheelNeedsPassword = false;
+  xdg.portal.enable = true;
+
   programs = {
-    sway.enable = true;
     steam.enable = true;
+    direnv.enable = true;
+    hyprland.enable = true;
 
     neovim = {
       enable = true;
-      defaultEditor = true;
-      withPython3 = true;
-      withNodeJs = true;
-      withRuby = true;
       vimAlias = true;
+      withNodeJs = true;
+      withPython3 = true;
+      defaultEditor = true;
+    };
+
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestions.enable = true;
     };
 
     nix-ld = {
       enable = true;
       libraries = with pkgs; [libGL glib glibc stdenv.cc.cc];
     };
+
+    dconf.profiles.user.databases = [
+      {
+        settings."org/gnome/desktop/interface".font-name = "Noto Sans Medium 10";
+      }
+    ];
   };
 
   services = {
+    pcscd.enable = true;
     thermald.enable = true;
     auto-cpufreq.enable = true;
 
@@ -93,7 +119,59 @@
       enable = true;
       wireplumber.enable = true;
     };
+
+    greetd = {
+      enable = true;
+      settings.default_session = {
+        user = "nixos";
+        command = "hyprland";
+      };
+    };
   };
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    jetbrains-mono
+    noto-fonts
+  ];
+
+  environment.systemPackages = with pkgs; [
+    cloudflared
+    gnumake
+    ripgrep
+    ffmpeg
+    unzip
+    cargo
+    rustc
+    wget
+    gcc
+    zip
+    bat
+    fd
+    uv
+
+    (rofi.override {plugins = [pkgs.rofi-emoji];})
+    sway-contrib.grimshot
+    adwaita-icon-theme
+    brightnessctl
+    wl-clipboard
+    quickshell
+    gammastep
+    alacritty
+    fastfetch
+    hypridle
+    hyprlock
+    hellwal
+    waybar
+    swww
+    btop
+
+    qdigidoc
+    spotify
+    discord
+    brave
+    vlc
+  ];
 
   system.stateVersion = "25.05";
 }
