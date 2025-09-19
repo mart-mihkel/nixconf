@@ -60,8 +60,6 @@
     fsType = "ext4";
   };
 
-  zramSwap.enable = true;
-
   services = {
     getty.autologinUser = "nixos";
     openssh = {

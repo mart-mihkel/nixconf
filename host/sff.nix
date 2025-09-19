@@ -60,8 +60,6 @@
     };
   };
 
-  zramSwap.enable = true;
-
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [libGL glib];
@@ -89,7 +87,7 @@
     soft-serve = {
       enable = true;
       settings.initial_admin_keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+eAbOpslZpfbchZmIEADHnxDTFvuEy1eblh4OnkZpm"
+        "sh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwT8Pp5RBli2Qc7P2XvYn4X3A1YLOAhl/MBE+WV/kwq"
       ];
     };
 

@@ -63,7 +63,6 @@
     }
   ];
 
-  zramSwap.enable = true;
   users.users.nixos.extraGroups = ["networkmanager"];
   security.sudo.wheelNeedsPassword = false;
   xdg.portal.enable = true;
@@ -136,16 +135,18 @@
     gcc
     zip
     bat
+    fzf
     fd
     uv
+    jq
 
     (rofi.override {plugins = [pkgs.rofi-emoji];})
     wayland-pipewire-idle-inhibit
-    sway-contrib.grimshot
     adwaita-icon-theme
     brightnessctl
     wl-clipboard
     quickshell
+    grimblast
     gammastep
     alacritty
     fastfetch
@@ -153,6 +154,7 @@
     hyprlock
     hellwal
     waybar
+    dunst
     swww
     btop
     feh
