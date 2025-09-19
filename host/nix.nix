@@ -64,12 +64,7 @@
   ];
 
   zramSwap.enable = true;
-
-  users.users.nixos = {
-    shell = pkgs.zsh;
-    extraGroups = ["networkmanager"];
-  };
-
+  users.users.nixos.extraGroups = ["networkmanager"];
   security.sudo.wheelNeedsPassword = false;
   xdg.portal.enable = true;
 
@@ -84,12 +79,6 @@
       withNodeJs = true;
       withPython3 = true;
       defaultEditor = true;
-    };
-
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      autosuggestions.enable = true;
     };
 
     nix-ld = {
@@ -151,6 +140,7 @@
     uv
 
     (rofi.override {plugins = [pkgs.rofi-emoji];})
+    wayland-pipewire-idle-inhibit
     sway-contrib.grimshot
     adwaita-icon-theme
     brightnessctl
@@ -165,11 +155,14 @@
     waybar
     swww
     btop
+    feh
 
     qdigidoc
     spotify
     discord
+    blender
     brave
+    gimp
     vlc
   ];
 

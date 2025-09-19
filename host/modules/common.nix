@@ -12,6 +12,7 @@
   console.keyMap = "et";
 
   users.users.nixos = {
+    shell = pkgs.zsh;
     createHome = true;
     isNormalUser = true;
     initialPassword = "nixos";
@@ -24,6 +25,12 @@
     tmux = {
       enable = true;
       baseIndex = 1;
+    };
+
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestions.enable = true;
     };
 
     git = {
