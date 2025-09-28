@@ -4,7 +4,9 @@
   config,
   modulesPath,
   ...
-}: {
+}: let
+  marimo-token = config.age.secrets.marimo-token.path;
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (import ./modules/cloudflare-tunnel.nix {host = "sff";})
@@ -42,8 +44,13 @@
     };
 
     firewall = {
-      allowedTCPPorts = [2718 8000 8787 23231]; # marimo jupyterhub rstudio softserve
       allowedUDPPorts = [9]; # wakeonlan
+      allowedTCPPorts = [
+        2718 # marimo
+        8000 # jupyterhub
+        8787 # rstudio
+        23231 # softserve
+      ];
     };
   };
 
@@ -103,6 +110,18 @@
           'CUDA_PATH': '/run/opengl-driver',
         }
       '';
+    };
+  };
+
+  age.secrets.marimo-token.file = ../secrets/marimo-token.age;
+  systemd.services.marimo = {
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
+    script = "${pkgs.uv}/bin/uv run marimo edit --host 0.0.0.0 --token-password $(cat ${marimo-token})";
+    serviceConfig = {
+      WorkingDirectory = "/home/nixos/marimo";
+      Restart = "always";
+      RestartSec = 5;
     };
   };
 
