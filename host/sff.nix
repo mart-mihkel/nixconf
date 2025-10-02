@@ -106,6 +106,7 @@ in {
         c.SystemdSpawner.environment = {
           'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
           'SSL_CERT_DIR': '/etc/ssl/certs',
+          'LD_LIBRARY_PATH': '/run/opengl-driver/lib',
           'CUDA_HOME': '/run/opengl-driver',
           'CUDA_PATH': '/run/opengl-driver',
         }
@@ -122,12 +123,21 @@ in {
       WorkingDirectory = "/home/nixos/marimo";
       Restart = "always";
       RestartSec = 5;
+      Environment = [
+        "LD_LIBRARY_PATH=/run/opengl-driver/lib"
+        "CUDA_HOME=/run/opengl-driver"
+        "CUDA_PATH=/run/opengl-driver"
+      ];
     };
   };
 
-  environment.variables = {
-    CUDA_HOME = "/run/opengl-driver";
-    CUDA_PATH = "/run/opengl-driver";
+  environment = {
+    systemPackages = with pkgs; [uv];
+    variables = {
+      LD_LIBRARY_PATH = "/run/opengl-driver/lib";
+      CUDA_HOME = "/run/opengl-driver";
+      CUDA_PATH = "/run/opengl-driver";
+    };
   };
 
   system.stateVersion = "24.05";
