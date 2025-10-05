@@ -37,7 +37,11 @@
 
   networking = {
     hostName = "nix";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.backend = "iwd";
+    };
+
     hosts = {
       "192.168.0.1" = ["rpi"];
       "192.168.0.2" = ["sff"];
@@ -71,6 +75,7 @@
     steam.enable = true;
     direnv.enable = true;
     hyprland.enable = true;
+    obs-studio.enable = true;
 
     neovim = {
       enable = true;
@@ -119,16 +124,19 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
+    material-symbols
     jetbrains-mono
     noto-fonts
   ];
 
   environment.systemPackages = with pkgs; [
     cloudflared
+    imagemagick
     gnumake
     ripgrep
     ffmpeg
     unzip
+    typst
     cargo
     rustc
     wget
@@ -136,31 +144,40 @@
     zip
     bat
     fzf
+    go
     fd
     uv
     jq
 
-    (rofi.override {plugins = [pkgs.rofi-emoji];})
     wayland-pipewire-idle-inhibit
     adwaita-icon-theme
     brightnessctl
     wl-clipboard
-    quickshell
+    pulsemixer
+    playerctl
     grimblast
     gammastep
     alacritty
     fastfetch
     hypridle
     hyprlock
+    ghostty
+    cmatrix
     hellwal
+    bluetui
+    impala
     waybar
     dunst
     swww
+    tree
+    cava
     btop
+    rofi
     feh
 
     qdigidoc
     spotify
+    zathura
     discord
     blender
     brave
