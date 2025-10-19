@@ -8,7 +8,7 @@
   };
 
   time.timeZone = "Europe/Tallinn";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_DK.UTF-8";
   console.keyMap = "et";
 
   users.users.nixos = {
