@@ -132,22 +132,13 @@
   environment.systemPackages = with pkgs; [
     cloudflared
     imagemagick
-    gnumake
-    ripgrep
+    nodejs
     ffmpeg
-    unzip
     typst
     cargo
     rustc
-    wget
-    gcc
-    zip
-    bat
-    fzf
+    bun
     go
-    fd
-    uv
-    jq
 
     wayland-pipewire-idle-inhibit
     adwaita-icon-theme
@@ -168,14 +159,15 @@
     impala
     waybar
     dunst
+    wtype
     swww
     tree
     cava
-    btop
     rofi
     feh
 
     qdigidoc
+    audacity
     spotify
     zathura
     discord
