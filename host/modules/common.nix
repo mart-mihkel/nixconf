@@ -27,10 +27,30 @@
       baseIndex = 1;
     };
 
+    bash = {
+      completion.enable = true;
+      shellInit = ''
+        bind '"\t": menu-complete'
+        bind "set show-all-if-ambiguous on"
+        bind "set completion-ignore-case on"
+        bind "set menu-complete-display-prefix on"
+      '';
+    };
+
     zsh = {
       enable = true;
       enableCompletion = true;
       autosuggestions.enable = true;
+      shellAliases = {
+        rm = "rm -v";
+        cp = "cp -v";
+        mv = "mv -v";
+      };
+
+      shellInit = ''
+        zstyle ":completion:*" menu yes select
+        zstyle ":completion::complete:*" gain-privileges 1
+      '';
     };
 
     git = {
@@ -55,6 +75,22 @@
       SSL_CERT_DIR = "/etc/ssl/certs";
     };
 
-    systemPackages = with pkgs; [openssl cacert];
+    systemPackages = with pkgs; [
+      openssl
+      ripgrep
+      gnumake
+      cacert
+      unzip
+      wget
+      glow
+      btop
+      gcc
+      zip
+      bat
+      fzf
+      fd
+      jq
+      uv
+    ];
   };
 }
