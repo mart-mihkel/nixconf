@@ -22,8 +22,16 @@
   };
 
   boot = {
-    initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
     kernelModules = ["kvm-intel"];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "nvme"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+      "rtsx_pci_sdmmc"
+    ];
+
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -72,6 +80,7 @@
   xdg.portal.enable = true;
 
   programs = {
+    sway.enable = true;
     steam.enable = true;
     direnv.enable = true;
     hyprland.enable = true;
@@ -117,7 +126,7 @@
       enable = true;
       settings.default_session = {
         user = "nixos";
-        command = "hyprland";
+        command = "sway";
       };
     };
   };
@@ -141,30 +150,35 @@
     go
 
     wayland-pipewire-idle-inhibit
-    adwaita-icon-theme
     brightnessctl
     wl-clipboard
     pulsemixer
     playerctl
-    grimblast
-    gammastep
-    alacritty
-    fastfetch
-    hypridle
-    hyprlock
-    ghostty
-    cmatrix
-    hellwal
     bluetui
     impala
-    waybar
-    dunst
     wtype
-    swww
     tree
-    cava
-    rofi
     feh
+
+    fastfetch
+    grimblast
+    alacritty
+    hypridle
+    hyprlock
+    hellwal
+    cmatrix
+    waybar
+    rofi
+    swww
+    cava
+
+    sway-contrib.grimshot
+    autotiling-rs
+    gammastep
+    swayidle
+    dunst
+    tofi
+    foot
 
     qdigidoc
     audacity
