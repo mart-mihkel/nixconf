@@ -21,6 +21,7 @@
 
   programs = {
     vim.enable = true;
+    direnv.enable = true;
 
     tmux = {
       enable = true;
@@ -84,6 +85,7 @@
       wget
       glow
       btop
+      tree
       gcc
       zip
       bat

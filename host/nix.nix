@@ -82,7 +82,6 @@
   programs = {
     sway.enable = true;
     steam.enable = true;
-    direnv.enable = true;
     hyprland.enable = true;
     obs-studio.enable = true;
 
@@ -146,6 +145,7 @@
     typst
     cargo
     rustc
+    pnpm
     bun
     go
 
@@ -157,7 +157,6 @@
     bluetui
     impala
     wtype
-    tree
     feh
 
     fastfetch
