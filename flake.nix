@@ -13,7 +13,6 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/release-25.05";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,11 +21,10 @@
 
   outputs = {...} @ inputs: let
     nixos = inputs.nixpkgs.lib.nixosSystem;
-    nixos-unstable = inputs.nixpkgs-unstable.lib.nixosSystem;
     agenix = inputs.agenix.nixosModules.default;
   in {
     nixosConfigurations = {
-      nix = nixos-unstable {
+      nix = nixos {
         system = "x86_64-linux";
         modules = [./host/nix.nix];
       };
