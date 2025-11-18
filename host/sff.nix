@@ -48,8 +48,6 @@ in {
       allowedTCPPorts = [
         2718 # marimo
         8000 # jupyterhub
-        8787 # rstudio
-        23231 # softserve
       ];
     };
   };
@@ -86,18 +84,6 @@ in {
       openFirewall = true;
     };
 
-    rstudio-server = {
-      enable = true;
-      listenAddr = "0.0.0.0";
-    };
-
-    soft-serve = {
-      enable = true;
-      settings.initial_admin_keys = [
-        "sh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwT8Pp5RBli2Qc7P2XvYn4X3A1YLOAhl/MBE+WV/kwq"
-      ];
-    };
-
     jupyterhub = {
       enable = true;
       extraConfig = ''
@@ -131,13 +117,10 @@ in {
     };
   };
 
-  environment = {
-    systemPackages = with pkgs; [uv];
-    variables = {
-      LD_LIBRARY_PATH = "/run/opengl-driver/lib";
-      CUDA_HOME = "/run/opengl-driver";
-      CUDA_PATH = "/run/opengl-driver";
-    };
+  environment.variables = {
+    LD_LIBRARY_PATH = "/run/opengl-driver/lib";
+    CUDA_HOME = "/run/opengl-driver";
+    CUDA_PATH = "/run/opengl-driver";
   };
 
   system.stateVersion = "24.05";
