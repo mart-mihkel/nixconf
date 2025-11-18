@@ -59,6 +59,7 @@
       config = {
         pull.rebase = true;
         core.editor = "vim";
+        push.autoSetupRemote = true;
         user = {
           name = "mart-mihkel";
           email = "mart.mihkel.aun@gmail.com";
