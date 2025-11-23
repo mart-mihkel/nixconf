@@ -4,9 +4,7 @@
   config,
   modulesPath,
   ...
-}: let
-  marimo-token = config.age.secrets.marimo-token.path;
-in {
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (import ./modules/cloudflare-tunnel.nix {host = "sff";})
@@ -97,23 +95,6 @@ in {
           'CUDA_PATH': '/run/opengl-driver',
         }
       '';
-    };
-  };
-
-  age.secrets.marimo-token.file = ../secrets/marimo-token.age;
-  systemd.services.marimo = {
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-    script = "${pkgs.uv}/bin/uv run marimo edit --host 0.0.0.0 --token-password $(cat ${marimo-token})";
-    serviceConfig = {
-      WorkingDirectory = "/home/nixos/marimo";
-      Restart = "always";
-      RestartSec = 5;
-      Environment = [
-        "LD_LIBRARY_PATH=/run/opengl-driver/lib"
-        "CUDA_HOME=/run/opengl-driver"
-        "CUDA_PATH=/run/opengl-driver"
-      ];
     };
   };
 
