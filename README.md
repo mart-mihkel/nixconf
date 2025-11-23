@@ -1,17 +1,17 @@
-# Nix dotfiles
+# Nix Config
 
-### Setup
+## Setup
 
-To bootstrap a system to flakes open a nix-shell with the experimental-features flag:
+Bootstrap to flakes
 
 ```bash
 nix-shell -p vim -p git --experimental-features 'nix-command flakes'
 nixos-rebuild switch --flake .#target-configuration
 ```
 
-### Secrets
+## Secrets
 
-Add the recipient public key from `/etc/ssh` to [secrets/secrets.nix](./secrets/secrets.nix) and reference the relevant secrets
+Add recipient public key to [secrets.nix](./secrets/secrets.nix)
 
 Create secret:
 
@@ -19,7 +19,7 @@ Create secret:
 nix-shell -p ragenix --command 'EDITOR=vim agenix -e secret.age'
 ```
 
-Use the secret:
+Use secret:
 
 ```nix
 let
@@ -28,3 +28,7 @@ in {
   age.secrets.secret.file = ./secrets/secret.age;
 }
 ```
+
+## Dev Shells
+
+See [./flakes/](flakes)
