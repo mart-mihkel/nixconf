@@ -140,6 +140,7 @@
   environment.systemPackages = with pkgs; [
     cloudflared
     imagemagick
+    sqlite
     nodejs
     ffmpeg
     typst
