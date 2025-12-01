@@ -12,7 +12,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/release-25.05";
+    nixpkgs.url = "nixpkgs/release-25.11";
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
