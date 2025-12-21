@@ -23,7 +23,7 @@
   };
 
   networking = {
-    hostName = "rpi";
+    hostName = "raspi";
     networkmanager.enable = false;
     interfaces = {
       eth0.useDHCP = false;

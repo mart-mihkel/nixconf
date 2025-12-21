@@ -24,19 +24,19 @@
     agenix = inputs.agenix.nixosModules.default;
   in {
     nixosConfigurations = {
-      nix = nixos {
+      latitude = nixos {
         system = "x86_64-linux";
-        modules = [./host/nix.nix];
+        modules = [./host/latitude.nix];
       };
 
-      sff = nixos {
+      lab = nixos {
         system = "x86_64-linux";
-        modules = [./host/sff.nix agenix];
+        modules = [./host/lab.nix agenix];
       };
 
-      rpi = nixos {
+      raspi = nixos {
         system = "aarch64-linux";
-        modules = [./host/rpi.nix agenix];
+        modules = [./host/raspi.nix agenix];
       };
     };
   };

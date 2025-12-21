@@ -34,7 +34,7 @@
   };
 
   networking = {
-    hostName = "sff";
+    hostName = "lab";
     networkmanager.enable = true;
     interfaces = {
       eth0.wakeOnLan.enable = true;
@@ -87,13 +87,14 @@
       extraConfig = ''
         c.Authenticator.allowed_users = { 'nixos' }
         c.Authenticator.admin_users = { 'nixos' }
-        c.SystemdSpawner.environment = {
-          'SSL_CERT_FILE': '/etc/ssl/certs/ca-bundle.crt',
-          'SSL_CERT_DIR': '/etc/ssl/certs',
-          'LD_LIBRARY_PATH': '/run/opengl-driver/lib',
-          'CUDA_HOME': '/run/opengl-driver',
-          'CUDA_PATH': '/run/opengl-driver',
-        }
+        c.Spawner.env_keep = [
+          'LD_LIBRARY_PATH',
+          'SSL_CERT_FILE',
+          'SSL_CERT_DIR',
+          'CUDA_HOME',
+          'CUDA_PATH',
+          'PATH',
+        ]
       '';
     };
   };

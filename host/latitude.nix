@@ -44,15 +44,15 @@
   };
 
   networking = {
-    hostName = "nix";
+    hostName = "latitude";
     networkmanager = {
       enable = true;
       wifi.backend = "iwd";
     };
 
     hosts = {
-      "192.168.0.1" = ["rpi"];
-      "192.168.0.2" = ["sff"];
+      "192.168.0.1" = ["raspi"];
+      "192.168.0.2" = ["lab"];
     };
   };
 
@@ -82,7 +82,7 @@
   programs = {
     sway.enable = true;
     steam.enable = true;
-    hyprland.enable = true;
+    chromium.enable = true;
     obs-studio.enable = true;
 
     neovim = {
@@ -140,6 +140,7 @@
   environment.systemPackages = with pkgs; [
     cloudflared
     imagemagick
+    opencode
     sqlite
     nodejs
     ffmpeg
@@ -149,39 +150,29 @@
     pnpm
     bun
     go
+    uv
 
     wayland-pipewire-idle-inhibit
+    sway-contrib.grimshot
+    autotiling-rs
     brightnessctl
     wl-clipboard
     pulsemixer
     playerctl
-    bluetui
-    impala
-    wtype
-    feh
-
-    fastfetch
-    grimblast
-    alacritty
-    hypridle
-    hyprlock
-    hellwal
-    cmatrix
-    waybar
-    rofi
-    swww
-    cava
-
-    sway-contrib.grimshot
-    autotiling-rs
     gammastep
     swayidle
+    bluetui
+    impala
     dunst
+    wtype
     tofi
     foot
+    feh
 
+    ungoogled-chromium
     qdigidoc
     audacity
+    gnumeric
     spotify
     zathura
     discord

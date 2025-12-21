@@ -30,6 +30,12 @@
 
     bash = {
       completion.enable = true;
+      shellAliases = {
+        rm = "rm -v";
+        cp = "cp -v";
+        mv = "mv -v";
+      };
+
       shellInit = ''
         bind '"\t": menu-complete'
         bind "set show-all-if-ambiguous on"
@@ -95,7 +101,6 @@
       fzf
       fd
       jq
-      uv
     ];
   };
 }
