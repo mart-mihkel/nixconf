@@ -5,12 +5,12 @@
   modulesPath,
   ...
 }: let
-  nvidia = pkgs.linuxPackages.nvidiaPackages.stable;
+  tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
+  token = config.age.secrets.cloudflare-tunnel.path;
 in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./modules/cloudflare-tunnel.nix {host = "sff";})
-    ./modules/common.nix
+    ./common.nix
   ];
 
   nixpkgs = {
@@ -27,7 +27,6 @@ in {
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    opengl.enable = true;
     graphics.enable = true;
     nvidia-container-toolkit.enable = true;
     nvidia = {
@@ -83,26 +82,33 @@ in {
     jupyterhub = {
       enable = true;
       extraConfig = ''
-        c.Authenticator.allowed_users = { 'nixos' }
-        c.Authenticator.admin_users = { 'nixos' }
-        c.Spawner.env_keep = [
-          'LD_LIBRARY_PATH',
-          'SSL_CERT_FILE',
-          'SSL_CERT_DIR',
-          'CUDA_PATH',
-          'PATH',
-        ]
+        c.Authenticator.allowed_users = {"nixos"}
+        c.Authenticator.admin_users = {"nixos"}
+        c.Spawner.env_keep = ["PATH"]
+        c.SystemdSpawner.environment = {
+          "CUDA_HOME": "/run/opengl-driver",
+          "LD_LIBRARY_PATH": "/run/opengl-driver/lib",
+          "SSL_CERT_FILE": "/etc/ssl/certs/ca-bundle.crt",
+          "SSL_CERT_DIR": "/etc/ssl/certs",
+        }
       '';
     };
   };
 
-  environment.variables = {
-    PKG_CONFIG_PATH = "${pkgs.fmt.dev}/lib/pkgconfig";
-    CMAKE_PREFIX_PATH = "${pkgs.fmt.dev}";
-    LD_LIBRARY_PATH = "${nvidia}/lib";
-    EXTRA_LDFLAGS = "-L/lib -L${nvidia}/lib";
-    EXTRA_CCFLAGS = "-I/usr/include";
-    CUDA_PATH = "${pkgs.cudatoolkit}";
+  age.secrets.cloudflare-tunnel.file = ../secrets/lab-tunnel.age;
+  systemd.services.cloudflare-tunnel = {
+    after = ["network.target" "systemd-resolved.service"];
+    wantedBy = ["multi-user.target"];
+    script = "${tunnel} --token $(cat ${token})";
+    serviceConfig = {
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
+
+  environment.sessionVariables = {
+    LD_LIBRARY_PATH = "/run/opengl-driver/lib";
+    CUDA_HOME = "/run/opengl-driver";
   };
 
   system.stateVersion = "24.05";

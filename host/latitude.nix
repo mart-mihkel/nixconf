@@ -8,7 +8,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./modules/common.nix
+    ./common.nix
   ];
 
   nixpkgs = {
@@ -64,11 +64,7 @@
     };
   };
 
-  swapDevices = [
-    {
-      device = "/dev/nvme0n1p3";
-    }
-  ];
+  swapDevices = [{device = "/dev/nvme0n1p3";}];
 
   users.users.nixos.extraGroups = ["networkmanager"];
   security.sudo.wheelNeedsPassword = false;
@@ -78,7 +74,6 @@
     sway.enable = true;
     steam.enable = true;
     chromium.enable = true;
-    obs-studio.enable = true;
 
     neovim = {
       enable = true;
@@ -129,19 +124,16 @@
   };
 
   fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    material-symbols
     jetbrains-mono
+    noto-fonts-cjk-sans
     noto-fonts
   ];
 
   environment.systemPackages = with pkgs; [
     cloudflared
-    imagemagick
     opencode
     sqlite
     nodejs
-    ffmpeg
     typst
     cargo
     rustc
@@ -155,29 +147,22 @@
     autotiling-rs
     brightnessctl
     wl-clipboard
-    pulsemixer
     wl-mirror
     playerctl
     gammastep
     swayidle
     bluetui
-    impala
     dunst
     wtype
     tofi
     foot
     feh
 
-    ungoogled-chromium
     qdigidoc
-    audacity
-    gnumeric
     spotify
     zathura
     discord
-    blender
     brave
-    gimp
     vlc
   ];
 

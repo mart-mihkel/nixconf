@@ -4,11 +4,13 @@
   config,
   modulesPath,
   ...
-}: {
+}: let
+  tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
+  token = config.age.secrets.cloudflare-tunnel.path;
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    (import ./modules/cloudflare-tunnel.nix {host = "rpi";})
-    ./modules/common.nix
+    ./common.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
@@ -91,6 +93,17 @@
           };
         };
       };
+    };
+  };
+
+  age.secrets.cloudflare-tunnel.file = ../secrets/raspi-tunnel.age;
+  systemd.services.cloudflare-tunnel = {
+    after = ["network.target" "systemd-resolved.service"];
+    wantedBy = ["multi-user.target"];
+    script = "${tunnel} --token $(cat ${token})";
+    serviceConfig = {
+      Restart = "always";
+      RestartSec = 5;
     };
   };
 

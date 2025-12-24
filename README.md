@@ -2,33 +2,29 @@
 
 ## Setup
 
-Bootstrap to flakes
-
 ```bash
 nix-shell -p vim -p git --experimental-features 'nix-command flakes'
-nixos-rebuild switch --flake .#target-configuration
+nixos-rebuild switch --flake .#<configuration>
 ```
 
 ## Secrets
 
-Add recipient public key to [secrets.nix](./secrets/secrets.nix)
-
-Create secret:
-
 ```bash
-nix-shell -p ragenix --command 'EDITOR=vim agenix -e secret.age'
+# add recipient public key to secrets.nix, then
+nix-shell -p ragenix
+agenix -e <secret>.age
 ```
 
-Use secret:
-
 ```nix
-let
-  secret-path = config.age.secrets.secret.path;
-in {
-  age.secrets.secret.file = ./secrets/secret.age;
+{config, ...}: {
+  age.secrets.<secret>.file = ./secrets/<secret>.age;
+  service.secret-file = config.age.secrets.<secret>.path;
 }
 ```
 
 ## Dev Shells
 
-See [./flakes/](flakes)
+```bash
+cd ./flakes/<flake>
+nix develop
+```
