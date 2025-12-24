@@ -4,7 +4,9 @@
   config,
   modulesPath,
   ...
-}: {
+}: let
+  nvidia = pkgs.linuxPackages.nvidiaPackages.stable;
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (import ./modules/cloudflare-tunnel.nix {host = "sff";})
@@ -25,6 +27,7 @@
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    opengl.enable = true;
     graphics.enable = true;
     nvidia-container-toolkit.enable = true;
     nvidia = {
@@ -77,11 +80,6 @@
       openFirewall = true;
     };
 
-    ollama = {
-      enable = true;
-      openFirewall = true;
-    };
-
     jupyterhub = {
       enable = true;
       extraConfig = ''
@@ -91,7 +89,6 @@
           'LD_LIBRARY_PATH',
           'SSL_CERT_FILE',
           'SSL_CERT_DIR',
-          'CUDA_HOME',
           'CUDA_PATH',
           'PATH',
         ]
@@ -100,9 +97,12 @@
   };
 
   environment.variables = {
-    LD_LIBRARY_PATH = "/run/opengl-driver/lib";
-    CUDA_HOME = "/run/opengl-driver";
-    CUDA_PATH = "/run/opengl-driver";
+    PKG_CONFIG_PATH = "${pkgs.fmt.dev}/lib/pkgconfig";
+    CMAKE_PREFIX_PATH = "${pkgs.fmt.dev}";
+    LD_LIBRARY_PATH = "${nvidia}/lib";
+    EXTRA_LDFLAGS = "-L/lib -L${nvidia}/lib";
+    EXTRA_CCFLAGS = "-I/usr/include";
+    CUDA_PATH = "${pkgs.cudatoolkit}";
   };
 
   system.stateVersion = "24.05";
