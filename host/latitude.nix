@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   config,
   modulesPath,
   ...
@@ -13,12 +14,6 @@
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
     config.allowUnfree = true;
-    # TODO: delete when neovim 0.12 is released
-    overlays = [
-      (import (builtins.fetchTarball {
-        url = "https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz";
-      }))
-    ];
   };
 
   boot = {
@@ -91,6 +86,9 @@
       withNodeJs = true;
       withPython3 = true;
       defaultEditor = true;
+
+      # TODO: delete when neovim 0.12 is released
+      package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     };
 
     nix-ld = {
@@ -158,6 +156,7 @@
     brightnessctl
     wl-clipboard
     pulsemixer
+    wl-mirror
     playerctl
     gammastep
     swayidle

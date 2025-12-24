@@ -26,6 +26,9 @@
     tmux = {
       enable = true;
       baseIndex = 1;
+      keyMode = "vi";
+      escapeTime = 0;
+      historyLimit = 10000;
     };
 
     bash = {
