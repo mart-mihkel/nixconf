@@ -5,8 +5,8 @@
   modulesPath,
   ...
 }: let
-  tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
-  token = config.age.secrets.cloudflare-tunnel.path;
+  cloudflare-tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
+  cloudflare-token = config.age.secrets.cloudflare-tunnel.path;
 in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -14,7 +14,6 @@ in {
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-  age.secrets.wpa-psk.file = ../secrets/wpa-psk.age;
 
   boot = {
     initrd.availableKernelModules = ["xhci_pci"];
@@ -62,6 +61,11 @@ in {
     fsType = "ext4";
   };
 
+  age.secrets = {
+    cloudflare-tunnel.file = ../secrets/raspi-tunnel.age;
+    wpa-psk.file = ../secrets/wpa-psk.age;
+  };
+
   services = {
     getty.autologinUser = "nixos";
     openssh = {
@@ -96,11 +100,10 @@ in {
     };
   };
 
-  age.secrets.cloudflare-tunnel.file = ../secrets/raspi-tunnel.age;
   systemd.services.cloudflare-tunnel = {
     after = ["network.target" "systemd-resolved.service"];
     wantedBy = ["multi-user.target"];
-    script = "${tunnel} --token $(cat ${token})";
+    script = "${cloudflare-tunnel} --token $(cat ${cloudflare-token})";
     serviceConfig = {
       Restart = "always";
       RestartSec = 5;

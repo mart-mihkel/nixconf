@@ -3,6 +3,8 @@ let
   raspi = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6R5YmNttShmQUeyZoDBmSsIy8IiEXE73rbzfrQi6XLkkCA491XvqKHtzFGBdYccMPNpG5xg5Vp2CrRK6IhEuxRo/MUrLzt03VKGaTqerTVK7ZH9QUBAiTEvMq8tlW7HORicyB6CgDtYt+AxuB7ozmqWGYME/9jCY9QcuG5aHWT4ZlHSYqhLCiSwSiWXBVWrY7kAhMgA6yqijAakbll1QJbnhVpxLdOMXENrifPAaKhSQ0LLk8xeZxHqm+g2fsllTXJw0kNii4AQsfaDN4yY9L5miNXUk6qx0UofT/lMn7xWyKfJXkMNMVwfxGuMp4ZUzbyNK1xt5/SRWNVcTiLSK47/NP9LucpdELG/Tgqp6foDwW0xfI/+TGPFRbKxIz5iSkaM0PiURkpeTJxT90KR/vV1n+AMMj3BojRa8bvrxUYAc+tM7pG9B/3rMZn6abS6A3E03C4t0JMF4xtKfrd7e0wUZq7vOZdAecH4aUkXWJQdAoq7QxGFR2Ymo6FzQIBfk71HHgwnrRpBXCa9Xumoyos/FPnR3xAArZKl3YNFBbHS4wIQB4++QIuK+d1OHLYAi2SMVi5KEMw/qK+ZrVpH0ZInYID2MzxWAtGN8gInCS/gQtrm6620HVP37AcLLiqdZ0EDWQ5ujz3kZ89O9Q/mS0mcSF0JJcaZx6rQ3bDjEt+w==";
 in {
   "lab-tunnel.age".publicKeys = [lab];
+  "munge-pwd.age".publicKeys = [lab];
+
   "raspi-tunnel.age".publicKeys = [raspi];
   "wpa-psk.age".publicKeys = [raspi];
 }

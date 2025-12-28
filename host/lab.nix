@@ -5,8 +5,9 @@
   modulesPath,
   ...
 }: let
-  tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
-  token = config.age.secrets.cloudflare-tunnel.path;
+  cloudflare-tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
+  cloudflare-token = config.age.secrets.cloudflare-tunnel.path;
+  munge-pwd = config.age.secrets.munge-pwd.path;
 in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -70,6 +71,14 @@ in {
     libraries = with pkgs; [libGL glib];
   };
 
+  age.secrets = {
+    cloudflare-tunnel.file = ../secrets/lab-tunnel.age;
+    munge-pwd = {
+      owner = "munge";
+      file = ../secrets/munge-pwd.age;
+    };
+  };
+
   services = {
     getty.autologinUser = "nixos";
     xserver.videoDrivers = ["nvidia"];
@@ -77,6 +86,21 @@ in {
     openssh = {
       enable = true;
       openFirewall = true;
+    };
+
+    munge = {
+      enable = true;
+      password = munge-pwd;
+    };
+
+    slurm = {
+      client.enable = true;
+      server.enable = true;
+      user = "nixos";
+      clusterName = "lab";
+      controlMachine = "lab";
+      nodeName = ["lab CPUs=1 State=UNKNOWN"];
+      partitionName = ["debug Nodes=ALL Default=YES MaxTime=INFINITE State=UP"];
     };
 
     jupyterhub = {
@@ -95,11 +119,10 @@ in {
     };
   };
 
-  age.secrets.cloudflare-tunnel.file = ../secrets/lab-tunnel.age;
   systemd.services.cloudflare-tunnel = {
     after = ["network.target" "systemd-resolved.service"];
     wantedBy = ["multi-user.target"];
-    script = "${tunnel} --token $(cat ${token})";
+    script = "${cloudflare-tunnel} --token $(cat ${cloudflare-token})";
     serviceConfig = {
       Restart = "always";
       RestartSec = 5;
