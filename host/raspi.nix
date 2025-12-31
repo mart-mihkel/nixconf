@@ -67,7 +67,6 @@ in {
   };
 
   services = {
-    getty.autologinUser = "nixos";
     openssh = {
       enable = true;
       openFirewall = true;

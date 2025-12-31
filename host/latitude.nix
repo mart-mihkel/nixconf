@@ -147,6 +147,7 @@
     autotiling-rs
     brightnessctl
     wl-clipboard
+    pulsemixer
     wl-mirror
     playerctl
     gammastep
@@ -158,6 +159,7 @@
     foot
     feh
 
+    eduvpn-client
     qdigidoc
     spotify
     zathura
