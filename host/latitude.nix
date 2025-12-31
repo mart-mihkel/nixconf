@@ -71,10 +71,10 @@
   xdg.portal.enable = true;
 
   programs = {
-    sway.enable = true;
     steam.enable = true;
     nix-ld.enable = true;
     chromium.enable = true;
+    hyprland.enable = true;
 
     neovim = {
       enable = true;
@@ -113,9 +113,12 @@
   };
 
   fonts.packages = with pkgs; [
-    jetbrains-mono
+    nerd-fonts.jetbrains-mono
     noto-fonts-cjk-sans
     noto-fonts
+
+    material-symbols
+    jetbrains-mono
   ];
 
   environment.systemPackages = with pkgs; [
@@ -131,22 +134,34 @@
     go
     uv
 
-    wayland-pipewire-idle-inhibit
-    sway-contrib.grimshot
-    autotiling-rs
     brightnessctl
-    wl-clipboard
+    imagemagick
     pulsemixer
-    wl-mirror
-    playerctl
+    fastfetch
+    grimblast
     gammastep
-    swayidle
+    playerctl
     bluetui
+    ffmpeg
+    hellwal
+    impala
     dunst
-    wtype
-    tofi
-    foot
+    rofi
+    swww
     feh
+
+    wayland-pipewire-idle-inhibit
+    swaynotificationcenter
+    adwaita-icon-theme
+    wl-clipboard
+    wl-mirror
+    alacritty
+    hyprland
+    hypridle
+    hyprlock
+    waybar
+    wtype
+    foot
 
     eduvpn-client
     qdigidoc
