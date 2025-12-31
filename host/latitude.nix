@@ -147,6 +147,7 @@
     autotiling-rs
     brightnessctl
     wl-clipboard
+    pulsemixer
     wl-mirror
     playerctl
     gammastep

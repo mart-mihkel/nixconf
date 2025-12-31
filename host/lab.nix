@@ -80,7 +80,6 @@ in {
   };
 
   services = {
-    getty.autologinUser = "nixos";
     xserver.videoDrivers = ["nvidia"];
 
     openssh = {
@@ -96,26 +95,27 @@ in {
     slurm = {
       client.enable = true;
       server.enable = true;
-      user = "nixos";
       clusterName = "lab";
       controlMachine = "lab";
       nodeName = ["lab CPUs=1 State=UNKNOWN"];
-      partitionName = ["debug Nodes=ALL Default=YES MaxTime=INFINITE State=UP"];
+      partitionName = ["main Nodes=ALL Default=YES MaxTime=INFINITE State=UP"];
     };
 
     jupyterhub = {
       enable = true;
-      extraConfig = ''
-        c.Authenticator.allowed_users = {"nixos"}
-        c.Authenticator.admin_users = {"nixos"}
-        c.Spawner.env_keep = ["PATH"]
-        c.SystemdSpawner.environment = {
-          "CUDA_HOME": "/run/opengl-driver",
-          "LD_LIBRARY_PATH": "/run/opengl-driver/lib",
-          "SSL_CERT_FILE": "/etc/ssl/certs/ca-bundle.crt",
-          "SSL_CERT_DIR": "/etc/ssl/certs",
-        }
-      '';
+      extraConfig =
+        # python
+        ''
+          c.Authenticator.allowed_users = {"nixos"}
+          c.Authenticator.admin_users = {"nixos"}
+          c.Spawner.env_keep = ["PATH"]
+          c.SystemdSpawner.environment = {
+            "CUDA_HOME": "/run/opengl-driver",
+            "LD_LIBRARY_PATH": "/run/opengl-driver/lib",
+            "SSL_CERT_FILE": "/etc/ssl/certs/ca-bundle.crt",
+            "SSL_CERT_DIR": "/etc/ssl/certs",
+          }
+        '';
     };
   };
 

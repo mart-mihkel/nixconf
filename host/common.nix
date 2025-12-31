@@ -33,36 +33,42 @@
 
     bash = {
       completion.enable = true;
+
       shellAliases = {
         rm = "rm -v";
         cp = "cp -v";
         mv = "mv -v";
       };
 
-      shellInit = ''
-        bind '"\t": menu-complete'
-        bind "set show-all-if-ambiguous on"
-        bind "set completion-ignore-case on"
-        bind "set menu-complete-display-prefix on"
-      '';
+      shellInit =
+        # bash
+        ''
+          bind '"\t": menu-complete'
+          bind "set show-all-if-ambiguous on"
+          bind "set completion-ignore-case on"
+          bind "set menu-complete-display-prefix on"
+        '';
     };
 
     zsh = {
       enable = true;
       enableCompletion = true;
       autosuggestions.enable = true;
+
       shellAliases = {
         rm = "rm -v";
         cp = "cp -v";
         mv = "mv -v";
       };
 
-      shellInit = ''
-        zstyle ":completion:*" menu yes select
-        zstyle ":completion:*" special-dirs yes
-        zstyle ":completion::complete:*" gain-privileges yes
-        setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
-      '';
+      shellInit =
+        # sh
+        ''
+          zstyle ":completion:*" menu yes select
+          zstyle ":completion:*" special-dirs yes
+          zstyle ":completion::complete:*" gain-privileges yes
+          setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
+        '';
     };
 
     git = {
@@ -93,6 +99,7 @@
       ripgrep
       gnumake
       cacert
+      cmake
       unzip
       wget
       glow
