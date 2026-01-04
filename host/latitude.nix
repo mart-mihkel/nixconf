@@ -73,6 +73,7 @@
   programs = {
     sway.enable = true;
     steam.enable = true;
+    nix-ld.enable = true;
     chromium.enable = true;
 
     neovim = {
@@ -86,11 +87,6 @@
       package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     };
 
-    nix-ld = {
-      enable = true;
-      libraries = with pkgs; [libGL glib glibc stdenv.cc.cc];
-    };
-
     dconf.profiles.user.databases = [
       {
         settings."org/gnome/desktop/interface".font-name = "Noto Sans Medium 10";
@@ -102,6 +98,7 @@
     pcscd.enable = true;
     thermald.enable = true;
     auto-cpufreq.enable = true;
+    getty.autologinUser = "nixos";
 
     undervolt = {
       enable = true;
@@ -112,14 +109,6 @@
     pipewire = {
       enable = true;
       wireplumber.enable = true;
-    };
-
-    greetd = {
-      enable = true;
-      settings.default_session = {
-        user = "nixos";
-        command = "sway";
-      };
     };
   };
 
