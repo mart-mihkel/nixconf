@@ -124,7 +124,7 @@
   environment.systemPackages = with pkgs; [
     cloudflared
     opencode
-    sqlite
+    ffmpeg
     nodejs
     typst
     cargo
@@ -132,44 +132,33 @@
     pnpm
     bun
     go
-    uv
-
-    brightnessctl
-    imagemagick
-    pulsemixer
-    fastfetch
-    grimblast
-    gammastep
-    playerctl
-    bluetui
-    ffmpeg
-    hellwal
-    impala
-    dunst
-    rofi
-    swww
-    feh
 
     wayland-pipewire-idle-inhibit
     swaynotificationcenter
     adwaita-icon-theme
+    brightnessctl
     wl-clipboard
-    wl-mirror
-    alacritty
+    imagemagick
+    pulsemixer
+    grimblast
+    fastfetch
+    gammastep
+    playerctl
+    qdigidoc
     hyprland
     hypridle
     hyprlock
+    hellwal
+    bluetui
+    zathura
+    impala
     waybar
     wtype
-    foot
-
-    eduvpn-client
-    qdigidoc
-    spotify
-    zathura
-    discord
     brave
-    vlc
+    foot
+    rofi
+    swww
+    feh
   ];
 
   system.stateVersion = "25.05";
