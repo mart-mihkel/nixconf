@@ -40,13 +40,11 @@
         mv = "mv -v";
       };
 
-      shellInit =
-        # bash
-        ''
-          bind "TAB:menu-complete"
-          bind "set show-all-if-ambiguous on"
-          bind "set completion-ignore-case on"
-        '';
+      shellInit = ''
+        bind "TAB:menu-complete"
+        bind "set show-all-if-ambiguous on"
+        bind "set completion-ignore-case on"
+      '';
     };
 
     zsh = {
@@ -60,14 +58,12 @@
         mv = "mv -v";
       };
 
-      shellInit =
-        # sh
-        ''
-          zstyle ":completion:*" menu yes select
-          zstyle ":completion:*" special-dirs yes
-          zstyle ":completion::complete:*" gain-privileges yes
-          setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
-        '';
+      shellInit = ''
+        zstyle ":completion:*" menu yes select
+        zstyle ":completion:*" special-dirs yes
+        zstyle ":completion::complete:*" gain-privileges yes
+        setopt no_case_glob no_case_match hist_ignore_dups inc_append_history
+      '';
     };
 
     git = {
@@ -97,6 +93,7 @@
       openssl
       ripgrep
       gnumake
+      sqlite
       cacert
       cmake
       unzip

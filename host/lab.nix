@@ -46,10 +46,7 @@ in {
 
     firewall = {
       allowedUDPPorts = [9]; # wakeonlan
-      allowedTCPPorts = [
-        2718 # marimo
-        8000 # jupyterhub
-      ];
+      allowedTCPPorts = [8000]; # jupyterhub
     };
   };
 
@@ -103,19 +100,17 @@ in {
 
     jupyterhub = {
       enable = true;
-      extraConfig =
-        # python
-        ''
-          c.Authenticator.allowed_users = {"nixos"}
-          c.Authenticator.admin_users = {"nixos"}
-          c.Spawner.env_keep = ["PATH"]
-          c.SystemdSpawner.environment = {
-            "CUDA_HOME": "/run/opengl-driver",
-            "LD_LIBRARY_PATH": "/run/opengl-driver/lib",
-            "SSL_CERT_FILE": "/etc/ssl/certs/ca-bundle.crt",
-            "SSL_CERT_DIR": "/etc/ssl/certs",
-          }
-        '';
+      extraConfig = ''
+        c.Authenticator.allowed_users = {"nixos"}
+        c.Authenticator.admin_users = {"nixos"}
+        c.Spawner.env_keep = ["PATH"]
+        c.SystemdSpawner.environment = {
+          "CUDA_HOME": "/run/opengl-driver",
+          "LD_LIBRARY_PATH": "/run/opengl-driver/lib",
+          "SSL_CERT_FILE": "/etc/ssl/certs/ca-bundle.crt",
+          "SSL_CERT_DIR": "/etc/ssl/certs",
+        }
+      '';
     };
   };
 
