@@ -63,6 +63,12 @@ in {
     };
   };
 
+  users.users.ninakoll = {
+    shell = pkgs.zsh;
+    createHome = true;
+    isNormalUser = true;
+  };
+
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [libGL glib];
@@ -101,7 +107,7 @@ in {
     jupyterhub = {
       enable = true;
       extraConfig = ''
-        c.Authenticator.allowed_users = {"nixos"}
+        c.Authenticator.allowed_users = {"nixos", "ninakoll"}
         c.Authenticator.admin_users = {"nixos"}
         c.Spawner.env_keep = ["PATH"]
         c.SystemdSpawner.environment = {
