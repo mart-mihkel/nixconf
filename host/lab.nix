@@ -46,10 +46,7 @@ in {
 
     firewall = {
       allowedUDPPorts = [9]; # wakeonlan
-      allowedTCPPorts = [
-        5000 # mlflow
-        8000 # jupyterhub
-      ];
+      allowedTCPPorts = [8000]; # jupyterhub
     };
   };
 

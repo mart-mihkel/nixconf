@@ -52,7 +52,7 @@ in {
 
     firewall = {
       allowedUDPPorts = [53 67]; # dns dhcp
-      allowedTCPPorts = [53]; # dns
+      allowedTCPPorts = [53 5000]; # dns mlflow
     };
   };
 
@@ -65,6 +65,8 @@ in {
     cloudflare-tunnel.file = ../secrets/raspi-tunnel.age;
     wpa-psk.file = ../secrets/wpa-psk.age;
   };
+
+  programs.nix-ld.enable = true;
 
   services = {
     openssh = {

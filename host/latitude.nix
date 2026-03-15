@@ -134,7 +134,6 @@
     go
 
     wayland-pipewire-idle-inhibit
-    swaynotificationcenter
     adwaita-icon-theme
     brightnessctl
     wl-clipboard
@@ -155,6 +154,7 @@
     waybar
     wtype
     brave
+    dunst
     foot
     rofi
     swww
