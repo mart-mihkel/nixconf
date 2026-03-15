@@ -8,6 +8,7 @@
   cloudflare-tunnel = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run";
   cloudflare-token = config.age.secrets.cloudflare-tunnel.path;
   munge-pwd = config.age.secrets.munge-pwd.path;
+  gres = pkgs.writeTextDir "gres.conf" "NodeName=lab Name=gpu Type=rtx4060 Count=1 File=/dev/nvidia0";
 in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -100,8 +101,10 @@ in {
       server.enable = true;
       clusterName = "lab";
       controlMachine = "lab";
-      nodeName = ["lab CPUs=1 State=UNKNOWN"];
-      partitionName = ["main Nodes=ALL Default=YES MaxTime=INFINITE State=UP"];
+      nodeName = ["lab Sockets=1 CoresPerSocket=6 ThreadsPerCore=2 CPUs=12 Gres=gpu:rtx4060:1 RealMemory=15917 State=UNKNOWN"];
+      partitionName = ["gpu Nodes=ALL Default=YES MaxTime=INFINITE State=UP"];
+      extraConfig = "GresTypes=gpu";
+      extraConfigPaths = [gres];
     };
 
     jupyterhub = {
