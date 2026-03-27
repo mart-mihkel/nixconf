@@ -64,10 +64,21 @@ in {
     };
   };
 
-  users.users.ninakoll = {
-    shell = pkgs.zsh;
-    createHome = true;
-    isNormalUser = true;
+  swapDevices = [
+    {
+      device = "/var/swapfile";
+      size = 32768;
+    }
+  ];
+
+  users.users = {
+    nixos.extraGroups = ["video"];
+    slurm.extraGroups = ["video"];
+    ninakoll = {
+      shell = pkgs.zsh;
+      createHome = true;
+      isNormalUser = true;
+    };
   };
 
   programs.nix-ld = {
@@ -85,6 +96,10 @@ in {
 
   services = {
     xserver.videoDrivers = ["nvidia"];
+
+    udev.extraRules = ''
+      KERNEL=="nvidia*", MODE="0660", GROUP="video"
+    '';
 
     openssh = {
       enable = true;
