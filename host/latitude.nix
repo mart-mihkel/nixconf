@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  inputs,
   config,
   modulesPath,
   ...
@@ -82,9 +81,6 @@
       withNodeJs = true;
       withPython3 = true;
       defaultEditor = true;
-
-      # TODO: delete when neovim 0.12 is released
-      package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     };
 
     dconf.profiles.user.databases = [
@@ -157,7 +153,7 @@
     dunst
     foot
     rofi
-    swww
+    awww
     feh
   ];
 

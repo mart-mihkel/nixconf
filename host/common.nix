@@ -15,9 +15,11 @@
     shell = pkgs.zsh;
     createHome = true;
     isNormalUser = true;
+    extraGroups = ["wheel"];
     initialPassword = "nixos";
-    extraGroups = ["wheel" "docker"];
   };
+
+  zramSwap.enable = true;
 
   programs = {
     vim.enable = true;
@@ -80,8 +82,14 @@
     };
   };
 
-  zramSwap.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    containers.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 
   environment = {
     sessionVariables = {
@@ -90,6 +98,7 @@
     };
 
     systemPackages = with pkgs; [
+      podman-compose
       openssl
       ripgrep
       gnumake

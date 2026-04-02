@@ -16,7 +16,6 @@
   inputs = {
     nixpkgs.url = "nixpkgs/release-25.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +30,6 @@
     nixosConfigurations = {
       latitude = nixos-unstable {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
         modules = [./host/latitude.nix];
       };
 
