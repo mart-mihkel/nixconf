@@ -125,15 +125,9 @@ in {
     jupyterhub = {
       enable = true;
       extraConfig = ''
-        c.Authenticator.allowed_users = {"nixos", "ninakoll"}
         c.Authenticator.admin_users = {"nixos"}
-        c.Spawner.env_keep = ["PATH"]
-        c.SystemdSpawner.environment = {
-          "CUDA_HOME": "/run/opengl-driver",
-          "LD_LIBRARY_PATH": "/run/opengl-driver/lib",
-          "SSL_CERT_FILE": "/etc/ssl/certs/ca-bundle.crt",
-          "SSL_CERT_DIR": "/etc/ssl/certs",
-        }
+        c.Authenticator.allowed_users = {"nixos", "ninakoll"}
+        c.Spawner.env_keep = ["PATH", "LD_LIBRARY_PATH", "CUDA_HOME", "SSL_CERT_DIR", "SSL_CERT_FILE"]
       '';
     };
   };
@@ -148,9 +142,13 @@ in {
     };
   };
 
-  environment.sessionVariables = {
-    LD_LIBRARY_PATH = "/run/opengl-driver/lib";
-    CUDA_HOME = "/run/opengl-driver";
+  environment = {
+    sessionVariables = {
+      CUDA_HOME = pkgs.cudatoolkit;
+      LD_LIBRARY_PATH = "${pkgs.cudatoolkit}/lib:${pkgs.cudaPackages.cudnn}/lib";
+    };
+
+    systemPackages = with pkgs; [cudatoolkit cudaPackages.cudnn];
   };
 
   system.stateVersion = "24.05";
